@@ -1,2 +1,4 @@
 /patientor-frontend/node_modules
 /patientor-frontend/build
+/patientor-backend/node_modules
+/patientor-backend/build
