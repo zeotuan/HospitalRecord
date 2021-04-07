@@ -1,14 +1,22 @@
 import React, { createContext, useContext, useReducer } from "react";
-import { Patient } from "../types";
+import { NonSensitivePatient,Patient, Diagnosis } from "../types";
 
 import { Action } from "./reducer";
 
+export interface ImprovedState{
+  patients: Map<string,Patient>
+}
+
 export type State = {
-  patients: { [id: string]: Patient };
+  patients: { [id: string]: Patient|NonSensitivePatient /*| undefined*/ };
+  diagnoses: { [id in Diagnosis['code']]:Diagnosis};
 };
 
+
+
 const initialState: State = {
-  patients: {}
+  patients: {},
+  diagnoses: {}
 };
 
 export const StateContext = createContext<[State, React.Dispatch<Action>]>([
