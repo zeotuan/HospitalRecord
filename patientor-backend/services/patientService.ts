@@ -1,51 +1,62 @@
-import patients from '../data/patients';
+import PatientModel from '../model/patients';
 import {NonSensitivePatient,Patient, NewPatient, EntryWithoutId} from '../types';
-import {v1 as uuid} from 'uuid'
 
 
-const getEntries = ():Patient[] => {
-    return patients;
+const getEntries = async():Promise<Patient[]|undefined> => {
+    try {
+        const patients:Patient[] = await PatientModel.find({});
+        return  patients
+    } catch (error) {
+        console.log(error)
+        return;
+    }
 }
 
-const getNonSensitiveEntries = ():NonSensitivePatient[] => {
-    return  patients.map(({id,name,dateOfBirth,gender,occupation}) => {
-        return {
-            id,
-            name,
-            dateOfBirth,
-            gender,
-            occupation
-        }
-    })
+const getNonSensitiveEntries = async ():Promise<NonSensitivePatient[]|undefined> => {
+    try {
+        const patients:Patient[] = await PatientModel.find({});
+        return  patients
+    } catch (error) {
+        console.log(error)
+        return;
+    }
+    
 }
 
-const findById = (id:string):Patient|undefined => {
-    const patientEntry = patients.find(p => p.id ===id );
-    return patientEntry;
+const findById = async(id:string):Promise<Patient|null> => {
+    try {
+        const patientEntry:Patient|null = await PatientModel.findOne({id});
+        return patientEntry;
+    } catch (error) {
+        console.log(error);
+        return null;
+    }
+    
 }
 
-const addPatient = (entry:NewPatient):Patient =>{
-    const newPatientEntry:Patient = {
-        ...entry,
-        id: uuid()
-    };
-    patients.push(newPatientEntry);
-    return newPatientEntry;
+const addPatient = async(entry:NewPatient):Promise<Patient|undefined> =>{
+    try {
+
+        const newPatient = new PatientModel({
+            ...entry
+        });
+        newPatient.save();
+        return newPatient;
+    } catch (error) {
+        console.log(error);
+        return;
+    }
 }
 
 
-const addEntry = (patientId:Patient['id'], entry:EntryWithoutId):Patient|undefined => {
-    patients.forEach(patient => {
-        if(patient.id === patientId){
-            patient.entries = patient.entries.concat({
-                ...entry,
-                id:uuid()
-            })    
-        }
-    })
-    const Patient = patients.find(p => p.id === patientId);
-    return Patient;
-
+const addEntry = async (patientId:String, entry:EntryWithoutId):Promise<Patient|null> => {
+    try {
+        let updatedPatient = await PatientModel.findByIdAndUpdate(patientId,{$push:{entries:entry}},{new:true})
+        return updatedPatient;
+    } catch (error) {
+        console.log(error);
+        return null;
+    }
 }
 
 export default {

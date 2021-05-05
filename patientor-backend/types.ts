@@ -1,3 +1,4 @@
+
 export enum Gender {
     Male = 'male',
     Female = 'female',
@@ -10,10 +11,7 @@ export interface Diagnosis{
     latin?:String
 }
 
-
-
-export interface Patient{
-    id:String,
+export interface Patient{ 
     name:String,
     dateOfBirth:String,
     ssn:String,
@@ -22,12 +20,11 @@ export interface Patient{
     entries:Array<Entry>
 }
 
-export interface BaseEntry {
-    id: string;
-    description: string;
-    date: string;
-    specialist: string;
-    diagnosisCodes?: Array<Diagnosis['code']>;
+export interface BaseEntry{
+    description: string,
+    date: string,
+    specialist: string,
+    diagnosisCodes?: Array<Diagnosis['code']>,
 }
 
 export enum HealthCheckRating{
@@ -37,7 +34,7 @@ export enum HealthCheckRating{
     "CriticalRisk" =3
 }
 
-interface HealthCheckEntry extends BaseEntry{
+export interface HealthCheckEntry extends BaseEntry{
     type:"HealthCheck";
     healthCheckRating: HealthCheckRating
 }
