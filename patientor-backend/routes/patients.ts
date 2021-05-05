@@ -4,12 +4,13 @@ import {toNewPatient} from '../utils/patient';
 import {toNewEntry} from '../utils/entry'
 const router = express.Router();
 
-router.get('/', (_req, res) => {
-    res.send(patientService.getNonSensitiveEntries());
+router.get('/', async (_req, res) => {
+    const patients = await patientService.getNonSensitiveEntries();
+    res.send(patients);
 })
 
-router.get('/:id', (req,res) => {
-    const patient = patientService.findById(req.params.id);
+router.get('/:id', async (req,res) => {
+    const patient = await patientService.findById(req.params.id);
     if(patient){
         res.send(patient);
     }else{
@@ -17,20 +18,20 @@ router.get('/:id', (req,res) => {
     }
 })
 
-router.post('/', (req,res) => {
+router.post('/', async (req,res) => {
     try {
         const newPatientEntry = toNewPatient(req.body) ;
-        const addedEntry = patientService.addPatient(newPatientEntry);
+        const addedEntry = await patientService.addPatient(newPatientEntry);
         res.json(addedEntry);
     } catch (error) {
         res.status(400).send(error.message);
     }
 })
 
-router.patch('/:authorId/entries/', (req,res) => {
+router.patch('/:authorId/entries/', async (req,res) => {
     try{
         const newEntry = toNewEntry(req.body);
-        patientService.addEntry(req.params.authorId,newEntry);
+        await patientService.addEntry(req.params.authorId,newEntry);
 
     }catch(error){
         res.status(400).send(error.message)

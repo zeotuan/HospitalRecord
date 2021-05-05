@@ -2,9 +2,8 @@ import {model,Document,Schema,Model,Types} from 'mongoose';
 const uniqueValidator = require('mongoose-unique-validator');
 import {Patient,Gender} from '../types'
 
-export interface patientBaseDocument extends Patient,Document{
 
-}
+export type patientBaseDocument = Patient & Document;
 
 const patientSchema:Schema = new Schema({
     name:String,
@@ -12,7 +11,7 @@ const patientSchema:Schema = new Schema({
     ssn:String,
     gender: {
         type: Gender,
-        enum : [Gender.Male,Gender.Female,Gender.Other],
+        enum : Object.values(Gender),
         default: Gender.Other
     },
     occupation:String,

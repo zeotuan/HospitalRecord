@@ -1,3 +1,4 @@
+import {Types} from 'mongoose';
 
 export enum Gender {
     Male = 'male',
@@ -12,6 +13,7 @@ export interface Diagnosis{
 }
 
 export interface Patient{ 
+    id:Types.ObjectId,
     name:String,
     dateOfBirth:String,
     ssn:String,

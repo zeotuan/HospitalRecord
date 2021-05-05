@@ -1,31 +1,31 @@
-import PatientModel from '../model/patients';
+import PatientModel,{patientBaseDocument} from '../model/patients';
 import {NonSensitivePatient,Patient, NewPatient, EntryWithoutId} from '../types';
 
 
-const getEntries = async():Promise<Patient[]|undefined> => {
+const getEntries = async():Promise<patientBaseDocument[]|undefined> => {
     try {
-        const patients:Patient[] = await PatientModel.find({});
-        return  patients
+        const patients:patientBaseDocument[] = await PatientModel.find({});
+        return patients
     } catch (error) {
         console.log(error)
-        return;
+        return [];
     }
 }
 
 const getNonSensitiveEntries = async ():Promise<NonSensitivePatient[]|undefined> => {
     try {
-        const patients:Patient[] = await PatientModel.find({});
-        return  patients
+        const patients:patientBaseDocument[] = await PatientModel.find({});   
+        return patients
     } catch (error) {
         console.log(error)
-        return;
+        return [];
     }
     
 }
 
 const findById = async(id:string):Promise<Patient|null> => {
     try {
-        const patientEntry:Patient|null = await PatientModel.findOne({id});
+        const patientEntry:patientBaseDocument|null = await PatientModel.findOne({id});
         return patientEntry;
     } catch (error) {
         console.log(error);
@@ -37,7 +37,7 @@ const findById = async(id:string):Promise<Patient|null> => {
 const addPatient = async(entry:NewPatient):Promise<Patient|undefined> =>{
     try {
 
-        const newPatient = new PatientModel({
+        const newPatient:patientBaseDocument = new PatientModel({
             ...entry
         });
         newPatient.save();

@@ -5,10 +5,7 @@ import {BaseEntry,HealthCheckRating,HealthCheckEntry} from '../types';
 const baseOptions = {
     discriminatorKey:'type',
 }
-
-export interface EntryBaseDocument extends BaseEntry,Document{
-}
-
+type EntryBaseDocument = BaseEntry & Document;
 export interface HealthCheckEntryDocument extends HealthCheckEntry,Document{
 
 }
