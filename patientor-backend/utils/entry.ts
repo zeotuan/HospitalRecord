@@ -1,4 +1,4 @@
-import {EntryWithoutId, HealthCheckRating} from '../types';
+import {Entry, HealthCheckRating} from '../types';
 
 interface BaseEntryField {
     description: unknown;
@@ -31,11 +31,11 @@ interface OccupationalHealthcareEntryField extends BaseEntryField{
 
 type EntryField = HealthCheckEntryField | HospitalEntryField | OccupationalHealthcareEntryField;
 
-export const toNewEntry = (props:EntryField):EntryWithoutId => {
+export const toNewEntry = (props:EntryField):Entry => {
     const {description,date,specialist,diagnosisCodes} = props
     switch(props.type){
         case "HealthCheck":
-            const healthCheckEntry:EntryWithoutId = {
+            const healthCheckEntry:Entry = {
                 description:parseDescription(description),
                 date:parseDate(date),
                 specialist:parseSpecialist(specialist),
@@ -45,7 +45,7 @@ export const toNewEntry = (props:EntryField):EntryWithoutId => {
             }
             return healthCheckEntry;
         case "Hospital":
-            const HospitalEntry:EntryWithoutId = {
+            const HospitalEntry:Entry = {
                 description:parseDescription(description),
                 date:parseDate(date),
                 specialist:parseSpecialist(specialist),
@@ -58,7 +58,7 @@ export const toNewEntry = (props:EntryField):EntryWithoutId => {
             }
             return HospitalEntry;
         case "OccupationalHealthcare":
-            const OccupationalHealthcareEntry:EntryWithoutId = {
+            const OccupationalHealthcareEntry:Entry = {
                 description:parseDescription(description),
                 date:parseDate(date),
                 specialist:parseSpecialist(specialist),

@@ -11,6 +11,7 @@ router.get('/', async (_req, res) => {
 
 router.get('/:id', async (req,res) => {
     const patient = await patientService.findById(req.params.id);
+    
     if(patient){
         res.send(patient);
     }else{
@@ -31,8 +32,8 @@ router.post('/', async (req,res) => {
 router.patch('/:authorId/entries/', async (req,res) => {
     try{
         const newEntry = toNewEntry(req.body);
-        await patientService.addEntry(req.params.authorId,newEntry);
-
+        const updatedPatient = await patientService.addEntry(req.params.authorId,newEntry);
+        res.json(updatedPatient);
     }catch(error){
         res.status(400).send(error.message)
     }

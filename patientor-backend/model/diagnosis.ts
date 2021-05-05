@@ -3,7 +3,6 @@ import {Diagnosis} from '../types';
 const uniqueValidator = require('mongoose-unique-validator');
 
 export interface DiagnosisDocument extends Diagnosis,Document{
-
 }
 
 const diagonsisSchema:Schema = new mongoose.Schema({

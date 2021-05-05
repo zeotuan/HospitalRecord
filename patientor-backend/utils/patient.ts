@@ -1,9 +1,9 @@
-import {Gender, NewPatient} from '../types'
+import {Gender, Patient} from '../types'
 
 type Field = {name:unknown,dateOfBirth:unknown,ssn:unknown,gender:unknown,occupation:unknown}
 
-export const toNewPatient  = ({name,dateOfBirth,ssn,gender,occupation}:Field):NewPatient => {
-    const newEntry:NewPatient = {
+export const toNewPatient  = ({name,dateOfBirth,ssn,gender,occupation}:Field):Patient => {
+    const newEntry:Patient = {
         name:parseName(name),
         dateOfBirth:parseDob(dateOfBirth),
         ssn:parseSSN(ssn),

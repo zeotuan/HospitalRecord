@@ -1,5 +1,3 @@
-import {Types} from 'mongoose';
-
 export enum Gender {
     Male = 'male',
     Female = 'female',
@@ -13,13 +11,12 @@ export interface Diagnosis{
 }
 
 export interface Patient{ 
-    id:Types.ObjectId,
     name:String,
     dateOfBirth:String,
     ssn:String,
     gender: Gender,
     occupation:String
-    entries:Array<Entry>
+    entries:Array<Entry[]>
 }
 
 export interface BaseEntry{
@@ -59,9 +56,4 @@ interface OccupationalHealthcareEntry extends BaseEntry{
 }
 
 export type Entry = HealthCheckEntry | HospitalEntry | OccupationalHealthcareEntry
-export type NewPatient = Omit<Patient,'id'>;
 export type NonSensitivePatient = Omit<Patient,'ssn' | 'entries'>;
-
-
-type UnionOmit<T, K extends string | number | symbol> = T extends unknown ? Omit<T, K> : never;
-export type EntryWithoutId = UnionOmit<Entry, 'id'>;

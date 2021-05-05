@@ -1,9 +1,19 @@
 import {model,Document,Schema,Model,Types} from 'mongoose';
 const uniqueValidator = require('mongoose-unique-validator');
-import {Patient,Gender} from '../types'
+import {Patient,Gender,Entry} from '../types';
+import {EntryBaseDocument} from './entry';
 
+export interface patientBaseDocument extends Patient, Document{
+    entries:Types.Array<EntryBaseDocument['id']>
+}
 
-export type patientBaseDocument = Patient & Document;
+export interface populatedPatientDocument extends patientBaseDocument {
+    entries:Types.Array<Entry>
+}
+
+export interface patientModel extends Model<patientBaseDocument>{
+    getFullPatient(id:string): Promise<populatedPatientDocument>
+}
 
 const patientSchema:Schema = new Schema({
     name:String,
@@ -32,6 +42,13 @@ patientSchema.set('toJSON',{
     }
 });
 
-const PatientModel:Model<patientBaseDocument> = model('Patient',patientSchema)
+patientSchema.statics.getFullPatient = async function(
+    this:Model<patientBaseDocument>,
+    id:String
+) {
+    return this.findById(id).populate('entries').exec();
+}
 
-export default PatientModel;
+const PatientModel = model<patientBaseDocument,patientModel>('Patient',patientSchema);
+
+export default  PatientModel;

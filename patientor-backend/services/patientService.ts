@@ -1,5 +1,6 @@
-import PatientModel,{patientBaseDocument} from '../model/patients';
-import {NonSensitivePatient,Patient, NewPatient, EntryWithoutId} from '../types';
+import PatientModel,{patientBaseDocument,populatedPatientDocument} from '../model/patients';
+import EntryModel from '../model/entry';
+import {NonSensitivePatient,Patient, Entry} from '../types';
 
 
 const getEntries = async():Promise<patientBaseDocument[]|undefined> => {
@@ -23,9 +24,9 @@ const getNonSensitiveEntries = async ():Promise<NonSensitivePatient[]|undefined>
     
 }
 
-const findById = async(id:string):Promise<Patient|null> => {
+const findById = async(id:string):Promise<populatedPatientDocument|null> => {
     try {
-        const patientEntry:patientBaseDocument|null = await PatientModel.findOne({id});
+        const patientEntry:populatedPatientDocument|null = await PatientModel.getFullPatient(id);
         return patientEntry;
     } catch (error) {
         console.log(error);
@@ -34,13 +35,13 @@ const findById = async(id:string):Promise<Patient|null> => {
     
 }
 
-const addPatient = async(entry:NewPatient):Promise<Patient|undefined> =>{
+const addPatient = async(entry:Patient):Promise<Patient|undefined> =>{
     try {
         console.log(entry)
         const newPatient:patientBaseDocument = new PatientModel({
             ...entry
         });
-        newPatient.save();
+        await newPatient.save();
         return newPatient;
     } catch (error) {
         console.log(error);
@@ -49,9 +50,15 @@ const addPatient = async(entry:NewPatient):Promise<Patient|undefined> =>{
 }
 
 
-const addEntry = async (patientId:String, entry:EntryWithoutId):Promise<Patient|null> => {
+const addEntry = async (patientId:String, entry:Entry):Promise<Patient|null> => {
     try {
-        let updatedPatient = await PatientModel.findByIdAndUpdate(patientId,{$push:{entries:entry}},{new:true})
+        const updatedPatient = await PatientModel.findById(patientId);
+        const newEntry = new EntryModel({
+            ...entry,
+        })
+        await newEntry.save();
+        updatedPatient?.entries.concat(newEntry._id);
+        await updatedPatient?.save()
         return updatedPatient;
     } catch (error) {
         console.log(error);

@@ -3,10 +3,13 @@ const uniqueValidator = require('mongoose-unique-validator');
 import {BaseEntry,HealthCheckRating,HealthCheckEntry} from '../types';
 
 const baseOptions = {
-    discriminatorKey:'type',
+    discriminatorKey:'kind',
 }
-type EntryBaseDocument = BaseEntry & Document;
-export interface HealthCheckEntryDocument extends HealthCheckEntry,Document{
+export interface EntryBaseDocument extends BaseEntry, Document{
+
+}
+
+export interface HealthCheckEntryDocument extends HealthCheckEntry, Document{
 
 }
 

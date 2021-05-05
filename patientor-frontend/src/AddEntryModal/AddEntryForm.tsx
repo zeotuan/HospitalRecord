@@ -138,7 +138,7 @@ const AddEntryForm = ({onSubmit, onCancel}:Props) => {
                     return errors;
                 }}
             >
-            {({isValid,dirty,setFieldValue, setFieldTouched}) => {
+            {({isValid,dirty,setFieldValue, setFieldTouched,values}) => {
                 return (
                     <Form className='form ui'>
                         <Field 
@@ -164,14 +164,14 @@ const AddEntryForm = ({onSubmit, onCancel}:Props) => {
                             setFieldTouched={setFieldTouched}
                             diagnoses={Object.values(diagnoses)}
                         />
-                        {type === "HealthCheck" &&
+                        {values.type === "HealthCheck" &&
                         <SelectField
                             label="HealthCheckRating"
                             name="healthCheckRating"
                             options={HealthCheckRatingOptions}
                         />
                         }
-                        {type === "Hospital" &&
+                        {values.type === "Hospital" &&
                             <div>
                                 <Field 
                                     label="Discharge Criteria"
@@ -187,7 +187,7 @@ const AddEntryForm = ({onSubmit, onCancel}:Props) => {
                                 />
                             </div>
                         }
-                        {type === "OccupationalHealthcare" &&
+                        {values.type === "OccupationalHealthcare" &&
                             <div>
                                 <Field 
                                     label="Employer name"
