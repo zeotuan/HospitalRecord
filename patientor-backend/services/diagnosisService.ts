@@ -2,7 +2,7 @@ import diagnoses from '../data/diagnosis';
 import {Diagnosis} from '../types';
 
 
-const getEntries = ():Diagnosis[] => {
+const getEntries = async ():Promise<Diagnosis[]> => {
     return diagnoses;
 }
 

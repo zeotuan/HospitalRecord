@@ -3,8 +3,8 @@ import diagnosisService from '../services/diagnosisService'
 
 const router = express.Router()
 
-router.get('/', (_req,res) => {
-    res.send(diagnosisService.getEntries())
+router.get('/', async (_req,res) => {
+    res.send(await diagnosisService.getEntries())
 })
 
 export default router

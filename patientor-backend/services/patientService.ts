@@ -36,7 +36,7 @@ const findById = async(id:string):Promise<Patient|null> => {
 
 const addPatient = async(entry:NewPatient):Promise<Patient|undefined> =>{
     try {
-
+        console.log(entry)
         const newPatient:patientBaseDocument = new PatientModel({
             ...entry
         });

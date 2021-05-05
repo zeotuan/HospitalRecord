@@ -53,7 +53,7 @@ const PatientPage = ():JSX.Element => {
                     modalOpen={modelOpen}
                     
                 />
-                <Button onClick={() => openModal()}>Add New Patient</Button>
+                <Button onClick={() => openModal()}>Add New Entry</Button>
                 <h2>{patient.name} <GenderIcon gender={patient.gender}/></h2> 
                 <p>{patient.ssn}</p>
                 <p>{patient.occupation}</p>
