@@ -16,7 +16,7 @@ export interface Patient{
     ssn:String,
     gender: Gender,
     occupation:String
-    entries:Array<Entry[]>
+    entries:Array<Entry>
 }
 
 export interface BaseEntry{

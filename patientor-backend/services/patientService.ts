@@ -15,7 +15,7 @@ const getEntries = async():Promise<patientBaseDocument[]|undefined> => {
 
 const getNonSensitiveEntries = async ():Promise<NonSensitivePatient[]|undefined> => {
     try {
-        const patients:patientBaseDocument[] = await PatientModel.find({});   
+        const patients = await PatientModel.find({});   
         return patients
     } catch (error) {
         console.log(error)
@@ -24,9 +24,9 @@ const getNonSensitiveEntries = async ():Promise<NonSensitivePatient[]|undefined>
     
 }
 
-const findById = async(id:string):Promise<populatedPatientDocument|null> => {
+const findById = async(id:string):Promise<Patient|null> => {
     try {
-        const patientEntry:populatedPatientDocument|null = await PatientModel.getFullPatient(id);
+        const patientEntry = await PatientModel.getFullPatient(id);
         return patientEntry;
     } catch (error) {
         console.log(error);
