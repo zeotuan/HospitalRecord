@@ -26,10 +26,6 @@ export interface  EntryModel extends Model<EntryDocument>{
     getFullEntryDocument(id:string):Promise<populatedEntryDocuemnt>
 }
 
-
-
-
-
 const entrySchema:Schema = new Schema({
     description: {type:String, required:true},
     date:  {type:Date, required:true},

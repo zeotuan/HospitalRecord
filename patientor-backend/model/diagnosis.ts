@@ -1,4 +1,4 @@
-import mongoose, {Document,Schema, Model} from 'mongoose';
+import mongoose, {Document,Schema,model} from 'mongoose';
 import {Diagnosis} from '../types';
 const uniqueValidator = require('mongoose-unique-validator');
 
@@ -31,6 +31,6 @@ diagonsisSchema.set('toJSON',{
     }
 });
 
-const DiagnosisModel: Model<DiagnosisDocument> = mongoose.model('Diagnosis',diagonsisSchema);
+const DiagnosisModel = model<DiagnosisDocument>('Diagnosis',diagonsisSchema);
 
 export default DiagnosisModel;
