@@ -1,12 +1,20 @@
 import {model,Document,Schema,Model, Types} from 'mongoose';
 const uniqueValidator = require('mongoose-unique-validator');
-import {BaseEntry,HealthCheckRating,HealthCheckEntry} from '../types';
-
+import {BaseEntry,HealthCheckRating,HealthCheckEntry,Diagnosis} from '../types';
+import {DiagnosisDocument} from './diagnosis'
 const baseOptions = {
     discriminatorKey:'kind',
 }
 export interface EntryBaseDocument extends BaseEntry, Document{
+    diagnosisCodes: Types.Array<DiagnosisDocument['id']>
+}
 
+export interface populatedEntryDocument extends EntryBaseDocument{
+    diagnosisCodes: Types.Array<Diagnosis>
+}
+
+export interface  EntryModel extends Model<EntryBaseDocument>{
+    getFullEntryDocument(id:string):Promise<populatedEntryDocument>
 }
 
 export interface HealthCheckEntryDocument extends HealthCheckEntry, Document{
@@ -35,6 +43,12 @@ entrySchema.set('toJSON',{
     }
 });
 
+entrySchema.statics.getFullEntryDocument = async function(
+    this:Model<EntryBaseDocument>,
+    id:string
+){
+    return this.findById(id).populate('diagnosisCodes').exec();
+}
 
 
 const HealthCheckEntrySchema:Schema = new Schema({
@@ -72,10 +86,8 @@ const OccupationalHealthcareEntrySchema:Schema = new Schema({
         required:false
     }
 })
-const EntryModel:Model<EntryBaseDocument> = model('Entry',entrySchema)
+const EntryModel = model<EntryBaseDocument,EntryModel>('Entry',entrySchema)
 export const HospitalEntryModel = EntryModel.discriminator('HospitalEntry',HospitalEntrySchema)
 export const HealthCheckEntryModel = EntryModel.discriminator('HealthCheckEntry', HealthCheckEntrySchema)
 export const OcculationalHealthcareEntryModel = EntryModel.discriminator('OcculationalHealthcareEntry',OccupationalHealthcareEntrySchema)
-
-
 export default EntryModel;
