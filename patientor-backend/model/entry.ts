@@ -1,32 +1,41 @@
 import {model,Document,Schema,Model, Types} from 'mongoose';
 const uniqueValidator = require('mongoose-unique-validator');
-import {BaseEntry,HealthCheckRating,HealthCheckEntry,Diagnosis} from '../types';
+import {BaseEntry,HealthCheckRating,HealthCheckEntry,Diagnosis,HospitalEntry,OccupationalHealthcareEntry} from '../types';
 import {DiagnosisDocument} from './diagnosis'
 const baseOptions = {
     discriminatorKey:'kind',
 }
 export interface EntryBaseDocument extends BaseEntry, Document{
-    diagnosisCodes: Types.Array<DiagnosisDocument['id']>
+    diagnosisCodesIds: Types.Array<DiagnosisDocument['id']>
+}
+export interface populatedEntryBaseDocument extends EntryBaseDocument{
+    diagnosisCodesIds: Types.Array<Diagnosis>
 }
 
-export interface populatedEntryDocument extends EntryBaseDocument{
-    diagnosisCodes: Types.Array<Diagnosis>
+export interface HealthCheckEntryDocument extends HealthCheckEntry, EntryBaseDocument{
+}
+export interface HospitalEntryDocument extends HospitalEntry, EntryBaseDocument{
+}
+export interface OccupationalHealthcareDocument extends OccupationalHealthcareEntry,EntryBaseDocument{
 }
 
-export interface  EntryModel extends Model<EntryBaseDocument>{
-    getFullEntryDocument(id:string):Promise<populatedEntryDocument>
+export type EntryDocument = HealthCheckEntryDocument | HospitalEntryDocument | OccupationalHealthcareDocument;
+export type populatedEntryDocuemnt = EntryDocument & populatedEntryBaseDocument
+
+export interface  EntryModel extends Model<EntryDocument>{
+    getFullEntryDocument(id:string):Promise<populatedEntryDocuemnt>
 }
 
-export interface HealthCheckEntryDocument extends HealthCheckEntry, Document{
 
-}
+
+
 
 const entrySchema:Schema = new Schema({
     description: {type:String, required:true},
     date:  {type:Date, required:true},
     specialist:  {type:String, required:true},
     type:  {type:String, required:true},
-    diagnosisCodes:[{
+    diagnosisCodesIds:[{
         type:Types.ObjectId,
         ref:'Diagnosis'
     }]
@@ -36,7 +45,7 @@ entrySchema.plugin(uniqueValidator)
 
 
 entrySchema.set('toJSON',{
-    transform: (_document:Document,returnedObject:EntryBaseDocument) => {
+    transform: (_document:Document,returnedObject:EntryDocument) => {
         returnedObject.id = returnedObject._id.toString()
         delete returnedObject._id
         delete returnedObject.__v
@@ -44,10 +53,10 @@ entrySchema.set('toJSON',{
 });
 
 entrySchema.statics.getFullEntryDocument = async function(
-    this:Model<EntryBaseDocument>,
+    this:Model<EntryDocument>,
     id:string
 ){
-    return this.findById(id).populate('diagnosisCodes').exec();
+    return this.findById(id).populate('diagnosisCodesIds').exec();
 }
 
 
@@ -86,7 +95,7 @@ const OccupationalHealthcareEntrySchema:Schema = new Schema({
         required:false
     }
 })
-const EntryModel = model<EntryBaseDocument,EntryModel>('Entry',entrySchema)
+const EntryModel = model<EntryDocument,EntryModel>('Entry',entrySchema)
 export const HospitalEntryModel = EntryModel.discriminator('HospitalEntry',HospitalEntrySchema)
 export const HealthCheckEntryModel = EntryModel.discriminator('HealthCheckEntry', HealthCheckEntrySchema)
 export const OcculationalHealthcareEntryModel = EntryModel.discriminator('OcculationalHealthcareEntry',OccupationalHealthcareEntrySchema)
