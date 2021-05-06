@@ -29,10 +29,10 @@ router.post('/', async (req,res) => {
     }
 })
 
-router.patch('/:authorId/entries/', async (req,res) => {
+router.patch('/:patientId/entries/', async (req,res) => {
     try{
         const newEntry = toNewEntry(req.body);
-        const updatedPatient = await patientService.addEntry(req.params.authorId,newEntry);
+        const updatedPatient = await patientService.addEntry(req.params.patientId,newEntry);
         res.json(updatedPatient);
     }catch(error){
         res.status(400).send(error.message)

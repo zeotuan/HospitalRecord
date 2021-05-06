@@ -1,4 +1,4 @@
-import PatientModel,{patientBaseDocument,populatedPatientDocument} from '../model/patients';
+import PatientModel,{patientBaseDocument} from '../model/patients';
 import EntryModel from '../model/entry';
 import {NonSensitivePatient,Patient, Entry} from '../types';
 
