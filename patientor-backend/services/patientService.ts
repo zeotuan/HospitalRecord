@@ -3,10 +3,19 @@ import EntryModel from '../model/entry';
 import {NonSensitivePatient,Patient, Entry} from '../types';
 
 
-const getEntries = async():Promise<patientBaseDocument[]|undefined> => {
+const getEntries = async():Promise<Patient[]|undefined> => {
     try {
-        const patients:patientBaseDocument[] = await PatientModel.find({});
-        return patients
+        const patients = await PatientModel.find({});
+        const patientResult:Patient[] = patients.map(p => ({
+            id:p.id,
+            name:p.name,
+            dateOfBirth:p.dateOfBirth,
+            gender:p.gender,
+            ssn:p.ssn,
+            occupation:p.occupation,
+            entries:p.entries
+        }))
+        return patientResult
     } catch (error) {
         console.log(error)
         return [];
@@ -15,8 +24,15 @@ const getEntries = async():Promise<patientBaseDocument[]|undefined> => {
 
 const getNonSensitiveEntries = async ():Promise<NonSensitivePatient[]|undefined> => {
     try {
-        const patients = await PatientModel.find({});   
-        return patients
+        const patients = await PatientModel.find({}).select({_id:1,name:1,dateOfBirth:1,gender:1,occupation:1});
+        const patientResult:NonSensitivePatient[] = patients.map(p => ({
+            id:p.id,
+            name:p.name,
+            dateOfBirth:p.dateOfBirth,
+            gender:p.gender,
+            occupation:p.occupation
+        }))
+        return patientResult;
     } catch (error) {
         console.log(error)
         return [];

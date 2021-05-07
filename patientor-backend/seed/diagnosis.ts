@@ -23,6 +23,5 @@ const seedingDiagnosis = async () => {
     await DiagnosisModel.deleteMany({});
     await DiagnosisModel.create(diagnosisEntry);
     await mongoose.disconnect();
-    
 }
 
