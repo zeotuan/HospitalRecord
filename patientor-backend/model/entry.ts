@@ -1,6 +1,6 @@
 import {model,Document,Schema,Model, Types} from 'mongoose';
 const uniqueValidator = require('mongoose-unique-validator');
-import {BaseEntry,HealthCheckRating,HealthCheckEntry,Diagnosis,HospitalEntry,OccupationalHealthcareEntry} from '../types';
+import {BaseEntry,HealthCheckRating,HealthCheckEntry as healthCheckEntry,Diagnosis,HospitalEntry as hospitalEntry,OccupationalHealthcareEntry as occupationalHealthcareEntry} from '../types';
 import {DiagnosisDocument} from './diagnosis'
 const baseOptions = {
     discriminatorKey:'kind',
@@ -12,11 +12,11 @@ export interface populatedEntryBaseDocument extends EntryBaseDocument{
     diagnosisCodesIds: Types.Array<Diagnosis>
 }
 
-export interface HealthCheckEntryDocument extends HealthCheckEntry, EntryBaseDocument{
+export interface HealthCheckEntryDocument extends healthCheckEntry, EntryBaseDocument{
 }
-export interface HospitalEntryDocument extends HospitalEntry, EntryBaseDocument{
+export interface HospitalEntryDocument extends hospitalEntry, EntryBaseDocument{
 }
-export interface OccupationalHealthcareDocument extends OccupationalHealthcareEntry,EntryBaseDocument{
+export interface OccupationalHealthcareDocument extends occupationalHealthcareEntry,EntryBaseDocument{
 }
 
 export type EntryDocument = HealthCheckEntryDocument | HospitalEntryDocument | OccupationalHealthcareDocument;
@@ -25,6 +25,7 @@ export type populatedEntryDocuemnt = EntryDocument & populatedEntryBaseDocument
 export interface  EntryModel extends Model<EntryDocument>{
     getFullEntryDocument(id:string):Promise<populatedEntryDocuemnt>
 }
+
 
 const entrySchema:Schema = new Schema({
     description: {type:String, required:true},
@@ -82,17 +83,20 @@ const OccupationalHealthcareEntrySchema:Schema = new Schema({
     sickLeave:{
         startDate:{
             type:Date,
-            required:true
+            required:false
         },
         endDate:{
             type:Date,
-            required:true
+            required:false
         },
         required:false
     }
 })
-const EntryModel = model<EntryDocument,EntryModel>('Entry',entrySchema)
-export const HospitalEntryModel = EntryModel.discriminator('HospitalEntry',HospitalEntrySchema)
-export const HealthCheckEntryModel = EntryModel.discriminator('HealthCheckEntry', HealthCheckEntrySchema)
-export const OcculationalHealthcareEntryModel = EntryModel.discriminator('OcculationalHealthcareEntry',OccupationalHealthcareEntrySchema)
-export default EntryModel;
+const Entry = model<EntryDocument,EntryModel>('Entry',entrySchema);
+Entry.discriminator('Hospital',HospitalEntrySchema);
+export const HospitalEntry = model<HospitalEntryDocument>('Hospital',HospitalEntrySchema);
+Entry.discriminator('HealthCheck', HealthCheckEntrySchema)
+export const HealthCheckEntry = model<HealthCheckEntryDocument>('HealthCheck',HealthCheckEntrySchema)
+Entry.discriminator('OcculationalHealthcare',OccupationalHealthcareEntrySchema)
+export const OcculationalHealthcareEntry = model<OccupationalHealthcareDocument>('OcculationalHealthcare',OccupationalHealthcareEntrySchema)
+export default Entry;

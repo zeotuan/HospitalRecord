@@ -1,6 +1,6 @@
 import PatientModel,{patientBaseDocument} from '../model/patients';
-import EntryModel from '../model/entry';
-import {NonSensitivePatient,Patient, Entry} from '../types';
+import Entry from '../model/entry';
+import {NonSensitivePatient,Patient, Entry as entry} from '../types';
 
 
 const getEntries = async():Promise<Patient[]|undefined> => {
@@ -66,10 +66,10 @@ const addPatient = async(entry:Patient):Promise<Patient|undefined> =>{
 }
 
 
-const addEntry = async (patientId:String, entry:Entry):Promise<Patient|null> => {
+const addEntry = async (patientId:String, entry:entry):Promise<Patient|null> => {
     try {
         const updatedPatient = await PatientModel.findById(patientId);
-        const newEntry = new EntryModel({
+        const newEntry = new Entry({
             ...entry,
         })
         await newEntry.save();

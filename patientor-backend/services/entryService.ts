@@ -1,10 +1,10 @@
-import {Entry} from '../types';
-import EntryModel from '../model/entry';
+import {Entry as entry} from '../types';
+import Entry from '../model/entry';
 
 
-const getAll = async ():Promise<Entry[]|null> => {
+const getAll = async ():Promise<entry[]|null> => {
     try{
-        const  allEntries = await EntryModel.find({});
+        const  allEntries = await Entry.find({});
         return allEntries;
     }catch(error){
         console.log(error);
@@ -12,9 +12,9 @@ const getAll = async ():Promise<Entry[]|null> => {
     }
 }
 
-const getEntryById = async (id:string):Promise<Entry|null> => {
+const getEntryById = async (id:string):Promise<entry|null> => {
     try {
-        const entry = await EntryModel.getFullEntryDocument(id);
+        const entry = await Entry.getFullEntryDocument(id);
         return entry;
     } catch (error) {
         console.log(error);

@@ -2,10 +2,9 @@ import mongoose from 'mongoose';
 import config from '../utils/config';
 import patientsEntry from '../data/patients';
 import patientModel from '../model/patients';
-import entryModel from '../model/entry';
 import DiagnosisModel from '../model/diagnosis';
 import PatientModel from '../model/patients';
-import EntryModel from '../model/entry';
+import Entry, {EntryDocument,HealthCheckEntry,HospitalEntry,OcculationalHealthcareEntry} from '../model/entry';
 
 
 mongoose.set('debug', true);
@@ -26,7 +25,7 @@ mongoose.connect(mongoUrl, {})
 
 const seedingPatientAndEntries = async () => {
     await patientModel.deleteMany({});
-    await EntryModel.deleteMany({});
+    await Entry.deleteMany({});
     for(const patientEntry of patientsEntry){
         const {entries, ...patientInfo} = patientEntry
         const newPatient = new PatientModel({
@@ -34,9 +33,30 @@ const seedingPatientAndEntries = async () => {
         })
         for(const entry of entries){
             const {diagnosisCodes, ...other} = entry
-            const newEntry = new entryModel({
-                ...other,
-            })
+            let newEntry:EntryDocument;
+
+            switch(other.type){
+                case "HealthCheck":
+                    newEntry = new HealthCheckEntry({
+                        ...other
+                    })
+                    await newEntry.save();
+                    break;
+                case "Hospital":
+                    newEntry = new HospitalEntry({
+                        ...other
+                    })
+                    await newEntry.save();
+                    break;
+                case "OccupationalHealthcare":
+                    newEntry = new OcculationalHealthcareEntry({
+                        ...other
+                    })
+                    await newEntry.save();
+                    break;
+                default:
+                    throw new Error('invalid type');
+            }
             if(diagnosisCodes){
                 for(const diagCode of diagnosisCodes){
                     const diagnosis = await DiagnosisModel.findOne({code:diagCode});
