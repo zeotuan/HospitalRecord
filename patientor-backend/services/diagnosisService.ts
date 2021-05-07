@@ -1,12 +1,7 @@
-import diagnoses from '../data/diagnosis';
 import {Diagnosis} from '../types';
 import DiagnosisModel from '../model/diagnosis';
 
-const getEntries = async ():Promise<Diagnosis[]> => {
-    return diagnoses;
-}
-
-const getAlldiagnoses = async ():Promise<Diagnosis[]|null> => {
+const getAllDiagnoses = async ():Promise<Diagnosis[]|null> => {
     try {
         const diagnoses = await DiagnosisModel.find({})
         return diagnoses
@@ -16,8 +11,7 @@ const getAlldiagnoses = async ():Promise<Diagnosis[]|null> => {
     }
 }
 
-
 export default {
-    getEntries,
-    getAlldiagnoses
+    
+    getAllDiagnoses
 }

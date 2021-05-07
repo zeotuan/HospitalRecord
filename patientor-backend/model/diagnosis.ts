@@ -1,4 +1,4 @@
-import mongoose, {Document,Schema,model, Types} from 'mongoose';
+import mongoose, {Document,Schema,model} from 'mongoose';
 import {Diagnosis} from '../types';
 const uniqueValidator = require('mongoose-unique-validator');
 

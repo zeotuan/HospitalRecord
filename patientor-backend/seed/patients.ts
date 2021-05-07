@@ -27,14 +27,11 @@ mongoose.connect(mongoUrl, {})
 
 const addPatient = async () => {
     for(const patientEntry of patientsEntry){
+        const {entries, ...patientInfo} = patientEntry
         const newPatient = new PatientModel({
-            name: patientEntry.name,
-            dateOfBirth: patientEntry.dateOfBirth,
-            ssn: patientEntry.ssn,
-            gender: patientEntry.gender,
-            occupation: patientEntry.occupation,
+            ...patientInfo
         })
-        for(const entry of patientEntry.entries){
+        for(const entry of entries){
             const {diagnosisCodes, ...other} = entry
             const newEntry = new entryModel({
                 ...other,
