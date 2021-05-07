@@ -9,14 +9,20 @@ const mongoUrl = config.MONGODB_URI? config.MONGODB_URI : '';
 mongoose.connect(mongoUrl, {})
     .then(_result => {
         console.log(`connected to mongoDB with URI ${mongoUrl}`);
-        DiagnosisModel.deleteMany({});
-    }).then(()=>{
-        DiagnosisModel.create(diagnosisEntry);
-    }).then(()=>{
-        mongoose.disconnect();
+        return seedingDiagnosis();
+    })
+    .then(()=>{
+        console.log('finished populting diagnosis');
     })
     .catch(error => {
         console.log(error);
         mongoose.disconnect();
     })
+
+const seedingDiagnosis = async () => {
+    await DiagnosisModel.deleteMany({});
+    await DiagnosisModel.create(diagnosisEntry);
+    await mongoose.disconnect();
+    
+}
 

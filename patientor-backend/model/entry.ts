@@ -67,7 +67,7 @@ const HealthCheckEntrySchema:Schema = new Schema({
 const HospitalEntrySchema:Schema = new Schema({
     discharge:{
         date:{
-            type:String,
+            type:Date,
             required:true
         },
         criteria:{
@@ -81,11 +81,11 @@ const OccupationalHealthcareEntrySchema:Schema = new Schema({
     employerName: String,
     sickLeave:{
         startDate:{
-            type:String,
+            type:Date,
             required:true
         },
         endDate:{
-            type:String,
+            type:Date,
             required:true
         },
         required:false
