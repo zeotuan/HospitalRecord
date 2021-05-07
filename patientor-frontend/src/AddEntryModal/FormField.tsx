@@ -80,7 +80,7 @@ export const NumberField = ({ field, label, min, max } : NumberProps ) => (
     const stateOptions = diagnoses.map(diagnosis => ({
       key: diagnosis.code,
       text: `${diagnosis.name} (${diagnosis.code})`,
-      value: diagnosis.code
+      value: diagnosis.id
     }));
   
     return (

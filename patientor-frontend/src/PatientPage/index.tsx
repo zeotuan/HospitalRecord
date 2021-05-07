@@ -31,7 +31,7 @@ const PatientPage = ():JSX.Element => {
             setError(e.response?.data?.error || 'Unknown error');
         }
     };
-
+    
     const patient:Patient|NonSensitivePatient|undefined = patients[id];
     if(!patient ||  !isPatient(patient)){
         patientService

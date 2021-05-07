@@ -2,6 +2,7 @@ import React from 'react';
 import {Icon, Card} from 'semantic-ui-react';
 import {HospitalEntry} from '../types';
 import {useStateValue} from '../state';
+import DiagnosisDescription from './DiagnosisDescription';
 
 const HospitalEntryCard = ({entry}:{entry:HospitalEntry}):JSX.Element => {
     const [{diagnoses},] = useStateValue();
@@ -12,16 +13,7 @@ const HospitalEntryCard = ({entry}:{entry:HospitalEntry}):JSX.Element => {
                     {entry.date}
                     <Icon name="hospital" />
                 </Card.Header>
-                <Card.Description>
-                    {entry.description}
-                    <ul>
-                        {entry.diagnosisCodes && entry.diagnosisCodes.map(d => 
-                            <li key={d}>
-                                {d} : {diagnoses[d] && diagnoses[d].name}
-                            </li>
-                        )}   
-                    </ul>    
-                </Card.Description>
+                <DiagnosisDescription description={entry.description} diagnosisCodes={entry.diagnosisCodes}/>
             </Card.Content>
         </Card>
     );
