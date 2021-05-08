@@ -17,7 +17,7 @@ const diagonsisSchema:Schema = new mongoose.Schema({
     },
     latin:{
         type:String,
-        required:true
+        required:false
     }
 });
 
