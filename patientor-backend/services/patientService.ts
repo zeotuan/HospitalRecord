@@ -69,12 +69,9 @@ const addPatient = async(entry:Patient):Promise<Patient|undefined> =>{
 const addEntry = async (patientId:String, entry:entry):Promise<Patient|null> => {
     try {
         const updatedPatient = await PatientModel.findById(patientId);
-        const newEntry = new Entry({
-            ...entry,
-        })
-        await newEntry.save();
+        const newEntry = await Entry.addEntry(entry);
         updatedPatient?.entries.concat(newEntry._id);
-        await updatedPatient?.save()
+        await updatedPatient?.save();
         return updatedPatient;
     } catch (error) {
         console.log(error);

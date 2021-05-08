@@ -81,6 +81,7 @@ entrySchema.statics.addEntry = async function(
             throw new Error('invalid type');
     }
     await newEntry.save();
+    return newEntry;
 }
 
 
