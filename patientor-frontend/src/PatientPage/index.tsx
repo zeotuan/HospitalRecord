@@ -1,6 +1,6 @@
 import React from 'react';
 import {Patient,NonSensitivePatient, isPatient} from '../types';
-import { useStateValue,getFullPatientInfo/*, addEntry*/ } from "../state";
+import { useStateValue,getFullPatientInfo, addEntry } from "../state";
 import {useParams} from 'react-router-dom';
 import patientService from '../services/patient';
 import GenderIcon from '../components/GenderIcon';
@@ -20,11 +20,11 @@ const PatientPage = ():JSX.Element => {
         setError(undefined);
     };
 
-    const submitNewEntry = (values:EntryWithoutId) => {
+    const submitNewEntry = async (values:EntryWithoutId) => {
         try{
-            console.log(values);
-            //const updatedPatient = await patientService.addEntry(values,id);
-            //dispatch(addEntry(updatedPatient));
+            //console.log(values);
+            const updatedPatient = await patientService.addEntry(values,id);
+            dispatch(addEntry(updatedPatient));
             closeModal();
         }catch(e){
             console.error(e.response?.data || 'Unknown Error');

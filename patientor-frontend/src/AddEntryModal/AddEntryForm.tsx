@@ -139,7 +139,7 @@ const AddEntryForm = ({onSubmit, onCancel}:Props) => {
 
                     if(values.type==="OccupationalHealthcare"){
                         if(!values.employerName){
-                            errors.employerName = requiredError
+                            errors.employerName = requiredError;
                         }
                     }
                     return errors;
