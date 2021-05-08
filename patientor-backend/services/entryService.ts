@@ -14,7 +14,7 @@ const getAll = async ():Promise<entry[]|null> => {
 
 const getEntryById = async (id:string):Promise<entry|null> => {
     try {
-        const entry = await Entry.getFullEntryDocument(id);
+        const entry = await Entry.findById(id);
         return entry;
     } catch (error) {
         console.log(error);

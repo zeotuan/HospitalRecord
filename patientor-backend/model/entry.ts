@@ -1,16 +1,16 @@
-import {model,Document,Schema,Model, Types} from 'mongoose';
+import {model,Document,Schema,Model} from 'mongoose';
 const uniqueValidator = require('mongoose-unique-validator');
-import {BaseEntry,HealthCheckRating,HealthCheckEntry as healthCheckEntry,Diagnosis,HospitalEntry as hospitalEntry,OccupationalHealthcareEntry as occupationalHealthcareEntry} from '../types';
-import {DiagnosisDocument} from './diagnosis'
+import {BaseEntry,HealthCheckRating,HealthCheckEntry as healthCheckEntry,HospitalEntry as hospitalEntry,OccupationalHealthcareEntry as occupationalHealthcareEntry, Entry} from '../types';
+//import {DiagnosisDocument} from './diagnosis'
 const baseOptions = {
     discriminatorKey:'kind',
 }
 export interface EntryBaseDocument extends BaseEntry, Document{
-    diagnosisCodesIds: Types.Array<DiagnosisDocument['id']>
+    //diagnosisCodesIds: Types.Array<DiagnosisDocument['id']>
 }
-export interface populatedEntryBaseDocument extends EntryBaseDocument{
-    diagnosisCodesIds: Types.Array<Diagnosis>
-}
+// export interface populatedEntryBaseDocument extends EntryBaseDocument{
+//     diagnosisCodesIds: Types.Array<Diagnosis>
+// }
 
 export interface HealthCheckEntryDocument extends healthCheckEntry, EntryBaseDocument{
 }
@@ -20,10 +20,11 @@ export interface OccupationalHealthcareDocument extends occupationalHealthcareEn
 }
 
 export type EntryDocument = HealthCheckEntryDocument | HospitalEntryDocument | OccupationalHealthcareDocument;
-export type populatedEntryDocuemnt = EntryDocument & populatedEntryBaseDocument
+//export type populatedEntryDocuemnt = EntryDocument & populatedEntryBaseDocument
 
 export interface  EntryModel extends Model<EntryDocument>{
-    getFullEntryDocument(id:string):Promise<populatedEntryDocuemnt>
+    //getFullEntryDocument(id:string):Promise<populatedEntryDocuemnt>,
+    addEntry(entry:Entry):Promise<EntryDocument>
 }
 
 
@@ -32,9 +33,9 @@ const entrySchema:Schema = new Schema({
     date:  {type:Date, required:true},
     specialist:  {type:String, required:true},
     type:  {type:String, required:true},
-    diagnosisCodesIds:[{
-        type:Types.ObjectId,
-        ref:'Diagnosis'
+    diagnosisCodes:[{
+        type:String
+        //ref:'Diagnosis'
     }]
 },baseOptions)
 
@@ -49,11 +50,37 @@ entrySchema.set('toJSON',{
     }
 });
 
-entrySchema.statics.getFullEntryDocument = async function(
-    this:Model<EntryDocument>,
-    id:string
+// entrySchema.statics.getFullEntryDocument = async function(
+//     this:Model<EntryDocument>,
+//     id:string
+// ){
+//     return this.findById(id).populate('diagnosisCodesIds').exec();
+// }
+
+entrySchema.statics.addEntry = async function(
+    entry:Entry
 ){
-    return this.findById(id).populate('diagnosisCodesIds').exec();
+    let newEntry:EntryDocument
+    switch(entry.type){
+        case "HealthCheck":
+            newEntry = new HealthCheckEntry({
+                ...entry,
+            }) 
+            break;
+        case "Hospital":
+            newEntry = new HospitalEntry({
+                ...entry
+            })
+            break;
+        case "OccupationalHealthcare":
+            newEntry = new OcculationalHealthcareEntry({
+                ...entry
+            })
+            break;
+        default:
+            throw new Error('invalid type');
+    }
+    await newEntry.save();
 }
 
 

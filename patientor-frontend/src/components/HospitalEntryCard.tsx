@@ -1,11 +1,9 @@
 import React from 'react';
 import {Icon, Card} from 'semantic-ui-react';
 import {HospitalEntry} from '../types';
-import {useStateValue} from '../state';
 import DiagnosisDescription from './DiagnosisDescription';
 
 const HospitalEntryCard = ({entry}:{entry:HospitalEntry}):JSX.Element => {
-    const [{diagnoses},] = useStateValue();
     return (
         <Card fluid>
             <Card.Content>
