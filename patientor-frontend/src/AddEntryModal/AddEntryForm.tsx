@@ -115,9 +115,7 @@ const AddEntryForm = ({onSubmit, onCancel}:Props) => {
                     if(!values.description){
                         errors.description = requiredError;
                     }
-                    // if(!values.healthCheckRating){
-                    //     errors.healthCheckRating = requiredError;
-                    // }    
+                       
                     if(!values.specialist){
                         errors.specialist = requiredError;
                     }
@@ -133,6 +131,9 @@ const AddEntryForm = ({onSubmit, onCancel}:Props) => {
                         }
                         if(!values.discharge.date){
                             errors.discharge.date = requiredError;
+                        }
+                        if(values.discharge.criteria && values.discharge.date){
+                            delete errors.discharge;
                         }
                     }
                     return errors;
