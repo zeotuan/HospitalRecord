@@ -136,6 +136,12 @@ const AddEntryForm = ({onSubmit, onCancel}:Props) => {
                             delete errors.discharge;
                         }
                     }
+
+                    if(values.type==="OccupationalHealthcare"){
+                        if(!values.employerName){
+                            errors.employerName = requiredError
+                        }
+                    }
                     return errors;
                 }}
             >
