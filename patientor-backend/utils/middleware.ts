@@ -1,6 +1,6 @@
 import Logger from './logger';
 import morgan, {StreamOptions} from 'morgan';
-
+import {Request,Response,NextFunction} from 'express'
 const stream:StreamOptions = {
     write:(message) => Logger.http(message)
 };
@@ -15,10 +15,27 @@ const morganMiddleware = morgan(
     {stream,skip}
 )
 
-export default {
-    morganMiddleware
+const errorHandler = (error:Error,_request:Request,response:Response,next:NextFunction):Response|void => {
+    Logger.error(error.message);
+    if(error.name === 'Cast Error'){
+        return response.status(400).send({error:'cast error'});
+    }
+    else if(error.name === 'Validation Error'){
+        return response.status(400).json({error:error.message});
+    }
+    else if(error.name === 'JsonWebTokenError: jwt must be provided'){
+        return response.status(400).json({error:'invalid or missing token'})
+    }
+    next(error)
 }
 
-const errorHandler = (error,_request,response,next):Response|void => {
-    Logger.error(error.message);
+const unknownEndpoint  = (_request:Request,response:Response) => {
+    response.status(404).send({error:'unknown endpoint'});
+}
+
+
+export default {
+    morganMiddleware,
+    errorHandler,
+    unknownEndpoint
 }

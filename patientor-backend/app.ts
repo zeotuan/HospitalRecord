@@ -19,6 +19,7 @@ mongoose.connect(mongoUrl, {})
 
 app.use(cors())
 app.use(express.json());
+app.use(middleware.errorHandler)
 app.use(middleware.morganMiddleware);
 app.use('/api/patients', patientRouter)
 app.use('/api/diagnoses', diagnosisRouter)
@@ -28,4 +29,5 @@ app.get('/api/ping', (_req,res) => {
 })
 
 
+app.use(middleware.unknownEndpoint)
 export default app;
