@@ -33,9 +33,17 @@ const unknownEndpoint  = (_request:Request,response:Response) => {
     response.status(404).send({error:'unknown endpoint'});
 }
 
+const tokenExtractor = (request:Request, _response:Response, next:NextFunction) => {
+    const authorization = request.get('Authorization');
+    if(authorization && authorization.toLowerCase().startsWith('bearer ')){
+        request.token = authorization.substring(7);
+    }
+    next();
+}
 
 export default {
     morganMiddleware,
     errorHandler,
-    unknownEndpoint
+    unknownEndpoint,
+    tokenExtractor
 }

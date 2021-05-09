@@ -6,6 +6,14 @@ import config from './utils/config';
 import mongoose from 'mongoose';
 import middleware from './utils/middleware';
 
+declare global {
+    namespace Express {
+         export interface Request {
+              token:string
+         }
+    }
+}
+
 const app = express();
 mongoose.set('debug', true);
 const mongoUrl = config.MONGODB_URI? config.MONGODB_URI : ''
@@ -21,6 +29,7 @@ app.use(cors())
 app.use(express.json());
 app.use(middleware.errorHandler)
 app.use(middleware.morganMiddleware);
+app.use(middleware.tokenExtractor);
 app.use('/api/patients', patientRouter)
 app.use('/api/diagnoses', diagnosisRouter)
 
