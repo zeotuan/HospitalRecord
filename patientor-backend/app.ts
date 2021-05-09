@@ -4,6 +4,7 @@ import patientRouter from './routes/patients'
 import diagnosisRouter from './routes/diagnoses'
 import config from './utils/config';
 import mongoose from 'mongoose';
+import middleware from './utils/middleware';
 
 const app = express();
 mongoose.set('debug', true);
@@ -18,6 +19,7 @@ mongoose.connect(mongoUrl, {})
 
 app.use(cors())
 app.use(express.json());
+app.use(middleware.morganMiddleware);
 app.use('/api/patients', patientRouter)
 app.use('/api/diagnoses', diagnosisRouter)
 
