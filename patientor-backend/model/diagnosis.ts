@@ -1,8 +1,8 @@
 import mongoose, {Document,Schema,model} from 'mongoose';
-import {Diagnosis} from '../types';
+import {Diagnosis as diagnosis} from '../types';
 const uniqueValidator = require('mongoose-unique-validator');
 
-export interface DiagnosisDocument extends Diagnosis,Document{
+export interface DiagnosisDocument extends diagnosis,Document{
 }
 
 const diagonsisSchema:Schema = new mongoose.Schema({
@@ -31,6 +31,6 @@ diagonsisSchema.set('toJSON',{
     }
 });
 
-const DiagnosisModel = model<DiagnosisDocument>('Diagnosis',diagonsisSchema);
+const Diagnosis = model<DiagnosisDocument>('Diagnosis',diagonsisSchema);
 
-export default DiagnosisModel;
+export default Diagnosis;

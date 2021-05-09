@@ -1,9 +1,9 @@
-import {Diagnosis} from '../types';
-import DiagnosisModel from '../model/diagnosis';
+import {Diagnosis as diagnosis} from '../types';
+import Diagnosis from '../model/diagnosis';
 
-const getAllDiagnoses = async ():Promise<Diagnosis[]|null> => {
+const getAllDiagnoses = async ():Promise<diagnosis[]|null> => {
     try {
-        const diagnoses = await DiagnosisModel.find({})
+        const diagnoses = await Diagnosis.find({})
         return diagnoses
     } catch (error) {
         console.log(error)

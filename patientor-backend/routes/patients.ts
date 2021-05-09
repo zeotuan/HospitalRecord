@@ -1,7 +1,7 @@
 import express from 'express';
 import patientService from '../services/patientService';
-import {toNewPatient} from '../utils/patient';
-import {toNewEntry} from '../utils/entry'
+import {toNewPatient} from '../utils/dataParser/patient';
+import {toNewEntry} from '../utils/dataParser/entry'
 const router = express.Router();
 
 router.get('/', async (_req, res) => {

@@ -1,4 +1,4 @@
-import {Entry, HealthCheckRating} from '../types';
+import {Entry, HealthCheckRating} from '../../types';
 
 interface BaseEntryField {
     description: unknown;

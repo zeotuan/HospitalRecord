@@ -1,9 +1,9 @@
 import {model,Document,Schema,Model,Types} from 'mongoose';
 const uniqueValidator = require('mongoose-unique-validator');
-import {Patient,Gender,Entry} from '../types';
+import {Patient as patient,Gender,Entry} from '../types';
 import {EntryBaseDocument} from './entry';
 
-export interface patientBaseDocument extends Patient, Document{
+export interface patientBaseDocument extends patient, Document{
     entries:Types.Array<EntryBaseDocument['id']>
 }
 
@@ -49,6 +49,6 @@ patientSchema.statics.getFullPatient = async function(
     return this.findById(id).populate('entries').exec();
 }
 
-const PatientModel = model<patientBaseDocument,patientModel>('Patient',patientSchema);
+const Patient = model<patientBaseDocument,patientModel>('Patient',patientSchema);
 
-export default  PatientModel;
+export default  Patient;

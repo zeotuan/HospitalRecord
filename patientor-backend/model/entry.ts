@@ -1,6 +1,6 @@
 import {model,Document,Schema,Model} from 'mongoose';
 const uniqueValidator = require('mongoose-unique-validator');
-import {BaseEntry,HealthCheckRating,HealthCheckEntry as healthCheckEntry,HospitalEntry as hospitalEntry,OccupationalHealthcareEntry as occupationalHealthcareEntry, Entry} from '../types';
+import {BaseEntry,HealthCheckRating,HealthCheckEntry as healthCheckEntry,HospitalEntry as hospitalEntry,OccupationalHealthcareEntry as occupationalHealthcareEntry, Entry as entry} from '../types';
 //import {DiagnosisDocument} from './diagnosis'
 const baseOptions = {
     discriminatorKey:'kind',
@@ -24,7 +24,7 @@ export type EntryDocument = HealthCheckEntryDocument | HospitalEntryDocument | O
 
 export interface  EntryModel extends Model<EntryDocument>{
     //getFullEntryDocument(id:string):Promise<populatedEntryDocuemnt>,
-    addEntry(entry:Entry):Promise<EntryDocument>
+    addEntry(entry:entry):Promise<EntryDocument>
 }
 
 
@@ -58,7 +58,7 @@ entrySchema.set('toJSON',{
 // }
 
 entrySchema.statics.addEntry = async function(
-    entry:Entry
+    entry:entry
 ){
     let newEntry:EntryDocument
     switch(entry.type){

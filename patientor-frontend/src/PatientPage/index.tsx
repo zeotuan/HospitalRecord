@@ -55,8 +55,8 @@ const PatientPage = ():JSX.Element => {
                 />
                 <Button onClick={() => openModal()}>Add New Entry</Button>
                 <h2>{patient.name} <GenderIcon gender={patient.gender}/></h2> 
-                <p>{patient.ssn}</p>
-                <p>{patient.occupation}</p>
+                <p>ssn: {patient.ssn}</p>
+                <p>occupation: {patient.occupation}</p>
                 <h2>Entries</h2>
                 {patient.entries.map(e => {
                     return <EntryCard key={e.id} entry={e} />;
