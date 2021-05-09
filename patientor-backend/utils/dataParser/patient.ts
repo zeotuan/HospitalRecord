@@ -1,4 +1,4 @@
-import {Gender, Patient} from '../types'
+import {Gender, Patient} from '../../types'
 
 type Field = {name:unknown,dateOfBirth:unknown,ssn:unknown,gender:unknown,occupation:unknown}
 
