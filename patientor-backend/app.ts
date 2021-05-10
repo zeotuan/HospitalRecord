@@ -18,6 +18,9 @@ declare global {
           NODE_ENV: 'development' | 'production'|'test';
           PORT?: string;
           JWT_SECRET: string;
+          saltRound:number;
+          passwordRegex:RegExp;
+          usernameRegex:RegExp;
         }
       }
 }

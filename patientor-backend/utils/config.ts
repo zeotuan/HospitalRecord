@@ -8,11 +8,16 @@ if(process.env.NODE_ENV === 'test'){
 }
 
 const JWT_SECRET = process.env.JWT_SECRET;
-
+const saltRound = process.env.saltRound;
+const passwordRegex = process.env.passwordRegex;
+const usernameRegex = process.env.usernameRegex;
 const config = {
     PORT,
     MONGODB_URI,
-    JWT_SECRET
+    JWT_SECRET,
+    saltRound,
+    passwordRegex,
+    usernameRegex
 }
 
 export default config

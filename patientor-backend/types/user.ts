@@ -1,4 +1,6 @@
-export interface user{
-    name:string,
-    passwordHash:string
+export interface User{
+    username:string;
+    name:string;
+    password?:string;
+    passwordHash?:string;
 }

@@ -1,6 +1,6 @@
-import PatientModel,{patientBaseDocument} from '../model/patients';
-import Entry from '../model/entry';
+import PatientModel from '../model/patients';
 import {NonSensitivePatient,Patient} from '../types/patient';
+import Entry from '../model/entry';
 import {Entry as entry} from '../types/entry';
 
 const getEntries = async():Promise<Patient[]> => {
@@ -51,7 +51,7 @@ const findById = async(id:string):Promise<Patient|null> => {
 const addPatient = async(entry:Patient):Promise<Patient> =>{
     try {
         console.log(entry)
-        const newPatient:patientBaseDocument = new PatientModel({
+        const newPatient = new PatientModel({
             ...entry
         });
         await newPatient.save();
