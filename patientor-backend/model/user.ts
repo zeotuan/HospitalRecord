@@ -3,7 +3,6 @@ const uniqueValidator = require('mongoose-unique-validator');
 import {User as user} from '../types/user';
 
 export interface userDocument extends user,Document{
-
 }
 
 const userSchema  = new Schema({

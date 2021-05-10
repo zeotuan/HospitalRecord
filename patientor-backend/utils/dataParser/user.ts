@@ -18,6 +18,15 @@ export const toNewUser= async (props:Field):Promise<User> => {
     return newUser;
 }
 
+export const toUser = (props:Field):User => {
+    const {username,password} = props;
+    const user:User = {
+        username:parseUserName(username),
+        password:parsePassword(password)
+    }
+    return user;
+}
+
 const parseUserName  = (username:unknown):string => {
     const parsedUsername = generalParser.parseName(username);
     if(!config.usernameRegex.test(parsedUsername)){
@@ -29,7 +38,7 @@ const parseUserName  = (username:unknown):string => {
 
 const parsePassword = (password:unknown):string => {
     if(!password || !generalParser.isString(password)){
-        throw new Error('incorrect or missing code');
+        throw new Error('incorrect or missing password');
     }
     if(!config.passwordRegex.test(password)){
         throw new Error('invalid password');
