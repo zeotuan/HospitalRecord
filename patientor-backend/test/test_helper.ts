@@ -1,8 +1,13 @@
 import Diagnosis from '../model/diagnosis';
 import Entry,{EntryDocument, HealthCheckEntry, HospitalEntry, OcculationalHealthcareEntry} from '../model/entry';
 import Patient from '../model/patients';
+import User from '../model/user';
 import {Patient as patient} from '../types/patient';
 import { Diagnosis as diagnosis} from '../types/diagnosis';
+import {User as user} from '../types/user';
+import {hashPassword} from '../utils/dataParser/user';
+import config from '../utils/config';
+import jwt from  'jsonwebtoken';
 
 const diagnosInDb = async () => {
     const diagnosis = await Diagnosis.find({});
@@ -17,6 +22,11 @@ const entryInDb = async () => {
 const patientInDb = async () => {
     const patients = await Patient.find({});
     return patients.map(p => p.toJSON());
+}
+
+const userInDb = async () => {
+    const users = await User.find({});
+    return users.map(u => u.toJSON());
 }
 
 export const seedingPatientAndEntries = async (patientEntries:patient[]) => {
@@ -77,11 +87,39 @@ const seedingDiagnosis = async (diagnosisEntries:diagnosis[]) => {
     
 }
 
+const seedingUser = async (userEntries:user[]) => {
+    await User.deleteMany({});
+    for(const u of userEntries){
+        let newUser = new User({
+            ...u
+        })
+        if(newUser.password){
+            newUser.passwordHash = await hashPassword(newUser.password,config.saltRound);
+            delete newUser.password;
+        }
+        await newUser.save()
+    }
+    
+}
+
+const getUserLogInToken = async () => {
+    const users = await User.find({});
+    const u = users[0]; 
+    const userForToken = {
+        username:u.username,
+        id:u.id
+    }
+    const token = jwt.sign(userForToken,config.JWT_SECRET)
+    return token;
+}
 
 export default {
     diagnosInDb,
     entryInDb,
     patientInDb,
+    userInDb,
     seedingPatientAndEntries,
-    seedingDiagnosis
+    seedingDiagnosis,
+    seedingUser,
+    getUserLogInToken
 }

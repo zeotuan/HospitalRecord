@@ -1,4 +1,4 @@
-import {Diagnosis as diagnosis} from '../types/types';
+import {Diagnosis as diagnosis} from '../types/diagnosis';
 import Diagnosis from '../model/diagnosis';
 
 const getAllDiagnoses = async ():Promise<diagnosis[]> => {

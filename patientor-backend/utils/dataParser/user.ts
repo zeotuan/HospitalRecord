@@ -47,7 +47,7 @@ const parsePassword = (password:unknown):string => {
     return password;
 }
 
-const hashPassword = async (password:string, saltRound:number):Promise<string> => {
+export const hashPassword = async (password:string, saltRound:number):Promise<string> => {
     try {
         const passwordHash = await bcrypt.hash(password,saltRound);
         return passwordHash;

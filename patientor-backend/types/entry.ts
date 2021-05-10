@@ -35,3 +35,4 @@ export interface OccupationalHealthcareEntry extends BaseEntry{
         endDate:string
     }
 }
+export type Entry = HealthCheckEntry | HospitalEntry | OccupationalHealthcareEntry

@@ -1,5 +1,5 @@
 import {User as user} from '../types/user';
-import {User} from  '../model/user';
+import User from  '../model/user';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import config from '../utils/config';

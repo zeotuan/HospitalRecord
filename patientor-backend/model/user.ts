@@ -31,4 +31,5 @@ userSchema.set('toJSON', {
     }
 })
 
-export const User = model<userDocument>('User',userSchema);
+const User = model<userDocument>('User',userSchema);
+export default User;
