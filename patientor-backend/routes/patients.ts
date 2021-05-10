@@ -1,31 +1,38 @@
-import express from 'express';
+import express,{Request,Response,NextFunction} from 'express';
 import patientService from '../services/patientService';
 import {toNewPatient} from '../utils/dataParser/patient';
 import {toNewEntry} from '../utils/dataParser/entry'
 const router = express.Router();
 
-router.get('/', async (_req, res) => {
-    const patients = await patientService.getNonSensitiveEntries();
-    res.send(patients);
+router.get('/', async (_req:Request, res:Response, next:NextFunction) => {
+    try {
+        const patients = await patientService.getNonSensitiveEntries();
+        return res.send(patients);    
+    } catch (error) {
+        return next(error);
+    }
+    
 })
 
-router.get('/:id', async (req,res) => {
-    const patient = await patientService.findById(req.params.id);
-    
-    if(patient){
-        res.send(patient);
-    }else{
-        res.sendStatus(404);
+router.get('/:id', async (req:Request,res:Response,next:NextFunction) => {
+    try {
+        const patient = await patientService.findById(req.params.id);
+        if(patient){
+            return res.send(patient);
+        }
+        return res.sendStatus(404);
+    } catch (error) {
+       return next(error); 
     }
 })
 
-router.post('/', async (req,res) => {
+router.post('/', async (req:Request,res:Response,next:NextFunction) => {
     try {
         const newPatientEntry = toNewPatient(req.body) ;
         const addedEntry = await patientService.addPatient(newPatientEntry);
-        res.json(addedEntry);
+        return res.json(addedEntry);
     } catch (error) {
-        res.status(400).send(error.message);
+        return next(error)
     }
 })
 

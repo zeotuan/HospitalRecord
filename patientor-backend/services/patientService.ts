@@ -1,9 +1,9 @@
 import PatientModel,{patientBaseDocument} from '../model/patients';
 import Entry from '../model/entry';
-import {NonSensitivePatient,Patient, Entry as entry} from '../types';
+import {NonSensitivePatient,Patient, Entry as entry} from '../types/types';
 
 
-const getEntries = async():Promise<Patient[]|undefined> => {
+const getEntries = async():Promise<Patient[]> => {
     try {
         const patients = await PatientModel.find({});
         const patientResult:Patient[] = patients.map(p => ({
@@ -17,12 +17,11 @@ const getEntries = async():Promise<Patient[]|undefined> => {
         }))
         return patientResult
     } catch (error) {
-        console.log(error)
-        return [];
+        throw new Error(error)
     }
 }
 
-const getNonSensitiveEntries = async ():Promise<NonSensitivePatient[]|undefined> => {
+const getNonSensitiveEntries = async ():Promise<NonSensitivePatient[]> => {
     try {
         const patients = await PatientModel.find({}).select({_id:1,name:1,dateOfBirth:1,gender:1,occupation:1});
         const patientResult:NonSensitivePatient[] = patients.map(p => ({
@@ -34,8 +33,7 @@ const getNonSensitiveEntries = async ():Promise<NonSensitivePatient[]|undefined>
         }))
         return patientResult;
     } catch (error) {
-        console.log(error)
-        return [];
+        throw new Error(error);
     }
     
 }
@@ -45,13 +43,12 @@ const findById = async(id:string):Promise<Patient|null> => {
         const patientEntry = await PatientModel.getFullPatient(id);
         return patientEntry;
     } catch (error) {
-        console.log(error);
-        return null;
+        throw new Error(error)
     }
     
 }
 
-const addPatient = async(entry:Patient):Promise<Patient|undefined> =>{
+const addPatient = async(entry:Patient):Promise<Patient> =>{
     try {
         console.log(entry)
         const newPatient:patientBaseDocument = new PatientModel({
@@ -60,8 +57,7 @@ const addPatient = async(entry:Patient):Promise<Patient|undefined> =>{
         await newPatient.save();
         return newPatient;
     } catch (error) {
-        console.log(error);
-        return;
+        throw new Error(error);
     }
 }
 
@@ -74,8 +70,7 @@ const addEntry = async (patientId:String, entry:entry):Promise<Patient|null> => 
         await updatedPatient?.save();
         return updatedPatient;
     } catch (error) {
-        console.log(error);
-        return null;
+        throw new Error(error);
     }
 }
 

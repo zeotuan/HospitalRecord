@@ -17,7 +17,7 @@ declare global {
           GITHUB_AUTH_TOKEN: string;
           NODE_ENV: 'development' | 'production'|'test';
           PORT?: string;
-          PWD: string;
+          JWT_SECRET: string;
         }
       }
 }

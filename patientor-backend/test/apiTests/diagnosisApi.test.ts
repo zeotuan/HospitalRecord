@@ -12,4 +12,8 @@ describe('Testing creating diagnosis', () => {
         await Diagnosis.deleteMany({});
         await test_helper.seedingDiagnosis(diagnosisEntry)
     })
+
+    test('a valid diagnosis can be inserted', async () => {
+        
+    })
 })

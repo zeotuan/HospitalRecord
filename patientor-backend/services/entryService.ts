@@ -1,14 +1,13 @@
-import {Entry as entry} from '../types';
+import {Entry as entry} from '../types/types';
 import Entry from '../model/entry';
 
 
-const getAll = async ():Promise<entry[]|null> => {
+const getAll = async ():Promise<entry[]> => {
     try{
         const  allEntries = await Entry.find({});
         return allEntries;
     }catch(error){
-        console.log(error);
-        return null;
+        throw new Error(error)
     }
 }
 
@@ -17,8 +16,7 @@ const getEntryById = async (id:string):Promise<entry|null> => {
         const entry = await Entry.findById(id);
         return entry;
     } catch (error) {
-        console.log(error);
-        return null;
+        throw new Error(error)
     }
 }
 

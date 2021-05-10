@@ -1,7 +1,7 @@
 import Diagnosis from '../model/diagnosis';
 import Entry,{EntryDocument, HealthCheckEntry, HospitalEntry, OcculationalHealthcareEntry} from '../model/entry';
 import Patient from '../model/patients';
-import {Patient as patient, Diagnosis as diagnosis} from '../types'
+import {Patient as patient, Diagnosis as diagnosis} from '../types/types'
 
 const diagnosInDb = async () => {
     const diagnosis = await Diagnosis.find({});
