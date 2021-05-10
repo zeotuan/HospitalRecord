@@ -62,13 +62,16 @@ const addPatient = async(entry:Patient):Promise<Patient> =>{
 }
 
 
-const addEntry = async (patientId:String, entry:entry):Promise<Patient|null> => {
+const addEntry = async (patientId:String, entry:entry):Promise<Patient> => {
     try {
         const updatedPatient = await PatientModel.findById(patientId);
-        const newEntry = await Entry.addEntry(entry);
-        updatedPatient?.entries.concat(newEntry._id);
-        await updatedPatient?.save();
-        return updatedPatient;
+        if(updatedPatient){
+            const newEntry = await Entry.addEntry(entry);
+            updatedPatient?.entries.concat(newEntry._id);
+            await updatedPatient?.save();
+            return updatedPatient;
+        }
+        throw new Error('cannot find patient to update');
     } catch (error) {
         throw new Error(error);
     }

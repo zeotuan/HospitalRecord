@@ -29,20 +29,27 @@ router.get('/:id', async (req:Request,res:Response,next:NextFunction) => {
 router.post('/', async (req:Request,res:Response,next:NextFunction) => {
     try {
         const newPatientEntry = toNewPatient(req.body) ;
-        const addedEntry = await patientService.addPatient(newPatientEntry);
-        return res.json(addedEntry);
+        const addedPatient = await patientService.addPatient(newPatientEntry);
+        if(addedPatient){
+            return res.json(addedPatient);
+        }
+        return res.status(400).json({error:'patient was not added'});
     } catch (error) {
         return next(error)
     }
 })
 
-router.patch('/:patientId/entries/', async (req,res) => {
+router.patch('/:patientId/entries/', async (req:Request,res:Response, next:NextFunction) => {
     try{
         const newEntry = toNewEntry(req.body);
         const updatedPatient = await patientService.addEntry(req.params.patientId,newEntry);
-        res.json(updatedPatient);
+        if(updatedPatient){
+            return res.json(updatedPatient);
+        }
+        return res.status(404).json({error:'no patient was updated'})
+        
     }catch(error){
-        res.status(400).send(error.message)
+        return next(error);
     }
 })
 
