@@ -1,4 +1,4 @@
-import {Entry as entry} from '../types/types';
+import {Entry as entry} from '../types/entry';
 import Entry from '../model/entry';
 
 

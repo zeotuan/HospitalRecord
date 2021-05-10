@@ -1,4 +1,5 @@
-import {Patient,Gender} from '../types/types';
+import {Gender} from '../types/generalTypes';
+import {Patient} from '../types/patient';
 
 var patientsEntry: Patient[] = [
     {

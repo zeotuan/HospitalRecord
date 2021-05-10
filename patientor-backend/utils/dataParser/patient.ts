@@ -1,4 +1,4 @@
-import { Patient} from '../../types/types'
+import { Patient} from '../../types/patient'
 import generalParser from './generalParser_helper';
 type Field = {name:unknown,dateOfBirth:unknown,ssn:unknown,gender:unknown,occupation:unknown}
 

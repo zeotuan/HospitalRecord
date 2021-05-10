@@ -1,4 +1,4 @@
-import {Entry, HealthCheckRating} from '../../types/types';
+import {Entry, HealthCheckRating} from '../../types/entry';
 import generalParser from './generalParser_helper';
 interface BaseEntryField {
     description: unknown;

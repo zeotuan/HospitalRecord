@@ -1,4 +1,4 @@
-import { Diagnosis } from "../../types/types";
+import { Diagnosis } from "../../types/diagnosis";
 import generalParser from './generalParser_helper';
 
 type Field = {code:unknown,name:unknown,latin?:unknown}

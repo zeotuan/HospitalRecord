@@ -1,6 +1,8 @@
 import {model,Document,Schema,Model,Types} from 'mongoose';
 const uniqueValidator = require('mongoose-unique-validator');
-import {Patient as patient,Gender,Entry} from '../types/types';
+import {Patient as patient} from '../types/patient';
+import {Entry} from '../types/entry';
+import {Gender} from '../types/generalTypes';
 import {EntryBaseDocument} from './entry';
 
 export interface patientBaseDocument extends patient, Document{

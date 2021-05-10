@@ -1,5 +1,5 @@
 import mongoose, {Document,Schema,model} from 'mongoose';
-import {Diagnosis as diagnosis} from '../types/types';
+import {Diagnosis as diagnosis} from '../types/diagnosis';
 const uniqueValidator = require('mongoose-unique-validator');
 
 export interface DiagnosisDocument extends diagnosis,Document{

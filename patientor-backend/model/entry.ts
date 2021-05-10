@@ -1,6 +1,6 @@
 import {model,Document,Schema,Model} from 'mongoose';
 const uniqueValidator = require('mongoose-unique-validator');
-import {BaseEntry,HealthCheckRating,HealthCheckEntry as healthCheckEntry,HospitalEntry as hospitalEntry,OccupationalHealthcareEntry as occupationalHealthcareEntry, Entry as entry} from '../types/types';
+import {BaseEntry,HealthCheckRating,HealthCheckEntry as healthCheckEntry,HospitalEntry as hospitalEntry,OccupationalHealthcareEntry as occupationalHealthcareEntry, Entry as entry} from '../types/entry';
 //import {DiagnosisDocument} from './diagnosis'
 const baseOptions = {
     discriminatorKey:'kind',

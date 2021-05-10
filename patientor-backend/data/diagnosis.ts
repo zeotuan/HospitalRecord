@@ -1,4 +1,4 @@
-import {Diagnosis} from '../types/types'
+import {Diagnosis} from '../types/diagnosis';
 
 var diagnosisEntry:Array<Diagnosis> = [
     {

@@ -1,7 +1,7 @@
 import PatientModel,{patientBaseDocument} from '../model/patients';
 import Entry from '../model/entry';
-import {NonSensitivePatient,Patient, Entry as entry} from '../types/types';
-
+import {NonSensitivePatient,Patient} from '../types/patient';
+import {Entry as entry} from '../types/entry';
 
 const getEntries = async():Promise<Patient[]> => {
     try {
