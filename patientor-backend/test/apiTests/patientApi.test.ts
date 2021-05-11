@@ -10,6 +10,7 @@ import Entry from '../../model/entry';
 import Patient from '../../model/patients';
 import User from '../../model/user';
 import {HealthCheckEntry,OccupationalHealthcareEntry,HospitalEntry} from '../../types/entry';
+import patientsEntry from '../../data/patients';
 const api = supertest(app);
 let token:string;
 
@@ -111,7 +112,24 @@ describe('testing patient api', () => {
 
         })
         describe('testing retrieving entry', () => {
-            
+            beforeAll(async () => {
+                await Entry.deleteMany({});
+                await Patient.deleteMany({});
+                await test_helper.seedingPatientAndEntries(patientEntry);
+            })
+            test('patient is returned as json', async () => {
+                await api.get('/api/patients').expect(200).expect('Content-Type',/application\/json/);
+            }) 
+            test('all note are returned ', async ()=> {
+                const response = await api.get('/api/patients');
+                expect(response.body).toHaveLength(patientsEntry.length);
+            })
+            test('patient unique identifier is named id ', async () => {
+                const response = await api.get('/api/patients');
+                const patientToTest = response.body[0];
+                expect(patientToTest.id).toBeDefined();
+            })
+
         })
     
     })
