@@ -16,14 +16,14 @@ export const toNewPatient  = ({name,dateOfBirth,ssn,gender,occupation}:Field):Pa
 
 const parseSSN = (ssn:unknown):string => {
     if(!ssn || !generalParser.isString(ssn)){
-        throw new Error('incorrect ssn ' + ssn);
+        throw new TypeError('incorrect ssn ' + ssn);
     }
     return ssn;
 }
 
 const parseOccupation = (occupation:unknown):string => {
     if(!occupation || !generalParser.isString(occupation)){
-        throw new Error('incorrect or missing occupation' + occupation);
+        throw new TypeError('incorrect or missing occupation' + occupation);
     } 
     return occupation;
 }

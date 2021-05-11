@@ -20,7 +20,7 @@ const isStringArray = (data:unknown):data is Array<string> => {
     if(Array.isArray(data)){
         for(const e of data){
             if(!isString(e)){
-                throw new Error('invalid array type');
+                throw new TypeError('invalid array type');
             }
         }
         return true;
@@ -30,21 +30,21 @@ const isStringArray = (data:unknown):data is Array<string> => {
 }
 const parseName = (name:unknown):string => {
     if(!name || !isString(name)){
-        throw new Error('incorrect or missing name');
+        throw new TypeError('incorrect or missing name');
     }
     return name;
 }
 
 const parseGender = (gender:unknown):Gender => {
     if(!gender || !isGender(gender)){
-        throw new Error('incorrect or missing gender:' + gender);
+        throw new TypeError('incorrect or missing gender:' + gender);
     }
     return gender;
 }
 
 const parseDate = (date:unknown):string => {
     if(!date || !isString(date) || !isDate(date)){
-        throw new Error('invalid or mising date' + date);
+        throw new TypeError('invalid or mising date' + date);
     }
     return date;
 }

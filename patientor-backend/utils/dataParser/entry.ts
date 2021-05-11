@@ -78,7 +78,7 @@ export const toNewEntry = (props:EntryField):Entry => {
 
 const parseHealthCheckRating = (rating:unknown):HealthCheckRating => {
     if(!rating || !isHealthCheckRating(rating)){
-        throw new Error('invalid or missing rating')
+        throw new TypeError('invalid or missing rating')
     }
     return rating;
 }
@@ -89,21 +89,21 @@ const isHealthCheckRating = (params:any):params is HealthCheckRating => {
 
 const parseCriteria = (criteria:unknown):string => {
     if(!criteria || !generalParser.isString(criteria)){
-        throw new Error('missing or invalid criteria');
+        throw new TypeError('missing or invalid criteria');
     }
     return criteria;
 }
 
 const parseDescription = (description:unknown):string  => {
     if(!description || !generalParser.isString(description)){
-        throw new Error('invalid or missing description' + description);
+        throw new TypeError('invalid or missing description' + description);
     }
     return description;
 }
 
 const parseSpecialist = (specialist:unknown):string =>{
     if(!specialist || !generalParser.isString(specialist)){
-        throw new Error('invalid or missing specialist' + specialist);
+        throw new TypeError('invalid or missing specialist' + specialist);
     }
     return specialist;
 }
@@ -119,7 +119,7 @@ const parseDiagnosisCodes = (diagnosisCodes:unknown):Array<string> => {
     if(generalParser.isStringArray(diagnosisCodes)){
         return diagnosisCodes;
     }else{
-        throw new Error('invalid diagnosiscode type');
+        throw new TypeError('invalid diagnosiscode type');
     }
 }
 

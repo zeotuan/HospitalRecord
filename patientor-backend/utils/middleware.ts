@@ -18,13 +18,16 @@ const morganMiddleware = morgan(
 const errorHandler = (error:Error,_request:Request,response:Response,next:NextFunction):Response|void => {
     Logger.error(error.message);
     if(error.name === 'Cast Error'){
-        return response.status(400).send({error:'cast error'});
+        return response.status(400).send({error:'cast error: ' + error.message});
     }
     else if(error.name === 'Validation Error'){
         return response.status(400).json({error:error.message});
     }
     else if(error.name === 'JsonWebTokenError: jwt must be provided'){
         return response.status(400).json({error:'invalid or missing token'})
+    }
+    else if (error.name === 'TypeError'){
+        return response.status(400).json({error:error.message});
     }
     next(error)
 }

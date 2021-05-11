@@ -18,7 +18,7 @@ export const toNewDiagnosis= (props:Field):Diagnosis => {
 
 const parseCode = (code:unknown):string => {
     if(!code || !generalParser.isString(code)){
-        throw new Error('incorrect or missing code');
+        throw new TypeError('incorrect or missing code');
     }
     return code;
 }
@@ -28,7 +28,7 @@ const parseLatin = (latin:unknown):string|undefined => {
         return;
     }
     if(!generalParser.isString(latin)){
-        throw new Error('incorrect latin type');
+        throw new TypeError('incorrect latin type');
     }
     return latin;
 }

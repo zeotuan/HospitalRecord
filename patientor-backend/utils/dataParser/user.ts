@@ -30,7 +30,7 @@ export const toUser = (props:Field):User => {
 const parseUserName  = (username:unknown):string => {
     const parsedUsername = generalParser.parseName(username);
     if(!config.usernameRegex.test(parsedUsername)){
-        throw new Error('invalid username');
+        throw new TypeError('invalid username');
     }
     return parsedUsername;
 }
@@ -38,10 +38,10 @@ const parseUserName  = (username:unknown):string => {
 
 const parsePassword = (password:unknown):string => {
     if(!password || !generalParser.isString(password)){
-        throw new Error('incorrect or missing password');
+        throw new TypeError('incorrect or missing password');
     }
     if(!config.passwordRegex.test(password)){
-        throw new Error('invalid password');
+        throw new TypeError('invalid password');
     }
    
     return password;
