@@ -6,7 +6,6 @@ import config from '../utils/config';
 
 const addUser = async (userEntry:user):Promise<user> => {
     try {
-        
         const newUser = new User({
             ...userEntry
         });

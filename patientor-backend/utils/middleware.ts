@@ -1,6 +1,9 @@
 import Logger from './logger';
 import morgan, {StreamOptions} from 'morgan';
 import {Request,Response,NextFunction} from 'express'
+import jwt from 'jsonwebtoken';
+import config from './config';
+
 const stream:StreamOptions = {
     write:(message) => Logger.http(message)
 };
@@ -39,7 +42,8 @@ const unknownEndpoint  = (_request:Request,response:Response) => {
 const tokenExtractor = (request:Request, _response:Response, next:NextFunction) => {
     const authorization = request.get('Authorization');
     if(authorization && authorization.toLowerCase().startsWith('bearer ')){
-        request.token = authorization.substring(7);
+        const token = authorization.substring(7);
+        request.decodedToken = jwt.verify(token,config.JWT_SECRET);
     }
     next();
 }

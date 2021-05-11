@@ -10,7 +10,7 @@ import middleware from './utils/middleware';
 declare global {
     namespace Express {
          export interface Request {
-              token:string
+              decodedToken:string|object
          }
     }
     namespace NodeJS {

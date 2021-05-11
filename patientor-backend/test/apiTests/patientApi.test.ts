@@ -69,6 +69,7 @@ describe('testing patient api', () => {
             const numberofEntryAtStart = patientToTest.entries.length;
             const response = await api
                 .patch(`/api/patients/${patientToTest.id}/entries`)
+                .set('Authorization','bearer '+token)
                 .send(sampleHealthCheckEntry)
                 .expect(200)
                 .expect('Content-Type',/application\/json/);
@@ -80,6 +81,7 @@ describe('testing patient api', () => {
             const patientToTest = await Patient.findByIdAndUpdate(patientAtStart[0].id,{$set:{entries:[]}},{new:true});
             const response = await api
                 .patch(`/api/patients/${patientToTest}/entries`)
+                .set('Authorization','bearer '+token)
                 .send(sampleHospitalEntry)
                 .expect(200)
                 .expect('Content-Type',/application\/json/);
@@ -92,6 +94,7 @@ describe('testing patient api', () => {
             const patientToTest = await Patient.findByIdAndUpdate(patientAtStart[0].id,{$set:{entries:[]}},{new:true});
             const response = await api
                 .patch(`/api/patients/${patientToTest}/entries`)
+                .set('Authorization','bearer '+token)
                 .send(sampleHealthCheckEntry)
                 .expect(200)
                 .expect('Content-Type',/application\/json/);
@@ -104,6 +107,7 @@ describe('testing patient api', () => {
             const patientToTest = await Patient.findByIdAndUpdate(patientAtStart[0].id,{$set:{entries:[]}},{new:true});
             const response = await api
                 .patch(`/api/patients/${patientToTest}/entries`)
+                .set('Authorization','bearer '+token)
                 .send(sapmleOccuationalEntry)
                 .expect(200)
                 .expect('Content-Type',/application\/json/);
