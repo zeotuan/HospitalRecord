@@ -14,8 +14,10 @@ const newDiagnosis:diagnosis = {
     name:'a new Diagnosis'
 }
 
+type inCompleteDiagnosis  = Partial<diagnosis>;
+
 describe('Testing creating diagnosis', () => {
-    beforeAll(async () => {
+    beforeEach(async () => {
         await Diagnosis.deleteMany({});
         await test_helper.seedingDiagnosis(diagnosisEntry);
         await test_helper.seedingUser(userEntry);
@@ -49,9 +51,57 @@ describe('Testing creating diagnosis', () => {
         expect(diagnosisCode).toContain(newDiagnosis.code);
     })
 
-    
+    test('a diagnosis without code will not be inserted', async () => {
+        const invalidDiagnosis:inCompleteDiagnosis = {
+            name:'an invalid diagnosis'
+        }
+        await api
+            .post('/api/diagnosis')
+            .set('Authorization','bearer '+token)
+            .send(invalidDiagnosis)
+            .expect(400)
+        const blogAtEnd = await test_helper.diagnosInDb();
+        expect(blogAtEnd).toHaveLength(diagnosisEntry.length);
+    })
+
+    test('a diagnosis without name will not be inserted', async () => {
+        const invalidDiagnosis:inCompleteDiagnosis = {
+            code:'Code of an invalid diagnosis'
+        }
+        await api
+            .post('/api/diagnosis')
+            .set('Authorization','bearer '+token)
+            .send(invalidDiagnosis)
+            .expect(400)
+        const blogAtEnd = await test_helper.diagnosInDb();
+        expect(blogAtEnd).toHaveLength(diagnosisEntry.length);
+    })
+
+})
+
+describe('Testing getting diagnosis information', () => {
+    beforeAll(async () => {
+        await Diagnosis.deleteMany({});
+        await test_helper.seedingDiagnosis(diagnosisEntry);
+        await test_helper.seedingUser(userEntry);
+        token = await test_helper.getUserLogInToken();
+    })
+    test('diagnosis are returned as json', async () => {
+        await api.get('/api/diagnosis').expect(200).expect('Content-Type',/application\/json/);
+    })
+
+    test('all diagnosis can be retrieved', async () => {
+        const response = await api.get('/api/diagnosis');
+        expect(response.body).toHaveLength(diagnosisEntry.length);
+    })
+
+    test('unique identifier is named id', async () => {
+        const response = await api.get('/api/diagnosis');
+        const diagnosis = response.body[0];
+        expect(diagnosis.id).toBeDefined();
+    })
 })
 
 afterAll(()=> {
-    mongoose.connection.close()
+    mongoose.connection.close();
 })
