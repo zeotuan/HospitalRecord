@@ -45,7 +45,6 @@ app.use(middleware.tokenExtractor);
 app.use('/api/patients', patientRouter);
 app.use('/api/diagnoses', diagnosisRouter);
 app.use('/api/users',userRouter);
-
 app.get('/api/ping', (_req,res) => {
     res.send('pong');
 })
