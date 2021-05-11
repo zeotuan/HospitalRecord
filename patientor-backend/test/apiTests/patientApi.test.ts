@@ -64,15 +64,53 @@ describe('testing patient api', () => {
         })
         test('an entry can be created', async () => {
             const patientAtStart = await test_helper.patientInDb();
-            const patient1 = patientAtStart[0];
-            const numberofEntryAtStart = patient1.entries.length;
-            await api
-                .patch(`/api/patients/${patient1.id}/entries`)
+            const patientToTest = patientAtStart[0];
+            const numberofEntryAtStart = patientToTest.entries.length;
+            const response = await api
+                .patch(`/api/patients/${patientToTest.id}/entries`)
                 .send(sampleHealthCheckEntry)
                 .expect(200)
-                .expect('Content-Type',/application\/json/)
+                .expect('Content-Type',/application\/json/);
+            
+            expect(response.body.entries).toHaveLength(numberofEntryAtStart+1);
+        })
+        test('an hospital entry will be created with correct type', async () => {
+            const patientAtStart = await test_helper.patientInDb();
+            const patientToTest = await Patient.findByIdAndUpdate(patientAtStart[0].id,{$set:{entries:[]}},{new:true});
+            const response = await api
+                .patch(`/api/patients/${patientToTest}/entries`)
+                .send(sampleHospitalEntry)
+                .expect(200)
+                .expect('Content-Type',/application\/json/);
+            const insertedEntry = await Entry.findById(response.body.entries[0]);
+            expect(insertedEntry?.type).toEqual(sampleHospitalEntry.type);
 
-            expect(patient1.entries).toHaveLength(numberofEntryAtStart+1);
+        })
+        test('an HealthCheck entry will be created with correct type', async () => {
+            const patientAtStart = await test_helper.patientInDb();
+            const patientToTest = await Patient.findByIdAndUpdate(patientAtStart[0].id,{$set:{entries:[]}},{new:true});
+            const response = await api
+                .patch(`/api/patients/${patientToTest}/entries`)
+                .send(sampleHealthCheckEntry)
+                .expect(200)
+                .expect('Content-Type',/application\/json/);
+            const insertedEntry = await Entry.findById(response.body.entries[0]);
+            expect(insertedEntry?.type).toEqual(sampleHealthCheckEntry.type);
+
+        })
+        test('an occupational health check entry will be created with correct type', async () => {
+            const patientAtStart = await test_helper.patientInDb();
+            const patientToTest = await Patient.findByIdAndUpdate(patientAtStart[0].id,{$set:{entries:[]}},{new:true});
+            const response = await api
+                .patch(`/api/patients/${patientToTest}/entries`)
+                .send(sapmleOccuationalEntry)
+                .expect(200)
+                .expect('Content-Type',/application\/json/);
+            const insertedEntry = await Entry.findById(response.body.entries[0]);
+            expect(insertedEntry?.type).toEqual(sapmleOccuationalEntry.type);
+
+        })
+        describe('testing retrieving entry', () => {
             
         })
     
