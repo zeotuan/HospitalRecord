@@ -10,8 +10,8 @@ const stream:StreamOptions = {
 };
 
 const skip = () => {
-    const env = process.env.NODE_ENV || 'development';
-    return  env !== 'development';
+    const env = process.env.NODE_ENV;
+    return  (env !== 'dev' && env !== 'test');
 };
 
 const morganMiddleware = morgan(
