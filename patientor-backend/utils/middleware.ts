@@ -44,7 +44,9 @@ const tokenExtractor = (request:Request, _response:Response, next:NextFunction) 
     if(authorization && authorization.toLowerCase().startsWith('bearer ')){
         const token = authorization.substring(7);
         request.decodedToken = jwt.verify(token,config.JWT_SECRET);
-    }
+    }else{
+        request.decodedToken = undefined;
+    }  
     next();
 }
 

@@ -42,9 +42,19 @@ const login = async (userInfo:user) => {
     }
 } 
 
+const getAll = async ():Promise<user[]> => {
+    try {
+        const allUser = await User.find({});
+        return allUser;
+    } catch (error) {
+        throw new Error(error);
+    }
+}
+
 export default {
     addUser,
-    login
+    login,
+    getAll
 }
 
 
