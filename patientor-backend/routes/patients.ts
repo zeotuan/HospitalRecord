@@ -4,6 +4,7 @@ import {toNewPatient} from '../utils/dataParser/patient';
 import {toNewEntry} from '../utils/dataParser/entry';
 const router = express.Router();
 
+// eslint-disable-next-line
 router.get('/', async (_req:Request, res:Response, next:NextFunction):Promise<void> => {
     try {
         const patients = await patientService.getNonSensitiveEntries();
@@ -14,7 +15,7 @@ router.get('/', async (_req:Request, res:Response, next:NextFunction):Promise<vo
     }
     
 });
-
+// eslint-disable-next-line
 router.get('/:id', async (req:Request,res:Response,next:NextFunction):Promise<void> => {
     try {
         const patient = await patientService.findById(req.params.id);
@@ -28,7 +29,7 @@ router.get('/:id', async (req:Request,res:Response,next:NextFunction):Promise<vo
        return next(error); 
     }
 });
-
+// eslint-disable-next-line
 router.post('/', async (req:Request,res:Response,next:NextFunction):Promise<void> => {
     try {
         const newPatientEntry = toNewPatient(req.body) ;
@@ -43,7 +44,7 @@ router.post('/', async (req:Request,res:Response,next:NextFunction):Promise<void
         return next(error);
     }
 });
-
+// eslint-disable-next-line
 router.patch('/:patientId/entries/', async (req:Request,res:Response, next:NextFunction):Promise<void> => {
     try{
         const newEntry = toNewEntry(req.body);

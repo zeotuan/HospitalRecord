@@ -3,6 +3,7 @@ import userService from '../services/userService';
 import {toNewUser,toUser} from '../utils/dataParser/user';
 const router = express.Router();
 
+// eslint-disable-next-line
 router.post('/signUp', async (req:Request,res:Response,next:NextFunction):Promise<void> => {
     try {
         const newUserEntry = await toNewUser(req.body);
@@ -17,7 +18,7 @@ router.post('/signUp', async (req:Request,res:Response,next:NextFunction):Promis
         return next(error);
     }
 });
-
+// eslint-disable-next-line
 router.post('/login', async (req:Request,res:Response,next:NextFunction):Promise<void> => {
     const body = req.body;
     try {
@@ -30,7 +31,7 @@ router.post('/login', async (req:Request,res:Response,next:NextFunction):Promise
     }
 });
 
-
+// eslint-disable-next-line
 router.get('/', async (req:Request, res:Response, next:NextFunction) => {
     try {
         if(!req.decodedToken || !req.decodedToken.id){
@@ -42,5 +43,4 @@ router.get('/', async (req:Request, res:Response, next:NextFunction) => {
         return next(error);
     }
 });
-
 export default router;

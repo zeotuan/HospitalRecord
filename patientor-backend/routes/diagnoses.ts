@@ -3,18 +3,32 @@ import diagnosisService from '../services/diagnosisService';
 import {toNewDiagnosis} from '../utils/dataParser/diagnosis';
 const router = express.Router();
 
- 
+
+//eslint-typescript complain about no misused promise one way to work around is to use promise+then instead of async/await
+// eslint-disable-next-line
 router.get('/', async (_req:Request,res:Response,next:NextFunction):Promise<void> => {
     try {
         const allDiagnosis = await diagnosisService.getAllDiagnoses(); 
         res.json(allDiagnosis);
-        return;
+        return;    
     } catch (error) {
-        return next(error); 
+        return next(error);   
     }
-    
+    //this code below doesn't trigger the  linting error.However, it looks ugly. should i just disable this rule
+    /*
+        (async () => {
+            try{
+                const allDiagnosis = await diagnosisService.getAllDiagnoses(); 
+                res.json(allDiagnosis);
+                return;
+            }catch(error){
+                return next(error);
+            }
+        })();
+    */
 });
 
+// eslint-disable-next-line
 router.post('/diagnosis', async(req:Request, res:Response,next:NextFunction):Promise<void> => {
     const body = req.body;
     const decodedToken = req.decodedToken;
@@ -32,4 +46,5 @@ router.post('/diagnosis', async(req:Request, res:Response,next:NextFunction):Pro
     }
 
 });
+
 export default router;
