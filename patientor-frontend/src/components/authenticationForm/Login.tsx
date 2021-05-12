@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom';
 import {Button, Form, Message} from 'semantic-ui-react';
 import Layout from './Layout';
 
-const Login = () => {
+const Login = (props:{handleSignIn:()=>void}) => {
     return (
         <Layout header="Dashboard Log in">
             <Form.Input
@@ -23,7 +23,7 @@ const Login = () => {
             />
 
             <Link to="/home">
-                <Button color="teal" fluid size="huge" className="auth-button">
+                <Button color="teal" fluid size="huge" className="auth-button" onClick={()=>props.handleSignIn()}>
                     Login
                 </Button>
             </Link>

@@ -36,6 +36,9 @@ const App = () => {
   const handleLogOut = () => {
     setSignIn(false);
   };
+  const handleSignIn = () => {
+    setSignIn(true);
+  };
 
   return (
     <div className="App">
@@ -54,13 +57,14 @@ const App = () => {
           <Switch>
           { signIn?
             <>
+              <Route exact path="/" component={PatientListPage}/>
               <Route exact path="/home" component={PatientListPage}/>
               <Route exact path="/patient/:id" component={PatientPage}/>
             </>:
             <>
-              <Route exact path="/" component={Login} />
-              <Route exact path="/login" component={Login} />
-              <Route exact path="/signUp" component={SignUp} />
+              <Route exact path="/" render={(props) => <Login {...props} handleSignIn={handleSignIn}/>}/>
+              <Route exact path="/login" render={(props) => <Login {...props} handleSignIn={handleSignIn}/>}/>
+              <Route exact path="/signUp" render={(props) => <SignUp {...props} handleSignIn={handleSignIn}/>} />
               <Route exact path="/done" component={SignUpDone} />
             </>
           }
