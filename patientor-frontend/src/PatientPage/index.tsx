@@ -8,10 +8,12 @@ import EntryCard from '../components/EntryCard/EntryCard';
 import {EntryWithoutId} from '../types';
 import {Button} from 'semantic-ui-react';
 import AddEntryModal from '../AddEntryModal/index';
+
+
 const PatientPage = ():JSX.Element => {
     const {id} = useParams<{id:string}>();
     const [{patients},dispatch] = useStateValue();
-    const [modelOpen,setModalOpen] = React.useState<boolean>(false);
+    const [modalOpen,setModalOpen] = React.useState<boolean>(false);
     const [error, setError] = React.useState<string|undefined>();
 
     const openModal = ():void => setModalOpen(true);
@@ -33,6 +35,10 @@ const PatientPage = ():JSX.Element => {
     };
     
     const patient:Patient|NonSensitivePatient|undefined = patients[id];
+
+    
+
+
     if(!patient ||  !isPatient(patient)){
         patientService
             .getPatient(id)
@@ -50,9 +56,9 @@ const PatientPage = ():JSX.Element => {
                     onSubmit={submitNewEntry} 
                     onClose={closeModal}
                     error={error}
-                    modalOpen={modelOpen}
+                    modalOpen={modalOpen}
                     
-                />
+                />  
                 <Button onClick={() => openModal()}>Add New Entry</Button>
                 <h2>{patient.name} <GenderIcon gender={patient.gender}/></h2> 
                 <p>ssn: {patient.ssn}</p>
