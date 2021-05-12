@@ -13,7 +13,7 @@ mongoose.connect(mongoUrl, {})
     })
     .then(()=>{
         console.log('finished populting diagnosis');
-        return mongoose.disconnect;
+        return mongoose.disconnect();
     })
     .catch(error => {
         console.log(error);
