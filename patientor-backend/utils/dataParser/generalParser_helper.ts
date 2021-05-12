@@ -11,6 +11,7 @@ const isDate = (date:string):boolean => {
     return Boolean(Date.parse(date));
 };
 
+// eslint-disable-next-line
 const isGender = (params:any): params is Gender => {
     return Object.values(Gender).includes(params);
 };  

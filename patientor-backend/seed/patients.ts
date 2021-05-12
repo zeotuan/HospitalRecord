@@ -15,10 +15,10 @@ mongoose.connect(mongoUrl, {})
         return test_helper.seedingPatientAndEntries(patientsEntry);
     }).then(()=>{
         console.log('finished seeding patients and entries');
-        mongoose.disconnect();
+        return  mongoose.disconnect();
     })
     .catch(error => {
         console.log(error);
-        mongoose.disconnect();
+        return mongoose.disconnect();
     });
 

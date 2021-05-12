@@ -32,6 +32,7 @@ router.get('/:id', async (req:Request,res:Response,next:NextFunction):Promise<vo
 // eslint-disable-next-line
 router.post('/', async (req:Request,res:Response,next:NextFunction):Promise<void> => {
     try {
+        // eslint-disable-next-line
         const newPatientEntry = toNewPatient(req.body) ;
         const addedPatient = await patientService.addPatient(newPatientEntry);
         if(addedPatient){
@@ -47,6 +48,7 @@ router.post('/', async (req:Request,res:Response,next:NextFunction):Promise<void
 // eslint-disable-next-line
 router.patch('/:patientId/entries/', async (req:Request,res:Response, next:NextFunction):Promise<void> => {
     try{
+        // eslint-disable-next-line
         const newEntry = toNewEntry(req.body);
         const updatedPatient = await patientService.addEntry(req.params.patientId,newEntry);
         if(updatedPatient){

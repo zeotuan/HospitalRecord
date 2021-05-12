@@ -2,6 +2,7 @@ import mongoose, {Document,Schema,model} from 'mongoose';
 import {Diagnosis as diagnosis} from '../types/diagnosis';
 import uniqueValidator from 'mongoose-unique-validator';
 export interface DiagnosisDocument extends diagnosis,Document{
+    id:string
 }
 
 const diagonsisSchema:Schema = new mongoose.Schema({

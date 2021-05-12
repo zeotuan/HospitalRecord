@@ -6,7 +6,8 @@ import {Gender} from '../types/generalTypes';
 import {EntryBaseDocument} from './entry';
 
 export interface patientBaseDocument extends patient, Document{
-    entries:Types.Array<EntryBaseDocument['id']>
+    id:string;
+    entries:Types.Array<EntryBaseDocument['id']>;
 }
 
 export interface populatedPatientDocument extends patientBaseDocument {

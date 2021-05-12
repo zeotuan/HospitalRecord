@@ -3,6 +3,7 @@ import uniqueValidator from 'mongoose-unique-validator';
 import {User as user} from '../types/user';
 
 export interface userDocument extends user,Document{
+    id:string,
 }
 
 const userSchema  = new Schema({
@@ -25,7 +26,7 @@ userSchema.plugin(uniqueValidator);
 userSchema.set('toJSON', {
     transform:(_document:Document, returnedObject:userDocument) => {
         /* eslint-disable */
-        returnedObject.id = returnedObject._id;
+        returnedObject.id = returnedObject._id.toString();
         delete returnedObject._id;
         delete returnedObject.__v;
         delete returnedObject.passwordHash;

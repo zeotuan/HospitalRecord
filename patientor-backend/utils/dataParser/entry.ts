@@ -83,6 +83,7 @@ const parseHealthCheckRating = (rating:unknown):HealthCheckRating => {
     return rating;
 };
 
+// eslint-disable-next-line
 const isHealthCheckRating = (params:any):params is HealthCheckRating => {
     return Object.values(HealthCheckRating).includes(params);
 };

@@ -102,12 +102,13 @@ describe('testing diagnosis api', () => {
 
         test('unique identifier is named id', async () => {
             const response = await api.get('/api/diagnosis');
+            // eslint-disable-next-line
             const diagnosis = response.body[0];
             expect(diagnosis.id).toBeDefined();
         });
     });
-    afterAll(()=> {
-        mongoose.connection.close();
+    afterAll(async ()=> {
+        await mongoose.connection.close();
     });
 });
 

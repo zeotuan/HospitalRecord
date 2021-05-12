@@ -30,14 +30,14 @@ router.get('/', async (_req:Request,res:Response,next:NextFunction):Promise<void
 
 // eslint-disable-next-line
 router.post('/diagnosis', async(req:Request, res:Response,next:NextFunction):Promise<void> => {
-    const body = req.body;
     const decodedToken = req.decodedToken;
     try{
         if(!decodedToken || !decodedToken.id){
             res.status(400).json({error:'token missing or invalid'});
             return;
         }
-        const newDiagnosisEntry = toNewDiagnosis(body) ;
+        // eslint-disable-next-line
+        const newDiagnosisEntry = toNewDiagnosis(req.body) ;
         const addedDiagnosis = await diagnosisService.addDiagnosis(newDiagnosisEntry);
         res.json(addedDiagnosis);
         return;

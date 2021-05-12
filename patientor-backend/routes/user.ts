@@ -6,6 +6,7 @@ const router = express.Router();
 // eslint-disable-next-line
 router.post('/signUp', async (req:Request,res:Response,next:NextFunction):Promise<void> => {
     try {
+        // eslint-disable-next-line
         const newUserEntry = await toNewUser(req.body);
         const addedUser = await userService.addUser(newUserEntry);
         if(addedUser){
@@ -20,9 +21,10 @@ router.post('/signUp', async (req:Request,res:Response,next:NextFunction):Promis
 });
 // eslint-disable-next-line
 router.post('/login', async (req:Request,res:Response,next:NextFunction):Promise<void> => {
-    const body = req.body;
+    
     try {
-        const user = toUser(body);
+        // eslint-disable-next-line
+        const user = toUser(req.body);
         const result = await userService.login(user);
         res.status(200).json(result);
         return;

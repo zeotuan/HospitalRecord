@@ -19,13 +19,15 @@ const addUser = async (userEntry:user):Promise<user> => {
 const login = async (userInfo:user) => {
     try {
         const userLogIn = await User.findOne({username:userInfo.username});
-         if(userLogIn && userInfo.password && userLogIn.passwordHash){
+        if(userLogIn && userInfo.password && userLogIn.passwordHash){
                 const correctPassword = await bcrypt.compare(userInfo.password,userLogIn.passwordHash);
                 if(!correctPassword){
                     throw new Error('invalid username or password');
                 }
+                
                 const userForToken = {
                     username:userLogIn.username,
+                    // eslint-disable-next-line
                     id:userLogIn._id
                 };   
                 const token = jwt.sign(userForToken,config.JWT_SECRET);

@@ -130,6 +130,7 @@ describe('testing patient api', () => {
             });
             test('patient unique identifier is named id ', async () => {
                 const response = await api.get('/api/patients');
+                // eslint-disable-next-line
                 const patientToTest = response.body[0];
                 expect(patientToTest.id).toBeDefined();
             });
@@ -138,7 +139,7 @@ describe('testing patient api', () => {
     
     });
 
-    afterAll(()=>{
-        mongoose.connection.close();
+    afterAll(async ()=>{
+        await mongoose.connection.close();
     });
 });
