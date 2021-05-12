@@ -14,12 +14,12 @@ const getEntries = async():Promise<Patient[]> => {
             ssn:p.ssn,
             occupation:p.occupation,
             entries:p.entries
-        }))
-        return patientResult
+        }));
+        return patientResult;
     } catch (error) {
-        throw new Error(error)
+        throw new Error(error);
     }
-}
+};
 
 const getNonSensitiveEntries = async ():Promise<NonSensitivePatient[]> => {
     try {
@@ -30,27 +30,27 @@ const getNonSensitiveEntries = async ():Promise<NonSensitivePatient[]> => {
             dateOfBirth:p.dateOfBirth,
             gender:p.gender,
             occupation:p.occupation
-        }))
+        }));
         return patientResult;
     } catch (error) {
         throw new Error(error);
     }
     
-}
+};
 
 const findById = async(id:string):Promise<Patient|null> => {
     try {
         const patientEntry = await PatientModel.getFullPatient(id);
         return patientEntry;
     } catch (error) {
-        throw new Error(error)
+        throw new Error(error);
     }
     
-}
+};
 
 const addPatient = async(entry:Patient):Promise<Patient> =>{
     try {
-        console.log(entry)
+        console.log(entry);
         const newPatient = new PatientModel({
             ...entry
         });
@@ -59,10 +59,10 @@ const addPatient = async(entry:Patient):Promise<Patient> =>{
     } catch (error) {
         throw new Error(error);
     }
-}
+};
 
 
-const addEntry = async (patientId:String, entry:entry):Promise<Patient> => {
+const addEntry = async (patientId:string, entry:entry):Promise<Patient> => {
     try {
         const updatedPatient = await PatientModel.findById(patientId);
         if(updatedPatient){
@@ -75,7 +75,7 @@ const addEntry = async (patientId:String, entry:entry):Promise<Patient> => {
     } catch (error) {
         throw new Error(error);
     }
-}
+};
 
 export default {
     getEntries,
@@ -83,4 +83,4 @@ export default {
     addPatient,
     findById,
     addEntry
-}
+};

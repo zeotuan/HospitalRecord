@@ -1,7 +1,7 @@
 import express,{Request,Response,NextFunction} from 'express';
 import patientService from '../services/patientService';
 import {toNewPatient} from '../utils/dataParser/patient';
-import {toNewEntry} from '../utils/dataParser/entry'
+import {toNewEntry} from '../utils/dataParser/entry';
 const router = express.Router();
 
 router.get('/', async (_req:Request, res:Response, next:NextFunction) => {
@@ -12,7 +12,7 @@ router.get('/', async (_req:Request, res:Response, next:NextFunction) => {
         return next(error);
     }
     
-})
+});
 
 router.get('/:id', async (req:Request,res:Response,next:NextFunction) => {
     try {
@@ -24,7 +24,7 @@ router.get('/:id', async (req:Request,res:Response,next:NextFunction) => {
     } catch (error) {
        return next(error); 
     }
-})
+});
 
 router.post('/', async (req:Request,res:Response,next:NextFunction) => {
     try {
@@ -35,9 +35,9 @@ router.post('/', async (req:Request,res:Response,next:NextFunction) => {
         }
         return res.status(400).json({error:'patient was not added'});
     } catch (error) {
-        return next(error)
+        return next(error);
     }
-})
+});
 
 router.patch('/:patientId/entries/', async (req:Request,res:Response, next:NextFunction) => {
     try{
@@ -46,11 +46,11 @@ router.patch('/:patientId/entries/', async (req:Request,res:Response, next:NextF
         if(updatedPatient){
             return res.json(updatedPatient);
         }
-        return res.status(404).json({error:'no patient was updated'})
+        return res.status(404).json({error:'no patient was updated'});
         
     }catch(error){
         return next(error);
     }
-})
+});
 
 export default router;

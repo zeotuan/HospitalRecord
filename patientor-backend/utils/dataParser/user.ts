@@ -3,7 +3,7 @@ import generalParser from './generalParser_helper';
 import bcrypt from 'bcrypt';
 import config from '../config';
 
-type Field = {username:unknown,name:unknown,password?:unknown}
+type Field = {username:unknown,name:unknown,password?:unknown};
 
 export const toNewUser= async (props:Field):Promise<User> => {
     const {username,name,password} = props;
@@ -16,16 +16,16 @@ export const toNewUser= async (props:Field):Promise<User> => {
         newUser.passwordHash = await hashPassword(parsedPassword,config.saltRound);
     }
     return newUser;
-}
+};
 
 export const toUser = (props:Field):User => {
     const {username,password} = props;
     const user:User = {
         username:parseUserName(username),
         password:parsePassword(password)
-    }
+    };
     return user;
-}
+};
 
 const parseUserName  = (username:unknown):string => {
     const parsedUsername = generalParser.parseName(username);
@@ -33,7 +33,7 @@ const parseUserName  = (username:unknown):string => {
         throw new TypeError('invalid username');
     }
     return parsedUsername;
-}
+};
 
 
 const parsePassword = (password:unknown):string => {
@@ -45,7 +45,7 @@ const parsePassword = (password:unknown):string => {
     }
    
     return password;
-}
+};
 
 export const hashPassword = async (password:string, saltRound:number):Promise<string> => {
     try {
@@ -54,7 +54,7 @@ export const hashPassword = async (password:string, saltRound:number):Promise<st
     } catch (error) {
         throw new Error(error);
     }
-}
+};
 
 
 

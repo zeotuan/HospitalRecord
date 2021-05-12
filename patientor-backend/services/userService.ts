@@ -10,15 +10,15 @@ const addUser = async (userEntry:user):Promise<user> => {
             ...userEntry
         });
         await newUser.save();
-        return newUser
+        return newUser;
     } catch (error) {
         throw new Error(error);
     }
-}
+};
 
 const login = async (userInfo:user) => {
     try {
-        const userLogIn = await User.findOne({username:userInfo.username})
+        const userLogIn = await User.findOne({username:userInfo.username});
          if(userLogIn && userInfo.password && userLogIn.passwordHash){
                 const correctPassword = await bcrypt.compare(userInfo.password,userLogIn.passwordHash);
                 if(!correctPassword){
@@ -33,14 +33,14 @@ const login = async (userInfo:user) => {
                     token,
                     username:userLogIn.username,
                     name:userLogIn.name
-                }
+                };
 
          }
          throw new Error('invalid username or password');
     } catch (error) {
-        throw new Error(error)
+        throw new Error(error);
     }
-} 
+}; 
 
 const getAll = async ():Promise<user[]> => {
     try {
@@ -49,13 +49,13 @@ const getAll = async ():Promise<user[]> => {
     } catch (error) {
         throw new Error(error);
     }
-}
+};
 
 export default {
     addUser,
     login,
     getAll
-}
+};
 
 
 

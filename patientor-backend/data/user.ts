@@ -1,6 +1,6 @@
 import {User} from  '../types/user';
 
-var userEntry:User[] = [
+const userEntry:User[] = [
     {
         username:'root',
         name:'seedUser1',
@@ -11,6 +11,6 @@ var userEntry:User[] = [
         name:'seedUser2',
         password:'1234',
     },
-]  
+];  
 
 export default userEntry;

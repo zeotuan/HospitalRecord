@@ -1,7 +1,7 @@
 import {Gender} from '../types/generalTypes';
 import {Patient} from '../types/patient';
 
-var patientsEntry: Patient[] = [
+const patientsEntry: Patient[] = [
     {
       name: 'John McClane',
       dateOfBirth: '1986-07-09',

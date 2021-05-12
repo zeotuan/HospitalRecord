@@ -1,7 +1,7 @@
 import { Diagnosis } from "../../types/diagnosis";
 import generalParser from './generalParser_helper';
 
-type Field = {code:unknown,name:unknown,latin?:unknown}
+type Field = {code:unknown,name:unknown,latin?:unknown};
 
 export const toNewDiagnosis= (props:Field):Diagnosis => {
     const {code,name,latin} = props;
@@ -11,17 +11,17 @@ export const toNewDiagnosis= (props:Field):Diagnosis => {
     };
     const parsedlatin = parseLatin(latin);
     if(parsedlatin){
-        newDiagnosis.latin = parsedlatin
+        newDiagnosis.latin = parsedlatin;
     }
     return newDiagnosis;
-}
+};
 
 const parseCode = (code:unknown):string => {
     if(!code || !generalParser.isString(code)){
         throw new TypeError('incorrect or missing code');
     }
     return code;
-}
+};
 
 const parseLatin = (latin:unknown):string|undefined => {
     if(!latin){
@@ -31,7 +31,7 @@ const parseLatin = (latin:unknown):string|undefined => {
         throw new TypeError('incorrect latin type');
     }
     return latin;
-}
+};
 
 
 

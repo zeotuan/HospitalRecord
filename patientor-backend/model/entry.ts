@@ -1,10 +1,10 @@
 import {model,Document,Schema,Model} from 'mongoose';
-const uniqueValidator = require('mongoose-unique-validator');
+import uniqueValidator from 'mongoose-unique-validator';
 import {BaseEntry,HealthCheckRating,HealthCheckEntry as healthCheckEntry,HospitalEntry as hospitalEntry,OccupationalHealthcareEntry as occupationalHealthcareEntry, Entry as entry} from '../types/entry';
 //import {DiagnosisDocument} from './diagnosis'
 const baseOptions = {
     discriminatorKey:'kind',
-}
+};
 export interface EntryBaseDocument extends BaseEntry, Document{
     //diagnosisCodesIds: Types.Array<DiagnosisDocument['id']>
 }
@@ -37,16 +37,18 @@ const entrySchema:Schema = new Schema({
         type:String
         //ref:'Diagnosis'
     }]
-},baseOptions)
+},baseOptions);
 
-entrySchema.plugin(uniqueValidator)
+entrySchema.plugin(uniqueValidator);
 
 
 entrySchema.set('toJSON',{
     transform: (_document:Document,returnedObject:EntryDocument) => {
-        returnedObject.id = returnedObject._id.toString()
-        delete returnedObject._id
-        delete returnedObject.__v
+        /* eslint-disable */
+        returnedObject.id = returnedObject._id.toString();
+        delete returnedObject._id;
+        delete returnedObject.__v;
+        /* eslint-enable */
     }
 });
 
@@ -60,29 +62,29 @@ entrySchema.set('toJSON',{
 entrySchema.statics.addEntry = async function(
     entry:entry
 ){
-    let newEntry:EntryDocument
+    let newEntry:EntryDocument;
     switch(entry.type){
         case "HealthCheck":
             newEntry = new HealthCheckEntry({
                 ...entry,
-            }) 
+            }); 
             break;
         case "Hospital":
             newEntry = new HospitalEntry({
                 ...entry
-            })
+            });
             break;
         case "OccupationalHealthcare":
             newEntry = new OcculationalHealthcareEntry({
                 ...entry
-            })
+            });
             break;
         default:
             throw new Error('invalid type');
     }
     await newEntry.save();
     return newEntry;
-}
+};
 
 
 const HealthCheckEntrySchema:Schema = new Schema({
@@ -91,7 +93,7 @@ const HealthCheckEntrySchema:Schema = new Schema({
             enum : Object.values(HealthCheckRating),
             default: HealthCheckRating.LowRisk
         }
-})
+});
 
 const HospitalEntrySchema:Schema = new Schema({
     discharge:{
@@ -104,7 +106,7 @@ const HospitalEntrySchema:Schema = new Schema({
             required:true
         }
     }
-})
+});
 
 const OccupationalHealthcareEntrySchema:Schema = new Schema({
     employerName: String,
@@ -119,12 +121,12 @@ const OccupationalHealthcareEntrySchema:Schema = new Schema({
         },
         required:false
     }
-})
+});
 const Entry = model<EntryDocument,EntryModel>('Entry',entrySchema);
 Entry.discriminator('Hospital',HospitalEntrySchema);
 export const HospitalEntry = model<HospitalEntryDocument>('Hospital',HospitalEntrySchema);
-Entry.discriminator('HealthCheck', HealthCheckEntrySchema)
-export const HealthCheckEntry = model<HealthCheckEntryDocument>('HealthCheck',HealthCheckEntrySchema)
-Entry.discriminator('OcculationalHealthcare',OccupationalHealthcareEntrySchema)
-export const OcculationalHealthcareEntry = model<OccupationalHealthcareDocument>('OcculationalHealthcare',OccupationalHealthcareEntrySchema)
+Entry.discriminator('HealthCheck', HealthCheckEntrySchema);
+export const HealthCheckEntry = model<HealthCheckEntryDocument>('HealthCheck',HealthCheckEntrySchema);
+Entry.discriminator('OcculationalHealthcare',OccupationalHealthcareEntrySchema);
+export const OcculationalHealthcareEntry = model<OccupationalHealthcareDocument>('OcculationalHealthcare',OccupationalHealthcareEntrySchema);
 export default Entry;

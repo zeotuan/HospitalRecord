@@ -4,5 +4,9 @@ export enum Gender {
     Other = 'other'
 }
 
+export interface token{
+    id:string;
+}
+
 
 

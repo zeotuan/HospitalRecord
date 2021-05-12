@@ -18,6 +18,6 @@ mongoose.connect(mongoUrl, {})
     .catch(error => {
         console.log(error);
         mongoose.disconnect();
-    })
+    });
 
 

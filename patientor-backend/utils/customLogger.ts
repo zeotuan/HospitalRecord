@@ -1,14 +1,14 @@
-import {EventEmitter} from 'events'
+import {EventEmitter} from 'events';
 
 export class LogManager extends EventEmitter {
     private options: LogOptions = {
         minLevels:{
             '':'info'
         }
-    }
+    };
 
     // prevent logger from being register twice
-    private loggerRegistered: boolean = false;
+    private loggerRegistered = false;
 
     public getOptions():LogOptions{
         return this.options;
@@ -16,7 +16,7 @@ export class LogManager extends EventEmitter {
 
     public configure(options: LogOptions):LogManager{
         this.options = Object.assign({},this.options,options);
-        return this
+        return this;
     }
 
     public getLogger(module:string):Logger {
@@ -29,7 +29,7 @@ export class LogManager extends EventEmitter {
                 match = key;
             }
         }
-        return new Logger(this,module,minLevel)
+        return new Logger(this,module,minLevel);
     }
 
     public registerConsoleLogger(): LogManager {
@@ -68,7 +68,7 @@ export class LogManager extends EventEmitter {
     }
 
 
-};
+}
 
 
 export class Logger {
@@ -81,7 +81,7 @@ export class Logger {
         'info': 3,
         'warn': 4,
         'error': 5
-    }
+    };
 
     constructor(logManager:EventEmitter, minLevel:string , module:string){
         this.logManager = logManager;
@@ -91,7 +91,7 @@ export class Logger {
 
     private levelToInt(minLevel:string):number {
         if(minLevel.toLowerCase() in this.levels){
-            return this.levels[minLevel.toLowerCase()]
+            return this.levels[minLevel.toLowerCase()];
         }
         else{
             return 99;
@@ -102,10 +102,10 @@ export class Logger {
         const level = this.levelToInt(logLevel);
         if(level < this.minLevel) return;
 
-        const logEntry: LogEntry = {level: logLevel, module: this.module, message}
+        const logEntry: LogEntry = {level: logLevel, module: this.module, message};
         const error = new Error('');
         if(error.stack){
-            const cla = error.stack.split('`n')
+            const cla = error.stack.split('`n');
             let idx = 1;
             while (idx < cla.length && cla[idx].includes("at Logger.Object.")) idx++;
             if (idx < cla.length) {

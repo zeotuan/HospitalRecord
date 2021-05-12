@@ -2,7 +2,7 @@ import supertest from 'supertest';
 import app from '../../app';
 import diagnosisEntry from '../../data/diagnosis';
 import userEntry from '../../data/user';
-import patientEntry from  '../../data/patients'
+import patientEntry from  '../../data/patients';
 import test_helper from  '../test_helper';
 import mongoose from  'mongoose';
 import Diagnosis from '../../model/diagnosis';
@@ -20,7 +20,7 @@ const sampleHealthCheckEntry:HealthCheckEntry = {
     type: 'HealthCheck',
     description: 'Yearly control visit. Cholesterol levels back to normal.',
     healthCheckRating: 0,
-} 
+}; 
 
 const sampleHospitalEntry:HospitalEntry = {
     date: '2015-01-02',
@@ -32,7 +32,7 @@ const sampleHospitalEntry:HospitalEntry = {
         date: '2015-01-16',
         criteria: 'Thumb has healed.',
     },
-}
+};
 
 const sapmleOccuationalEntry:OccupationalHealthcareEntry =  {
     date: '2019-08-05',
@@ -46,7 +46,7 @@ const sapmleOccuationalEntry:OccupationalHealthcareEntry =  {
       startDate: '2019-08-05',
       endDate: '2019-08-28',
     }
-  }
+  };
 
 describe('testing patient api', () => {
     beforeAll( async ()=>{
@@ -56,13 +56,13 @@ describe('testing patient api', () => {
         await test_helper.seedingDiagnosis(diagnosisEntry);
         token = await test_helper.getUserLogInToken();
         
-    })
+    });
     describe('testing creating entry', () => {
         beforeEach(async () => {
             await Entry.deleteMany({});
             await Patient.deleteMany({});
             await test_helper.seedingPatientAndEntries(patientEntry);
-        })
+        });
         test('an entry can be created', async () => {
             const patientAtStart = await test_helper.patientInDb();
             const patientToTest = patientAtStart[0];
@@ -75,7 +75,7 @@ describe('testing patient api', () => {
                 .expect('Content-Type',/application\/json/);
             
             expect(response.body.entries).toHaveLength(numberofEntryAtStart+1);
-        })
+        });
         test('an hospital entry will be created with correct type', async () => {
             const patientAtStart = await test_helper.patientInDb();
             const patientToTest = await Patient.findByIdAndUpdate(patientAtStart[0].id,{$set:{entries:[]}},{new:true});
@@ -88,7 +88,7 @@ describe('testing patient api', () => {
             const insertedEntry = await Entry.findById(response.body.entries[0]);
             expect(insertedEntry?.type).toEqual(sampleHospitalEntry.type);
 
-        })
+        });
         test('an HealthCheck entry will be created with correct type', async () => {
             const patientAtStart = await test_helper.patientInDb();
             const patientToTest = await Patient.findByIdAndUpdate(patientAtStart[0].id,{$set:{entries:[]}},{new:true});
@@ -101,7 +101,7 @@ describe('testing patient api', () => {
             const insertedEntry = await Entry.findById(response.body.entries[0]);
             expect(insertedEntry?.type).toEqual(sampleHealthCheckEntry.type);
 
-        })
+        });
         test('an occupational health check entry will be created with correct type', async () => {
             const patientAtStart = await test_helper.patientInDb();
             const patientToTest = await Patient.findByIdAndUpdate(patientAtStart[0].id,{$set:{entries:[]}},{new:true});
@@ -114,31 +114,31 @@ describe('testing patient api', () => {
             const insertedEntry = await Entry.findById(response.body.entries[0]);
             expect(insertedEntry?.type).toEqual(sapmleOccuationalEntry.type);
 
-        })
+        });
         describe('testing retrieving entry', () => {
             beforeAll(async () => {
                 await Entry.deleteMany({});
                 await Patient.deleteMany({});
                 await test_helper.seedingPatientAndEntries(patientEntry);
-            })
+            });
             test('patient is returned as json', async () => {
                 await api.get('/api/patients').expect(200).expect('Content-Type',/application\/json/);
-            }) 
+            }); 
             test('all note are returned ', async ()=> {
                 const response = await api.get('/api/patients');
                 expect(response.body).toHaveLength(patientsEntry.length);
-            })
+            });
             test('patient unique identifier is named id ', async () => {
                 const response = await api.get('/api/patients');
                 const patientToTest = response.body[0];
                 expect(patientToTest.id).toBeDefined();
-            })
+            });
 
-        })
+        });
     
-    })
+    });
 
     afterAll(()=>{
         mongoose.connection.close();
-    })
-})
+    });
+});

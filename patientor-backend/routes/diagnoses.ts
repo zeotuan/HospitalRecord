@@ -1,17 +1,19 @@
-import express,{Request,Response,NextFunction} from 'express'
-import diagnosisService from '../services/diagnosisService' 
+import express,{Request,Response,NextFunction} from 'express';
+import diagnosisService from '../services/diagnosisService'; 
 import {toNewDiagnosis} from '../utils/dataParser/diagnosis';
-
-const router = express.Router()
+const router = express.Router();
 
 router.get('/', async (_req:Request,res:Response,next:NextFunction) => {
     try {
-        return res.send(await diagnosisService.getAllDiagnoses());    
+        const allDiagnosis = await diagnosisService.getAllDiagnoses(); 
+        return res.json(allDiagnosis);
+            
     } catch (error) {
-        return next(error)
+        return next(error);
+        
     }
     
-})
+});
 
 router.post('/diagnosis', async(req:Request, res:Response,next:NextFunction) => {
     const body = req.body;
@@ -28,5 +30,5 @@ router.post('/diagnosis', async(req:Request, res:Response,next:NextFunction) => 
         return next(error);
     }
 
-})
-export default router
+});
+export default router;

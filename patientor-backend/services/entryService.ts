@@ -7,21 +7,21 @@ const getAll = async ():Promise<entry[]> => {
         const  allEntries = await Entry.find({});
         return allEntries;
     }catch(error){
-        throw new Error(error)
+        throw new Error(error);
     }
-}
+};
 
 const getEntryById = async (id:string):Promise<entry|null> => {
     try {
         const entry = await Entry.findById(id);
         return entry;
     } catch (error) {
-        throw new Error(error)
+        throw new Error(error);
     }
-}
+};
 
 
 export default {
     getAll,
     getEntryById
-}
+};

@@ -14,7 +14,7 @@ router.post('/signUp', async (req:Request,res:Response,next:NextFunction) => {
     } catch (error) {
         return next(error);
     }
-})
+});
 
 router.post('/login', async (req:Request,res:Response,next:NextFunction) => {
     const body = req.body;
@@ -25,7 +25,7 @@ router.post('/login', async (req:Request,res:Response,next:NextFunction) => {
     } catch (error) {
         return next(error);
     }
-})
+});
 
 
 router.get('/', async (req:Request, res:Response, next:NextFunction) => {
@@ -38,6 +38,6 @@ router.get('/', async (req:Request, res:Response, next:NextFunction) => {
     } catch (error) {
         return next(error);
     }
-})
+});
 
 export default router;

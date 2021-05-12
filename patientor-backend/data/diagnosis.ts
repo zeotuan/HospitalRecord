@@ -1,6 +1,6 @@
 import {Diagnosis} from '../types/diagnosis';
 
-var diagnosisEntry:Array<Diagnosis> = [
+const diagnosisEntry:Array<Diagnosis> = [
     {
       code: "M24.2",
       name: "Disorder of ligament",
@@ -82,7 +82,7 @@ var diagnosisEntry:Array<Diagnosis> = [
       code: "J12.82",
       name: "Pneumonia due to coronavirus disease"
     }
-  ]
+  ];
 
 
-export default diagnosisEntry
+export default diagnosisEntry;

@@ -2,11 +2,11 @@ import {Gender} from './generalTypes';
 import {Entry} from './entry';
 
 export interface Patient{ 
-    name:String,
-    dateOfBirth:String,
-    ssn:String,
+    name:string,
+    dateOfBirth:string,
+    ssn:string,
     gender: Gender,
-    occupation:String
+    occupation:string
     entries:Array<Entry>
 }
 export type NonSensitivePatient = Omit<Patient,'ssn' | 'entries'>;

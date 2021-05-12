@@ -1,7 +1,6 @@
 import mongoose, {Document,Schema,model} from 'mongoose';
 import {Diagnosis as diagnosis} from '../types/diagnosis';
-const uniqueValidator = require('mongoose-unique-validator');
-
+import uniqueValidator from 'mongoose-unique-validator';
 export interface DiagnosisDocument extends diagnosis,Document{
 }
 
@@ -24,10 +23,12 @@ const diagonsisSchema:Schema = new mongoose.Schema({
 diagonsisSchema.plugin(uniqueValidator);
 
 diagonsisSchema.set('toJSON',{
-    transform: (_document:Document,returnedObject:DiagnosisDocument) => {
-        returnedObject.id = returnedObject._id.toString()
-        delete returnedObject._id
-        delete returnedObject.__v
+    transform: (_document:Document,returnedObject:DiagnosisDocument) => {    
+        /* eslint-disable */
+        returnedObject.id = returnedObject._id.toString();
+        delete returnedObject._id;
+        delete returnedObject.__v;
+        /* eslint-enable */
     }
 });
 

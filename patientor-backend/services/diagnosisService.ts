@@ -8,7 +8,7 @@ const getAllDiagnoses = async ():Promise<diagnosis[]> => {
     } catch (error) {
         throw new Error(error);
     }
-}
+};
 
 const addDiagnosis = async (diagnosis:diagnosis):Promise<diagnosis> => {
     try{
@@ -20,10 +20,10 @@ const addDiagnosis = async (diagnosis:diagnosis):Promise<diagnosis> => {
     }catch(error){
         throw new Error(error);
     }
-}
+};
 
 export default {
     
     getAllDiagnoses,
     addDiagnosis
-}
+};

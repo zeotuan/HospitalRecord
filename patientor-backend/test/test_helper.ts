@@ -11,34 +11,34 @@ import jwt from  'jsonwebtoken';
 
 const diagnosInDb = async () => {
     const diagnosis = await Diagnosis.find({});
-    return diagnosis.map(d => d.toJSON())
-}
+    return diagnosis.map(d => d.toJSON());
+};
 
 const entryInDb = async () => {
     const entries = await Entry.find({});
     return entries.map(e => e.toJSON());
-}
+};
 
 const patientInDb = async () => {
     const patients = await Patient.find({});
     return patients.map(p => p.toJSON());
-}
+};
 
 const userInDb = async () => {
     const users = await User.find({});
     return users.map(u => u.toJSON());
-}
+};
 
 export const seedingPatientAndEntries = async (patientEntries:patient[]) => {
     await Patient.deleteMany({});
     await Entry.deleteMany({});
     for(const patientEntry of patientEntries){
-        const {entries, ...patientInfo} = patientEntry
+        const {entries, ...patientInfo} = patientEntry;
         const newPatient = new Patient({
             ...patientInfo
-        })
+        });
         for(const entry of entries){
-            const {diagnosisCodes, ...other} = entry
+            const {diagnosisCodes, ...other} = entry;
             let newEntry:EntryDocument;
 
             switch(other.type){
@@ -46,21 +46,21 @@ export const seedingPatientAndEntries = async (patientEntries:patient[]) => {
                     newEntry = new HealthCheckEntry({
                         ...other,
                         diagnosisCodes:diagnosisCodes
-                    })
+                    });
                     await newEntry.save();
                     break;
                 case "Hospital":
                     newEntry = new HospitalEntry({
                         ...other,
                         diagnosisCodes:diagnosisCodes
-                    })
+                    });
                     await newEntry.save();
                     break;
                 case "OccupationalHealthcare":
                     newEntry = new OcculationalHealthcareEntry({
                         ...other,
                         diagnosisCodes:diagnosisCodes
-                    })
+                    });
                     await newEntry.save();
                     break;
                 default:
@@ -79,28 +79,28 @@ export const seedingPatientAndEntries = async (patientEntries:patient[]) => {
         }
         await newPatient.save();
     }
-}
+};
 
 const seedingDiagnosis = async (diagnosisEntries:diagnosis[]) => {
     await Diagnosis.deleteMany({});
     await Diagnosis.create(diagnosisEntries);
     
-}
+};
 
 const seedingUser = async (userEntries:user[]) => {
     await User.deleteMany({});
     for(const u of userEntries){
-        let newUser = new User({
+        const newUser = new User({
             ...u
-        })
+        });
         if(newUser.password){
             newUser.passwordHash = await hashPassword(newUser.password,config.saltRound);
             delete newUser.password;
         }
-        await newUser.save()
+        await newUser.save();
     }
     
-}
+};
 
 const getUserLogInToken = async () => {
     const users = await User.find({});
@@ -108,10 +108,10 @@ const getUserLogInToken = async () => {
     const userForToken = {
         username:u.username,
         id:u.id
-    }
-    const token = jwt.sign(userForToken,config.JWT_SECRET)
+    };
+    const token = jwt.sign(userForToken,config.JWT_SECRET);
     return token;
-}
+};
 
 export default {
     diagnosInDb,
@@ -122,4 +122,4 @@ export default {
     seedingDiagnosis,
     seedingUser,
     getUserLogInToken
-}
+};

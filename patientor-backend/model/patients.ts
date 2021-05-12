@@ -1,5 +1,5 @@
 import {model,Document,Schema,Model,Types} from 'mongoose';
-const uniqueValidator = require('mongoose-unique-validator');
+import uniqueValidator from 'mongoose-unique-validator';
 import {Patient as patient} from '../types/patient';
 import {Entry} from '../types/entry';
 import {Gender} from '../types/generalTypes';
@@ -31,25 +31,27 @@ const patientSchema:Schema = new Schema({
         type:Types.ObjectId,
         ref:'Entry'
     }]
-})
+});
 
-patientSchema.plugin(uniqueValidator)
+patientSchema.plugin(uniqueValidator);
 
 
 patientSchema.set('toJSON',{
     transform: (_document:Document,returnedObject:patientBaseDocument) => {
-        returnedObject.id = returnedObject._id.toString()
-        delete returnedObject._id
-        delete returnedObject.__v
+        /* eslint-disable */
+        returnedObject.id = returnedObject._id.toString();
+        delete returnedObject._id;
+        delete returnedObject.__v;
+        /* eslint-enable */
     }
 });
 
 patientSchema.statics.getFullPatient = async function(
     this:Model<patientBaseDocument>,
-    id:String
+    id:string
 ) {
     return this.findById(id).populate('entries').exec();
-}
+};
 
 const Patient = model<patientBaseDocument,patientModel>('Patient',patientSchema);
 

@@ -18,7 +18,7 @@ const config = {
     saltRound,
     passwordRegex,
     usernameRegex
-}
+};
 
-export default config
+export default config;
 
