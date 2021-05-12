@@ -6,9 +6,10 @@
   "scripts": {
     "test": "NODE_ENV=test jest --verbose --runInBand",
     "tsc": "tsc",
-    "dev": "ts-node-dev NODE_ENV=test index.ts",
+    "dev": "NODE_ENV=dev ts-node-dev index.ts",
     "lint": "eslint --ext .ts .",
-    "start": "node build/index.js"
+    "start": "node build/index.js",
+    "seed": "npm run tsc && (NODE_ENV=dev node build/seed/diagnosis.js && NODE_ENV=dev node build/seed/patients.js)"
   },
   "author": "",
   "license": "ISC",

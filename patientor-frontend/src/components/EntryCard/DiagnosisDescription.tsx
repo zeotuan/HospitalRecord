@@ -1,7 +1,7 @@
 import React from 'react';
 import {Card} from 'semantic-ui-react';
-import {Entry} from '../types';
-import {useStateValue} from '../state';
+import {Entry} from '../../types';
+import {useStateValue} from '../../state';
 
 const DiagnosisDescription = ({description,diagnosisCodes}:{description:Entry['description'],diagnosisCodes:Entry['diagnosisCodes']}):JSX.Element => {
     const [{diagnoses},] = useStateValue();

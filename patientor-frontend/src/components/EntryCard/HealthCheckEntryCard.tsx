@@ -1,6 +1,6 @@
 import React from 'react';
 import {Icon, Card} from 'semantic-ui-react';
-import {HealthCheckEntry, HealthCheckRating} from '../types';
+import {HealthCheckEntry, HealthCheckRating} from '../../types';
 import DiagnosisDescription from './DiagnosisDescription';
 
 const HealthCheckEntryCard = ({entry}:{entry:HealthCheckEntry}):JSX.Element => {

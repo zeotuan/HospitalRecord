@@ -1,15 +1,15 @@
 import React from 'react';
 import {Icon, Card} from 'semantic-ui-react';
-import {OccupationalHealthcareEntry} from '../types';
+import {HospitalEntry} from '../../types';
 import DiagnosisDescription from './DiagnosisDescription';
 
-const OccupationalHealthcareEntryCard = ({entry}:{entry:OccupationalHealthcareEntry}):JSX.Element => {
+const HospitalEntryCard = ({entry}:{entry:HospitalEntry}):JSX.Element => {
     return (
         <Card fluid>
             <Card.Content>
                 <Card.Header>
                     {entry.date}
-                    <Icon name="stethoscope" />
+                    <Icon name="hospital" />
                 </Card.Header>
                 <DiagnosisDescription description={entry.description} diagnosisCodes={entry.diagnosisCodes}/>
             </Card.Content>
@@ -18,4 +18,4 @@ const OccupationalHealthcareEntryCard = ({entry}:{entry:OccupationalHealthcareEn
 };
 
 
-export default OccupationalHealthcareEntryCard;
+export default HospitalEntryCard;

@@ -1,8 +1,8 @@
 import React from 'react';
-import HealthCheckEntryCard from '../components/HealthCheckEntryCard';
-import HospitalEntryCard from '../components/HospitalEntryCard';
-import OccupationalHealthcareEntryCard from '../components/OccupationalHealthcareEntryCard';
-import {Entry} from '../types';
+import HealthCheckEntryCard from './HealthCheckEntryCard';
+import HospitalEntryCard from './HospitalEntryCard';
+import OccupationalHealthcareEntryCard from './OccupationalHealthcareEntryCard';
+import {Entry} from '../../types';
 
 const EntryCard = ({entry}:{entry:Entry}):JSX.Element => {
     switch(entry.type){
