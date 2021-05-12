@@ -3,25 +3,28 @@ import userService from '../services/userService';
 import {toNewUser,toUser} from '../utils/dataParser/user';
 const router = express.Router();
 
-router.post('/signUp', async (req:Request,res:Response,next:NextFunction) => {
+router.post('/signUp', async (req:Request,res:Response,next:NextFunction):Promise<void> => {
     try {
         const newUserEntry = await toNewUser(req.body);
         const addedUser = await userService.addUser(newUserEntry);
         if(addedUser){
-            return res.json(addedUser);
+            res.json(addedUser);
+            return;
         }
-        return res.status(400).json({error:'user not added'});
+        res.status(404).json({error:'sign up fail'});
+        return;
     } catch (error) {
         return next(error);
     }
 });
 
-router.post('/login', async (req:Request,res:Response,next:NextFunction) => {
+router.post('/login', async (req:Request,res:Response,next:NextFunction):Promise<void> => {
     const body = req.body;
     try {
         const user = toUser(body);
         const result = await userService.login(user);
-        return res.status(200).json(result);
+        res.status(200).json(result);
+        return;
     } catch (error) {
         return next(error);
     }

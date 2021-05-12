@@ -4,50 +4,56 @@ import {toNewPatient} from '../utils/dataParser/patient';
 import {toNewEntry} from '../utils/dataParser/entry';
 const router = express.Router();
 
-router.get('/', async (_req:Request, res:Response, next:NextFunction) => {
+router.get('/', async (_req:Request, res:Response, next:NextFunction):Promise<void> => {
     try {
         const patients = await patientService.getNonSensitiveEntries();
-        return res.send(patients);    
+        res.send(patients);
+        return;    
     } catch (error) {
         return next(error);
     }
     
 });
 
-router.get('/:id', async (req:Request,res:Response,next:NextFunction) => {
+router.get('/:id', async (req:Request,res:Response,next:NextFunction):Promise<void> => {
     try {
         const patient = await patientService.findById(req.params.id);
         if(patient){
-            return res.send(patient);
+            res.send(patient);
+            return;
         }
-        return res.sendStatus(404);
+        res.sendStatus(404).json({error:'no matching patient'});
+        return;
     } catch (error) {
        return next(error); 
     }
 });
 
-router.post('/', async (req:Request,res:Response,next:NextFunction) => {
+router.post('/', async (req:Request,res:Response,next:NextFunction):Promise<void> => {
     try {
         const newPatientEntry = toNewPatient(req.body) ;
         const addedPatient = await patientService.addPatient(newPatientEntry);
         if(addedPatient){
-            return res.json(addedPatient);
+            res.json(addedPatient);
+            return;
         }
-        return res.status(400).json({error:'patient was not added'});
+        res.status(400).json({error:'adding patient fail'});
+        return;
     } catch (error) {
         return next(error);
     }
 });
 
-router.patch('/:patientId/entries/', async (req:Request,res:Response, next:NextFunction) => {
+router.patch('/:patientId/entries/', async (req:Request,res:Response, next:NextFunction):Promise<void> => {
     try{
         const newEntry = toNewEntry(req.body);
         const updatedPatient = await patientService.addEntry(req.params.patientId,newEntry);
         if(updatedPatient){
-            return res.json(updatedPatient);
+            res.json(updatedPatient);
+            return;
         }
-        return res.status(404).json({error:'no patient was updated'});
-        
+        res.status(404).json({error:'updating patient fail'});
+        return;
     }catch(error){
         return next(error);
     }
