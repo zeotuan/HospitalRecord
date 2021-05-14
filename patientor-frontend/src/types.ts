@@ -1,3 +1,11 @@
+export interface User {
+  id:string,
+  username:string,
+  name:string,
+  token:string
+
+}
+
 export interface Diagnosis {
   code: string;
   name: string;
