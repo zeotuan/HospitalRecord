@@ -4,8 +4,6 @@ import { Action as pdAction} from "./patientAndDiagnosis/action";
 import { Action as userAction} from './user/action';
 import {userState, initialUserState} from './user/state';
 
-export type StateObject = pdStateObject | userStateObject;
-
 export interface pdStateObject {
   State:pDState,
   Dispatch:React.Dispatch<pdAction>
@@ -18,7 +16,8 @@ export interface userStateObject {
 
 
 export interface ContextState {
-  [key:string]:StateObject
+  patientAndDiagnosis:pdStateObject;
+  user:userStateObject
 }
   
 export const Context = createContext<ContextState>(
