@@ -24,6 +24,22 @@ export const StateContext = createContext<[State, React.Dispatch<Action>]>([
   () => initialState
 ]);
 
+export interface StateObject {
+   State:State,
+   Dispatch:React.Dispatch<Action>
+}
+
+export interface ContextState {
+  [key:string]:StateObject
+}
+
+export const testContext = createContext<ContextState>(
+  {
+    patientAndDiagnosis: {State:initialState, Dispatch:()=>initialState},
+    user: {State:initialState, Dispatch:()=>initialState}
+  }
+)
+
 type StateProviderProps = {
   reducer: React.Reducer<State, Action>;
   children: React.ReactElement;
