@@ -3,15 +3,20 @@ import {pDState, initialPDState} from './patientAndDiagnosis/state'
 import { Action as pdAction} from "./patientAndDiagnosis/action";
 import { Action as userAction} from './user/action';
 import {userState, initialUserState} from './user/state';
-  
-export type State = pDState | userState;
-export type Action = pdAction | userAction;
 
-export interface StateObject {
-  State:State,
-  Dispatch:React.Dispatch<Action>
+export type StateObject = pdStateObject | userStateObject;
+
+export interface pdStateObject {
+  State:pDState,
+  Dispatch:React.Dispatch<pdAction>
 }
-  
+
+export interface userStateObject {
+  State:userState,
+  Dispatch:React.Dispatch<userAction>
+}
+
+
 export interface ContextState {
   [key:string]:StateObject
 }
@@ -24,8 +29,8 @@ export const Context = createContext<ContextState>(
 )
   
 type StateProviderProps = {
-  patientAndDiagnosisReducer: React.Reducer<pDState,Action>;
-  userReducer:React.Reducer<userState,Action>;
+  patientAndDiagnosisReducer: React.Reducer<pDState,pdAction>;
+  userReducer:React.Reducer<userState,userAction>;
   children: React.ReactElement
 }
   
