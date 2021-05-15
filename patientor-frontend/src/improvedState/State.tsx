@@ -4,26 +4,21 @@ import { Action as pdAction} from "./patientAndDiagnosis/action";
 import { Action as userAction} from './user/action';
 import {userState, initialUserState} from './user/state';
 
-export interface pdStateObject {
-  State:pDState,
-  Dispatch:React.Dispatch<pdAction>
-}
-
-export interface userStateObject {
-  State:userState,
-  Dispatch:React.Dispatch<userAction>
-}
-
-
 export interface ContextState {
-  patientAndDiagnosis:pdStateObject;
-  user:userStateObject
+  patientAndDiagnosis:[pDState,React.Dispatch<pdAction>]
+  user:[userState,React.Dispatch<userAction>]
 }
+
+// this might be working need more testing
+// export type StateObject = pdStateObject | userStateObject;
+// export interface ContextState {
+//   [key:string]:StateObject
+// }
   
 export const Context = createContext<ContextState>(
   {
-    patientAndDiagnosis: {State:initialPDState, Dispatch:()=>initialPDState},
-    user: {State:initialUserState, Dispatch:()=>initialUserState}
+    patientAndDiagnosis: [initialPDState, ()=>initialPDState],
+    user: [initialUserState, ()=>initialUserState]
   }
 )
   
@@ -44,8 +39,8 @@ export const StateProvider: React.FC<StateProviderProps> = ({
     <Context.Provider 
       value={
         {
-          patientAndDiagnosis:{State:pDState,Dispatch:pDdispatch},
-          user:{State:uState, Dispatch:uDispatch}
+          patientAndDiagnosis:[pDState,pDdispatch],
+          user:[uState,uDispatch]
         }
       }>
       {children}

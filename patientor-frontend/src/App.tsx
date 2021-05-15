@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import {Divider, Header, Container} from "semantic-ui-react";
 import { apiBaseUrl } from "./constants";
 import { useStateValue ,setPatientList, setDiagnosisList} from "./state";
+import {useStateValue as testUseStateValue} from './improvedState/State';
 import patientService from "./services/patient";
 import diagnosisService from "./services/diagnosis";
 import PatientListPage from "./PatientListPage";
@@ -15,6 +16,8 @@ import Menu from "./components/Menu";
 
 const App = () => {
   const [, dispatch] = useStateValue();
+  const {patientAndDiagnosis} = testUseStateValue();
+  const [ ,Dispatch] = patientAndDiagnosis;
   const [signIn,setSignIn] = useState(true);
   React.useEffect(() => {
     void axios.get<void>(`${apiBaseUrl}/ping`);
@@ -23,9 +26,10 @@ const App = () => {
       try {
         const patientListFromApi = await patientService.getAll();
         dispatch(setPatientList(patientListFromApi));
-
+        Dispatch(setPatientList(patientListFromApi));// testing new store
         const diagnosisListFromApi = await diagnosisService.getAll();
         dispatch(setDiagnosisList(diagnosisListFromApi));
+        Dispatch(setDiagnosisList(diagnosisListFromApi));//testing new store
       } catch (e) {
         console.error(e);
       }
