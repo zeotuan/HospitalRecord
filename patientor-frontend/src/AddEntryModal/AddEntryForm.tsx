@@ -3,7 +3,7 @@ import {HealthCheckRating, EntryWithoutId, Entry} from '../types';
 import {Field, Form, Formik} from 'formik';
 import {DiagnosisSelection, SelectField, HealthCheckRatingOption, EntryTypeOption} from './FormField';
 import {TextField} from '../AddPatientModal/FormField';
-import {useStateValue} from '../state';
+import {useStateValue} from '../improvedState/State';
 import { Grid, Button, Dropdown, Form as SForm} from "semantic-ui-react";
 
 // export type HealthCheckEntryWithoutId = Omit<HealthCheckEntry,'id'>;
@@ -30,7 +30,8 @@ const EntryTypeOptions:EntryTypeOption[] = [
 ];
 
 const AddEntryForm = ({onSubmit, onCancel}:Props) => {
-    const [{diagnoses}]= useStateValue();
+    const {patientAndDiagnosis} = useStateValue();
+    const [{diagnoses},] = patientAndDiagnosis;
     const [type,setType] = React.useState<Entry['type']>('HealthCheck');
     let initialValue:EntryWithoutId;
     switch(type){

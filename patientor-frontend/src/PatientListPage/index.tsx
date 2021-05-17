@@ -27,7 +27,7 @@ const PatientListPage = () => {
   const submitNewPatient = async (values: PatientFormValues) => {
     try {
       const newPatient = await patientServices.addPatient(values);
-      dispatch(addPatient(newPatient));
+      dispatch(addPatient(newPatient));// test dispatch
       closeModal();
     } catch (e) {
       console.error(e.response?.data || 'Unknown Error');

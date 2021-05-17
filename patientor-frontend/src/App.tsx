@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import {Divider, Header, Container} from "semantic-ui-react";
 import { apiBaseUrl } from "./constants";
 //import { useStateValue ,setPatientList, setDiagnosisList} from "./state";
-import {useStateValue as testUseStateValue} from './improvedState/State';
+import {useStateValue} from './improvedState/State';
 import {setPatientList , setDiagnosisList} from './improvedState/patientAndDiagnosis/actionCreator';
 import patientService from "./services/patient";
 import diagnosisService from "./services/diagnosis";
@@ -17,7 +17,7 @@ import Menu from "./components/Menu";
 
 const App = () => {
   //const [, dispatch] = useStateValue();
-  const {patientAndDiagnosis} = testUseStateValue();
+  const {patientAndDiagnosis} = useStateValue();
   const [ ,dispatch] = patientAndDiagnosis;
   const [signIn,setSignIn] = useState(true);
   React.useEffect(() => {
