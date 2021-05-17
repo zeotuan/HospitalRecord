@@ -1,7 +1,7 @@
 import React from "react";
 import { ErrorMessage, Field, FieldProps} from "formik";
 import { Form } from "semantic-ui-react";
-import {Gender} from "../types";
+import {Gender} from "../../types";
 
 // structure of a single option
 export type GenderOption = {

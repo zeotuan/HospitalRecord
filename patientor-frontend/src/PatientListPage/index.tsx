@@ -1,8 +1,8 @@
 import React from "react";
 import {Link} from "react-router-dom";
 import { Container, Table, Button } from "semantic-ui-react";
-import { PatientFormValues } from "../AddPatientModal/AddPatientForm";
-import AddPatientModal from "../AddPatientModal";
+import { PatientFormValues } from "./AddPatientModal/AddPatientForm";
+import AddPatientModal from "./AddPatientModal";
 import { Patient, NonSensitivePatient } from "../types";
 import HealthRatingBar from "../components/HealthRatingBar";
 //import { useStateValue, addPatient } from "../state";

@@ -9,7 +9,7 @@ import GenderIcon from '../components/GenderIcon';
 import EntryCard from '../components/EntryCard/EntryCard';
 import {EntryWithoutId} from '../types';
 import {Button} from 'semantic-ui-react';
-import AddEntryModal from '../AddEntryModal/index';
+import AddEntryModal from './AddEntryModal/index';
 
 
 const PatientPage = ():JSX.Element => {

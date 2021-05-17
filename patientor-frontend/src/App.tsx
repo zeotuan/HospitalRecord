@@ -3,7 +3,6 @@ import axios from "axios";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import {Divider, Header, Container} from "semantic-ui-react";
 import { apiBaseUrl } from "./constants";
-//import { useStateValue ,setPatientList, setDiagnosisList} from "./state";
 import {useStateValue} from './improvedState/State';
 import {setPatientList , setDiagnosisList} from './improvedState/patientAndDiagnosis/actionCreator';
 import patientService from "./services/patient";
@@ -12,7 +11,6 @@ import PatientListPage from "./PatientListPage";
 import PatientPage from "./PatientPage";
 import Login from "./components/authenticationForm/Login";
 import SignUp from "./components/authenticationForm/SignUp";
-import SignUpDone from "./components/authenticationForm/SignUpDone";
 import Menu from "./components/Menu";
 
 const App = () => {
@@ -68,7 +66,6 @@ const App = () => {
               <Route exact path="/" render={(props) => <Login {...props} handleSignIn={handleSignIn}/>}/>
               <Route exact path="/login" render={(props) => <Login {...props} handleSignIn={handleSignIn}/>}/>
               <Route exact path="/signUp" render={(props) => <SignUp {...props} handleSignIn={handleSignIn}/>} />
-              <Route exact path="/done" component={SignUpDone} />
             </>
           }
             

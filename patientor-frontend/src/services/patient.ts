@@ -1,7 +1,7 @@
 import axios from 'axios';
 import {Patient, EntryWithoutId} from '../types';
 import {apiBaseUrl} from '../constants';
-import {PatientFormValues} from '../AddPatientModal/AddPatientForm';
+import {PatientFormValues} from '../PatientListPage/AddPatientModal/AddPatientForm';
 
 const baseUrl = `${apiBaseUrl}/patients`;
 
