@@ -6,5 +6,5 @@ export type userState = {
   
 export const initialUserState: userState = {
     user:null
-  }
+};
   

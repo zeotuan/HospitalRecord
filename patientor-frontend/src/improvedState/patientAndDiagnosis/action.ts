@@ -1,5 +1,4 @@
-import { Patient, Diagnosis } from "../types";
-
+import { Patient, Diagnosis } from "../../types";
 export type Action =
   | {
       type: "SET_PATIENT_LIST";

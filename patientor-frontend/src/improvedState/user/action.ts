@@ -7,6 +7,6 @@ export type Action =
     }
   | {
       type: "LOG OUT";
-      payload: User;
+      payload: null;
     }
   

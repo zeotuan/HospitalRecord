@@ -1,4 +1,4 @@
-import { Patient, Diagnosis } from "../types";
+import { Patient, Diagnosis } from "../../types";
 import {Action} from './action';
 
 export const setPatientList = (patients:Array<Patient>):Action => {
