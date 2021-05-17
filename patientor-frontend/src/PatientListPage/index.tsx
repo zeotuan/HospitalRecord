@@ -5,12 +5,15 @@ import { PatientFormValues } from "../AddPatientModal/AddPatientForm";
 import AddPatientModal from "../AddPatientModal";
 import { Patient, NonSensitivePatient } from "../types";
 import HealthRatingBar from "../components/HealthRatingBar";
-import { useStateValue, addPatient } from "../state";
+//import { useStateValue, addPatient } from "../state";
+import { useStateValue as testUseStateValue} from '../improvedState/State';
+import {addPatient} from '../improvedState/patientAndDiagnosis/actionCreator';
 import patientServices from '../services/patient';
 
 const PatientListPage = () => {
-  const [{ patients }, dispatch] = useStateValue();
-
+  //const [{ patients }, dispatch] = useStateValue();
+  const {patientAndDiagnosis} = testUseStateValue();//testing new state reducer
+  const [{patients},dispatch] = patientAndDiagnosis;// get patient from testing state reducer
   const [modalOpen, setModalOpen] = React.useState<boolean>(false);
   const [error, setError] = React.useState<string | undefined>();
 
@@ -24,7 +27,6 @@ const PatientListPage = () => {
   const submitNewPatient = async (values: PatientFormValues) => {
     try {
       const newPatient = await patientServices.addPatient(values);
-      //dispatch({ type: "ADD_PATIENT", payload: newPatient });
       dispatch(addPatient(newPatient));
       closeModal();
     } catch (e) {
@@ -57,6 +59,7 @@ const PatientListPage = () => {
                 <HealthRatingBar showText={false} rating={1} />
               </Table.Cell>
             </Table.Row>
+            
           ))}
         </Table.Body>
       </Table>

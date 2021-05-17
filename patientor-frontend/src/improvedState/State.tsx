@@ -27,7 +27,8 @@ type StateProviderProps = {
   userReducer:React.Reducer<userState,userAction>;
   children: React.ReactElement
 };
-  
+
+
 export const StateProvider: React.FC<StateProviderProps> = ({
   patientAndDiagnosisReducer,
   userReducer,
@@ -48,4 +49,34 @@ export const StateProvider: React.FC<StateProviderProps> = ({
   );
 };
   
+
+// type improvedStateProviderProps = {
+//   reducers:{
+//     patientAndDiagnosisReducer: React.Reducer<pDState,pdAction>;
+//     userReducer:React.Reducer<userState,userAction>;
+//   }
+//   children: React.ReactElement
+// };
+  
+
+
+// export const improvedStateProvider: React.FC<improvedStateProviderProps> = ({
+//   reducers,
+//   children
+// }: improvedStateProviderProps) => {
+//   const {patientAndDiagnosisReducer, userReducer} = reducers;
+//   const [pDState, pDdispatch] = useReducer(patientAndDiagnosisReducer, initialPDState);
+//   const [uState,uDispatch] = useReducer(userReducer,initialUserState);
+//   return (
+//     <Context.Provider 
+//       value={
+//         {
+//           patientAndDiagnosis:[pDState,pDdispatch],
+//           user:[uState,uDispatch]
+//         }
+//       }>
+//       {children}
+//     </Context.Provider>
+//   );
+// };
 export const useStateValue = () => useContext(Context);

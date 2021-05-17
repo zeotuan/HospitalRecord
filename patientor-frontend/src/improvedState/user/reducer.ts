@@ -1,5 +1,4 @@
 import { userState } from "./state";
-import { User} from "../../types";
 import {Action} from './action';
 
 

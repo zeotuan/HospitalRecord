@@ -1,5 +1,4 @@
 import { pDState } from "./state";
-import { Patient, Diagnosis } from "../../types";
 import {Action} from './action';
 
 

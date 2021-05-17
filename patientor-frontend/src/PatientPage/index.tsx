@@ -1,6 +1,8 @@
 import React from 'react';
 import {Patient,NonSensitivePatient, isPatient} from '../types';
-import { useStateValue,getFullPatientInfo, addEntry } from "../state";
+//import { useStateValue,getFullPatientInfo, addEntry } from "../state";
+import {useStateValue as testUseStateValue} from '../improvedState/State';
+import {getFullPatientInfo , addEntry} from '../improvedState/patientAndDiagnosis/actionCreator';
 import {useParams} from 'react-router-dom';
 import patientService from '../services/patient';
 import GenderIcon from '../components/GenderIcon';
@@ -12,7 +14,9 @@ import AddEntryModal from '../AddEntryModal/index';
 
 const PatientPage = ():JSX.Element => {
     const {id} = useParams<{id:string}>();
-    const [{patients},dispatch] = useStateValue();
+    //const [{patients},dispatch] = useStateValue();
+    const {patientAndDiagnosis} = testUseStateValue();
+    const [{patients} ,dispatch] = patientAndDiagnosis;
     const [modalOpen,setModalOpen] = React.useState<boolean>(false);
     const [error, setError] = React.useState<string|undefined>();
 
@@ -33,22 +37,19 @@ const PatientPage = ():JSX.Element => {
             setError(e.response?.data?.error || 'Unknown error');
         }
     };
-    
+  
     const patient:Patient|NonSensitivePatient|undefined = patients[id];
-
-    
-
-
     if(!patient ||  !isPatient(patient)){
         patientService
             .getPatient(id)
             .then(p => dispatch(getFullPatientInfo(p)))
             .catch(error => console.log(error));
-            
-        return (
+        
+        return(
             <React.Fragment></React.Fragment>
         );
-    }else{
+    }
+    else{
         
         return (
             <React.Fragment>
