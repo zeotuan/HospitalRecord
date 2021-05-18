@@ -1,9 +1,12 @@
 import { User } from "../../types/user";
 import generalParser from './generalParser_helper';
 import bcrypt from 'bcrypt';
-import config from '../config';
+//import config from '../config';
 
 type Field = {username:unknown,name:unknown,password?:unknown};
+const usernameRegex = /^[a-zA-Z0-9]{3,}[a-zA-Z0-9]*/;
+const passwordRegex =  /^.*(?=.{8,})((?=.*[!@#$%^&*()\-_=+{};:,<.>]){1})(?=.*\d)((?=.*[a-z]){1})((?=.*[A-Z]){1}).*$/;
+const saltRound  = 10;
 
 export const toNewUser= async (props:Field):Promise<User> => {
     const {username,name,password} = props;
@@ -13,7 +16,7 @@ export const toNewUser= async (props:Field):Promise<User> => {
     };
     const parsedPassword = parsePassword(password);
     if(parsedPassword){
-        newUser.passwordHash = await hashPassword(parsedPassword,config.saltRound);
+        newUser.passwordHash = await hashPassword(parsedPassword,saltRound);
     }
     return newUser;
 };
@@ -29,7 +32,7 @@ export const toUser = (props:Field):User => {
 
 const parseUserName  = (username:unknown):string => {
     const parsedUsername = generalParser.parseName(username);
-    if(!config.usernameRegex.test(parsedUsername)){
+    if(!usernameRegex.test(parsedUsername)){
         throw new TypeError('invalid username');
     }
     return parsedUsername;
@@ -40,7 +43,7 @@ const parsePassword = (password:unknown):string => {
     if(!password || !generalParser.isString(password)){
         throw new TypeError('incorrect or missing password');
     }
-    if(!config.passwordRegex.test(password)){
+    if(!passwordRegex.test(password)){
         throw new TypeError('invalid password');
     }
    
