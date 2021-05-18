@@ -6,8 +6,9 @@ import * as yup from 'yup';
 import { Formik, Form, Field } from 'formik';
 import {TextField} from  '../FormField';
 import userService, {userLogInInput} from '../../services/user';
-
-
+import {useStateValue} from '../../improvedState/State';
+import { SETUSER } from '../../improvedState/user/actionCreator';
+import {User} from '../../types';
 interface LogInFormProps{
     onSubmit:(values:userLogInInput) => void
   }
@@ -63,12 +64,21 @@ const LogInForm = ({onSubmit}:LogInFormProps) => {
 const Login = () => {
     const history = useHistory();
     const [error,setError] = useState<string|undefined>();
+    const {user} = useStateValue();
+    const [,userDispatch] = user;
     const handleLogIn =  async(values:userLogInInput) => {
         const result = await userService.signIn(values);
+        
         if(!result || !result.token){
             showError('invalid username or password');
         }
         sessionStorage.setItem("userToken",result.token);
+        const u:User = {
+            username:result.username,
+            id:result.id,
+            name:result.name
+        };
+        userDispatch(SETUSER(u));
         history.push('/home');
     };
     const showError = (message:string) => {

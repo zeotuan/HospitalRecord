@@ -35,7 +35,7 @@ const signUp = async (newUser:userSignUpInput):Promise<User> => {
 };
 
 const signIn = async (user:userLogInInput):Promise<LogInResult> => {
-    const {data:logInResult} = await axios.post<LogInResult>(`${baseUrl}/signIn`,user);
+    const {data:logInResult} = await axios.post<LogInResult>(`${baseUrl}/login`,user);
     return logInResult;    
 };
 

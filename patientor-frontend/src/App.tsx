@@ -13,7 +13,7 @@ import PatientPage from "./PatientPage";
 import Login from "./components/authenticationForm/Login";
 import SignUp from "./components/authenticationForm/SignUp";
 import Menu from "./components/Menu";
-import useService from "./services/user";
+import userService from "./services/user";
 
 const App = () => {
   //const [, dispatch] = useStateValue();
@@ -23,11 +23,11 @@ const App = () => {
   React.useEffect(()=>{
     const token = sessionStorage.getItem('userToken');
     if(token){
-      useService.setToken(token);
+      userService.setToken(token);
       if(!uState.user){
         const fetchUserFromToken = async():Promise<void> => {
           try {
-           const user = await useService.getUser();
+           const user = await userService.getUser();
             if(!user){
               sessionStorage.removeItem('userToken');
             }else{
@@ -40,7 +40,8 @@ const App = () => {
         void fetchUserFromToken();
       }
     }
-  });
+  },[uState.user]);
+
   React.useEffect(() => {
     void axios.get<void>(`${apiBaseUrl}/ping`);
 
