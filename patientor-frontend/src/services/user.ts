@@ -3,11 +3,11 @@ import {User} from '../types';
 import {apiBaseUrl} from '../constants';
 
 const baseUrl = `${apiBaseUrl}/users`;
-let token:string|null = null;
+let token = "";
 
 const setToken = (newToken:string) => {
     token = newToken;
-}
+};
 
 export interface userLogInInput{
     username:string;
