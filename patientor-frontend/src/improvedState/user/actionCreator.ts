@@ -1,9 +1,9 @@
 import {User} from "../../types";
 import {Action} from './action';
 
-export const LOGIN = (user:User):Action => {
+export const SETUSER = (user:User):Action => {
     return{
-      type:"LOG IN",
+      type:"SET USER",
       payload:user
     };
   };

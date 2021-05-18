@@ -1,21 +1,15 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
+import {Link, useHistory} from 'react-router-dom';
 import {Button, Message} from "semantic-ui-react";
 import {TextField} from '../FormField';
 import Layout from  "./Layout";
 import {Field, Form,  Formik} from 'formik';
 //import {User} from '../../types';
 import * as yup from 'yup';
-
-export interface userSignUpInput{
-  username:string;
-  name:string;
-  password:string;
-  confirmPassword:string;
-}
+import userService,{userSignUpInput} from '../../services/user'; 
 
 interface SignUpFormProps{
-  onSubmit:(values:userSignUpInput|any) => void
+  onSubmit:(values:userSignUpInput) => void
 }
 
 const signUpSchema = yup.object().shape({
@@ -98,13 +92,23 @@ const SignUpForm = ({onSubmit}:SignUpFormProps) => {
 //   onCancel:() => void;
 // }
 
-const SignUp = (props:{handleSignIn:()=>void}) => {
-    return (
-        <Layout header="Sign up to get started">
-          <SignUpForm onSubmit={props.handleSignIn} />
-          
-      </Layout>
-    );
+const SignUp = () => {
+  const history = useHistory();
+  const handleSubmit = async (values:userSignUpInput) => {
+    const result = await userService.signUp(values);
+    if(result){
+      history.push('/login');
+      console.log('sign up successfully');
+      //should make a notification that can show the result
+    }else{
+      console.log('sign up fail');
+    }
+  }; 
+  return (
+    <Layout header="Sign up to get started">
+      <SignUpForm onSubmit={handleSubmit} />  
+    </Layout>
+  );
 };
 
 export default SignUp;

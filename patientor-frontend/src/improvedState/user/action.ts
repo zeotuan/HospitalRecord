@@ -2,7 +2,7 @@ import {User } from "../../types";
 
 export type Action =
   | {
-      type: "LOG IN";
+      type: "SET USER";
       payload: User;
     }
   | {

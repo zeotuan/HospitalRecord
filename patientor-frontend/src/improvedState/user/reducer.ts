@@ -1,14 +1,16 @@
 import { userState } from "./state";
 import {Action} from './action';
+import { User } from "../../types";
 
 
 export const reducer = (state: userState, action: Action): userState => {
   switch (action.type) {
-    case "LOG IN":
+    case "SET USER":
       if(action.payload){
-        return {user:action.payload};
+        return {user:action.payload as User};
+      }else{
+        return {user:null};
       }
-      return {user:null};
     case "LOG OUT":
       return {user:null};
 

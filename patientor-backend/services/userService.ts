@@ -34,7 +34,8 @@ const login = async (userInfo:user) => {
                 return {
                     token,
                     username:userLogIn.username,
-                    name:userLogIn.name
+                    name:userLogIn.name,
+                    id:userLogIn.id,
                 };
 
          }
