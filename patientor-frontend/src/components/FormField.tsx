@@ -41,12 +41,12 @@ interface TextProps extends FieldProps {
 
 export const TextField= ({
   field,
-  label,
+  label="",
   placeholder,
   type = 'text',
 }: TextProps) => (
   <Form.Field>
-    <label>{label}</label>
+    {label && <label>{label}</label>}
     <Field placeholder={placeholder} type={type} {...field} />
     <div style={{ color:'red' }}>
       <ErrorMessage name={field.name} />

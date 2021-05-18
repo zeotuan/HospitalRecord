@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom';
 import {Button, Message} from "semantic-ui-react";
 import {TextField} from '../FormField';
 import Layout from  "./Layout";
-import {Field, Form as FForm,  Formik} from 'formik';
+import {Field, Form,  Formik} from 'formik';
 //import {User} from '../../types';
 import * as yup from 'yup';
 
@@ -43,7 +43,7 @@ const SignUpForm = ({onSubmit}:SignUpFormProps) => {
     >
       {({ isValid, dirty }) => {
         return (
-          <FForm className="form ui">
+          <Form className="form ui">
             <Field
               label="Username"
               placeholder="username"
@@ -84,9 +84,9 @@ const SignUpForm = ({onSubmit}:SignUpFormProps) => {
             
             
             <Message size="big">
-                <Link to="/login">Not Registered?</Link>
+                <Link to="/login">Already Registered?</Link>
             </Message>
-          </FForm>
+          </Form>
         );
       }}
     </Formik>
