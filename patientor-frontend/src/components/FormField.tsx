@@ -1,20 +1,20 @@
 import React from "react";
 import { ErrorMessage, Field, FieldProps} from "formik";
-import { Form } from "semantic-ui-react";
-import {Gender} from "../../types";
+import { Form} from "semantic-ui-react";
+
 
 // structure of a single option
-export type GenderOption = {
-  value: Gender;
+export interface Option{
+  value: string;
   label: string;
-};
+}
 
 // props for select field component
-type SelectFieldProps = {
+export interface SelectFieldProps{
   name: string;
   label: string;
-  options: GenderOption[];
-};
+  options: Option[];
+}
 
 export const SelectField = ({
   name,
@@ -36,16 +36,18 @@ export const SelectField = ({
 interface TextProps extends FieldProps {
   label: string;
   placeholder: string;
+  type:'text'|'password';
 }
 
 export const TextField= ({
   field,
   label,
-  placeholder
+  placeholder,
+  type = 'text',
 }: TextProps) => (
   <Form.Field>
     <label>{label}</label>
-    <Field placeholder={placeholder} {...field} />
+    <Field placeholder={placeholder} type={type} {...field} />
     <div style={{ color:'red' }}>
       <ErrorMessage name={field.name} />
     </div>

@@ -3,7 +3,7 @@ import {Form, Header} from 'semantic-ui-react';
 import './auth.css';
 import logo from "../../images/logo.jpg";
 
-const Layout = (props:{header:string, children:JSX.Element[]}):JSX.Element => {
+const Layout = (props:{header:string, children:JSX.Element|JSX.Element[]}):JSX.Element => {
     return (
         <div className="auth-main">
             <div className="auth-content">

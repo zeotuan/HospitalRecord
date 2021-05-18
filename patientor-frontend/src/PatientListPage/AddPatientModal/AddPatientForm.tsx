@@ -2,7 +2,8 @@ import React from "react";
 import { Grid, Button } from "semantic-ui-react";
 import { Field, Formik, Form } from "formik";
 
-import { TextField, SelectField, GenderOption } from "./FormField";
+import { GenderOption} from "./FormField";
+import {TextField, SelectField} from "../../components/FormField";
 import { Gender, Patient } from "../../types";
 
 /*
@@ -30,7 +31,7 @@ export const AddPatientForm = ({ onSubmit, onCancel } : Props ) => {
         ssn: "",
         dateOfBirth: "",
         occupation: "",
-        gender: Gender.Other
+        gender: Gender.Other,
       }}
       onSubmit={onSubmit}
       validate={values => {
