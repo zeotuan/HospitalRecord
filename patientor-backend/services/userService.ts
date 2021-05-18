@@ -54,10 +54,24 @@ const getAll = async ():Promise<user[]> => {
     }
 };
 
+
+const getuserById = async (id:string):Promise<user|null> => {
+    try{
+        const u = await User.findById(id);
+        if(u){
+            return  u;
+        }
+        return null;
+    }catch (error){
+        throw new Error(error);
+    }
+}
+
 export default {
     addUser,
     login,
-    getAll
+    getAll,
+    getuserById
 };
 
 

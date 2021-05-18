@@ -2,6 +2,13 @@ import axios from 'axios';
 import {User} from '../types';
 import {apiBaseUrl} from '../constants';
 
+const baseUrl = `${apiBaseUrl}/users`;
+let token:string|null = null;
+
+const setToken = (newToken:string) => {
+    token = newToken;
+}
+
 export interface userLogInInput{
     username:string;
     password:string;
@@ -23,22 +30,27 @@ export interface userSignUpInput{
 
 
 const signUp = async (newUser:userSignUpInput):Promise<User> => {
-    const {data:addedUser} = await axios.post<User>(`${apiBaseUrl}/signUp`,newUser);
+    const {data:addedUser} = await axios.post<User>(`${baseUrl}/signUp`,newUser);
     return addedUser;
 };
 
 const signIn = async (user:userLogInInput):Promise<LogInResult> => {
-    const {data:logInResult} = await axios.post<LogInResult>(`${apiBaseUrl}/signIn`,user);
+    const {data:logInResult} = await axios.post<LogInResult>(`${baseUrl}/signIn`,user);
     return logInResult;    
 };
 
-const getUserFromToken = async (token:string):Promise<User> => {
-    const {data:user} = await axios.get<User>(`${apiBaseUrl}/userFromToken/${token}`);
+const getUser = async ():Promise<User> => {
+    const {data:user} = await axios.get<User>(`${baseUrl}/`,{
+        headers:{
+            'Authorization': `Bearer ${token}`
+        }
+    });
     return user;
 };
 
 export default {
     signUp,
     signIn,
-    getUserFromToken
+    getUser,
+    setToken
 };

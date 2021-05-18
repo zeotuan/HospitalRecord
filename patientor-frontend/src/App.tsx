@@ -23,10 +23,11 @@ const App = () => {
   React.useEffect(()=>{
     const token = sessionStorage.getItem('userToken');
     if(token){
+      useService.setToken(token);
       if(!uState.user){
         const fetchUserFromToken = async():Promise<void> => {
           try {
-           const user = await useService.getUserFromToken(token);
+           const user = await useService.getUser();
             if(!user){
               sessionStorage.removeItem('userToken');
             }else{
