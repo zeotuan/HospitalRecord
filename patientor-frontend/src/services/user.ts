@@ -39,18 +39,19 @@ const signIn = async (user:userLogInInput):Promise<LogInResult> => {
     return logInResult;    
 };
 
-const getUser = async ():Promise<User> => {
-    const {data:user} = await axios.get<User>(`${baseUrl}/`,{
+const getUserWithToken = async ():Promise<User> => {
+    const {data:user} = await axios.get<User>(`${baseUrl}/withToken`,{
         headers:{
             'Authorization': `Bearer ${token}`
         }
     });
+    
     return user;
 };
 
 export default {
     signUp,
     signIn,
-    getUser,
+    getUserWithToken,
     setToken
 };

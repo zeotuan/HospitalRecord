@@ -1,10 +1,6 @@
 import { User} from "../../types";
-export type userState = {
-    user:User|null 
-  };
+export type userState = User|null;
   
   
-export const initialUserState: userState = {
-    user:null
-};
+export const initialUserState: userState = null;
   

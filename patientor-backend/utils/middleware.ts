@@ -44,11 +44,15 @@ const tokenExtractor = (request:Request, _response:Response, next:NextFunction) 
     const authorization = request.get('Authorization');
     if(authorization && authorization.toLowerCase().startsWith('bearer ')){
         const token = authorization.substring(7);
-        const decodedToken = jwt.verify(token,config.JWT_SECRET);
-        request.decodedToken = (decodedToken as token);
+        const verifiedToken = jwt.verify(token,config.JWT_SECRET);
+        const decodedToken:token = {
+            id:(verifiedToken as token).id,
+        }
+        request.decodedToken = decodedToken;
     }else{
         request.decodedToken = undefined;
     }  
+
     next();
 };
 

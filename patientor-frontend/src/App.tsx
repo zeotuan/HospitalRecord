@@ -26,14 +26,15 @@ const App = () => {
     const token = tokenExtractor();
     if(token){
       userService.setToken(token);
-      if(!uState.user){
+      if(!uState){
         const fetchUserFromToken = async():Promise<void> => {
           try {
-           const user = await userService.getUser();
+           const user = await userService.getUserWithToken();
             if(!user){
               localStorage.removeItem('userToken');
               history.push('/login');
             }else{
+
                userDispatch(SETUSER(user));  
             }
           } catch (error) {
@@ -46,7 +47,7 @@ const App = () => {
       
     }
     //history.push('/login');
-  },[uState.user]);
+  },[uState]);
 
   React.useEffect(() => {
     void axios.get<void>(`${apiBaseUrl}/ping`);
@@ -74,10 +75,10 @@ const App = () => {
   return (
     <div className="App">
         <Container>
-          { uState.user?
+          { uState?
             <>
               <Header as="h1">Patientor</Header>
-              <Menu activeItem={'home'} handleLogOut={handleLogOut} userName={uState.user.username}/>
+              <Menu activeItem={'home'} handleLogOut={handleLogOut} userName={uState.username}/>
             </>:
             <>
 
@@ -85,7 +86,7 @@ const App = () => {
           }
           <Divider hidden />
           <Switch>
-          {uState.user?
+          {uState?
             <>
               <Route exact path="/" component={PatientListPage}/>
               <Route exact path="/home" component={PatientListPage}/>

@@ -47,4 +47,23 @@ router.get('/', async (req:Request, res:Response, next:NextFunction) => {
 });
 
 
+router.get('/withToken', async (req:Request, res:Response, next:NextFunction) => {
+    try{
+        if(!req.decodedToken || !req.decodedToken.id){
+            return res.status(400).json({error:'missing or invalid token'});
+        }
+
+        const user = await userService.getuserById(req.decodedToken.id);
+        if(user){
+            res.json(user);
+            return;
+        }
+        res.status(404).json({error:'cannot find user with that token'});
+
+    }catch(error){
+        return next(error);
+    }
+})
+
+
 export default router;

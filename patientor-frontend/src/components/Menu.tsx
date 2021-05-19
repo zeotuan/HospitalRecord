@@ -5,12 +5,12 @@ import {Link} from 'react-router-dom';
 interface menuProps{
     activeItem: string;
     handleLogOut: () => void;
-    userName: string;
+    userName: string|undefined;
 }
 
 const Menu = (props:menuProps):JSX.Element => {
     const {activeItem, userName} = props;
-    const [item,setItem] = useState<string>(activeItem);
+    const [item,setItem] = useState<string|undefined>(activeItem);
     return(
         <SMenu>
             <SMenu.Item
