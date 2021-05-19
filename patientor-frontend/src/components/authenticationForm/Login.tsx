@@ -72,7 +72,7 @@ const Login = () => {
         if(!result || !result.token){
             showError('invalid username or password');
         }
-        sessionStorage.setItem("userToken",result.token);
+        localStorage.setItem("userToken",JSON.stringify(result.token));
         const u:User = {
             username:result.username,
             id:result.id,

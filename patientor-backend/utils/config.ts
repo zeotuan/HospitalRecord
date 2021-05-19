@@ -11,9 +11,10 @@ if(process.env.NODE_ENV === 'test'){
 const MONGODB_URI:string = GET_MONGODB_URI? GET_MONGODB_URI : '';
 
 const JWT_SECRET = process.env.JWT_SECRET;
-const saltRound = 10 | process.env.saltRound;
-const passwordRegex = /^.*(?=.{8,})((?=.*[!@#$%^&*()\-_=+{};:,<.>]){1})(?=.*\d)((?=.*[a-z]){1})((?=.*[A-Z]){1}).*$/;
-const usernameRegex =  /^[a-zA-Z0-9]{3,}[a-zA-Z0-9]*/;
+const saltRound = parseInt(process.env.saltRound);
+const passwordRegex = new RegExp(process.env.passwordRegex);// should  be /^.*(?=.{8,})((?=.*[!@#$%^&*()\-_=+{};:,<.>]){1})(?=.*\d)((?=.*[a-z]){1})((?=.*[A-Z]){1}).*$/
+const usernameRegex =  new RegExp(process.env.usernameRegex);// should be /^[a-zA-Z0-9]{3,}[a-zA-Z0-9]*/
+
 const config = {
     PORT,
     MONGODB_URI,
