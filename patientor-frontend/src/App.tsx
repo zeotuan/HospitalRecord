@@ -1,6 +1,6 @@
 import React  from "react";
 import axios from "axios";
-import {Route, Switch, useHistory} from "react-router-dom";
+import {Redirect, Route, Switch, useHistory} from "react-router-dom";
 import {Divider, Header, Container} from "semantic-ui-react";
 import { apiBaseUrl } from "./constants";
 import {useStateValue} from './improvedState/State';
@@ -31,8 +31,8 @@ const App = () => {
           try {
            const user = await userService.getUser();
             if(!user){
-              sessionStorage.removeItem('userToken');
-              //history.push('/login');
+              localStorage.removeItem('userToken');
+              history.push('/login');
             }else{
                userDispatch(SETUSER(user));  
             }
@@ -43,6 +43,7 @@ const App = () => {
         };  
         void fetchUserFromToken();
       }
+      
     }
     //history.push('/login');
   },[uState.user]);
@@ -76,7 +77,7 @@ const App = () => {
           { uState.user?
             <>
               <Header as="h1">Patientor</Header>
-              <Menu activeItem={'home'} handleLogOut={handleLogOut}/>
+              <Menu activeItem={'home'} handleLogOut={handleLogOut} userName={uState.user.username}/>
             </>:
             <>
 
@@ -86,14 +87,16 @@ const App = () => {
           <Switch>
           {uState.user?
             <>
-              <Route path="/" component={PatientListPage}/>
+              <Route exact path="/" component={PatientListPage}/>
               <Route exact path="/home" component={PatientListPage}/>
-              <Route exact path="/patient/:id" component={PatientPage}/>              
+              <Route exact path="/patient/:id" component={PatientPage}/>
+              <Redirect path="" to="/" />              
             </>:
             <>
-              <Route path="/" render={() => <Login />}/>
+              <Route exact path="/" render={() => <Login />}/>
               <Route exact path="/login" render={() => <Login  />}/>
               <Route exact path="/signUp" render={() => <SignUp />} />
+              <Redirect path="" to="/" /> 
             </>
           }
             

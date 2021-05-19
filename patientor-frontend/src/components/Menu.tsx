@@ -2,8 +2,14 @@ import React, { useState } from 'react';
 import {Menu as SMenu,Input} from 'semantic-ui-react';
 import {Link} from 'react-router-dom';
 
-const Menu = (props:{activeItem:string, handleLogOut:()=>void}):JSX.Element => {
-    const {activeItem} = props;
+interface menuProps{
+    activeItem: string;
+    handleLogOut: () => void;
+    userName: string;
+}
+
+const Menu = (props:menuProps):JSX.Element => {
+    const {activeItem, userName} = props;
     const [item,setItem] = useState<string>(activeItem);
     return(
         <SMenu>
@@ -19,16 +25,16 @@ const Menu = (props:{activeItem:string, handleLogOut:()=>void}):JSX.Element => {
                 onClick={()=>{setItem('diagnosis');}}
                 as={Link} to='/home'
             />
-            <SMenu.Item
-                name='friends'
-                active={item === 'friends'}
-                onClick={()=>{setItem('friends');}}
-                as={Link} to='/home'
-            />
             <SMenu.Menu position='right'>
                 <SMenu.Item>
                     <Input icon='search' placeholder='Search...' />
                 </SMenu.Item>
+                <SMenu.Item
+                    name= {userName}
+                    active={item === userName}
+                    onClick={()=>{setItem(userName);}}
+                    as={Link} to='/home'
+                />
                 <SMenu.Item
                     name='logout'
                     active={activeItem === 'logout'}
