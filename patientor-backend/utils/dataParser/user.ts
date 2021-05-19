@@ -1,12 +1,12 @@
 import { User } from "../../types/user";
 import generalParser from './generalParser_helper';
 import bcrypt from 'bcrypt';
-//import config from '../config';
+import config from '../config';
 
 type Field = {username:unknown,name:unknown,password?:unknown};
-const usernameRegex = /^[a-zA-Z0-9]{3,}[a-zA-Z0-9]*/;
-const passwordRegex =  /^.*(?=.{8,})((?=.*[!@#$%^&*()\-_=+{};:,<.>]){1})(?=.*\d)((?=.*[a-z]){1})((?=.*[A-Z]){1}).*$/;
-const saltRound  = 10;
+const usernameRegex =  config.usernameRegex;
+const passwordRegex =  config.passwordRegex;
+const saltRound  = config.saltRound;
 
 export const toNewUser= async (props:Field):Promise<User> => {
     const {username,name,password} = props;
