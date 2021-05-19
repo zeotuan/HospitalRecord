@@ -1,6 +1,6 @@
 import React from 'react';
 import AddPatientForm, { PatientFormValues } from './AddPatientForm';
-import CustomBaseModal from '../../components/CustomModal/CustomBaseModal';
+import CustomBaseModal from '../../CustomModal/CustomBaseModal';
 interface Props {
   modalOpen: boolean;
   onClose: () => void;

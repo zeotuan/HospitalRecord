@@ -1,6 +1,6 @@
-import React  from "react";
+import React from "react";
 import axios from "axios";
-import {Redirect, Route, Switch, useHistory} from "react-router-dom";
+import {Redirect, Route, Switch} from "react-router-dom";
 import {Divider, Header, Container} from "semantic-ui-react";
 import { apiBaseUrl } from "./constants";
 import {useStateValue} from './improvedState/State';
@@ -8,8 +8,8 @@ import {setPatientList , setDiagnosisList} from './improvedState/patientAndDiagn
 import {SETUSER, LOGOUT} from './improvedState/user/actionCreator';
 import patientService from "./services/patient";
 import diagnosisService from "./services/diagnosis";
-import PatientListPage from "./PatientListPage";
-import PatientPage from "./PatientPage";
+import PatientListPage from "./components/PatientListPage";
+import PatientPage from "./components/PatientPage";
 import Login from "./components/authenticationForm/Login";
 import SignUp from "./components/authenticationForm/SignUp";
 import Menu from "./components/Menu";
@@ -21,7 +21,6 @@ const App = () => {
   const {patientAndDiagnosis,user} = useStateValue();
   const [ ,dispatch] = patientAndDiagnosis;
   const [uState,userDispatch] = user;
-  const history = useHistory();
   React.useEffect(()=>{
     const token = tokenExtractor();
     if(token){
@@ -32,21 +31,16 @@ const App = () => {
            const user = await userService.getUserWithToken();
             if(!user){
               localStorage.removeItem('userToken');
-              history.push('/login');
             }else{
-
                userDispatch(SETUSER(user));  
             }
           } catch (error) {
             console.log(error);
-            //history.push('/login');
           }
         };  
         void fetchUserFromToken();
-      }
-      
+      } 
     }
-    //history.push('/login');
   },[uState]);
 
   React.useEffect(() => {
@@ -68,7 +62,6 @@ const App = () => {
   const handleLogOut = () => {
     localStorage.removeItem('userToken');
     userDispatch(LOGOUT());
-    history.push('/login');
   };
   
 
@@ -88,16 +81,14 @@ const App = () => {
           <Switch>
           {uState?
             <>
-              <Route exact path="/" component={PatientListPage}/>
               <Route exact path="/home" component={PatientListPage}/>
               <Route exact path="/patient/:id" component={PatientPage}/>
-              <Redirect path="" to="/" />              
+              <Redirect path="" to="/home" />              
             </>:
             <>
-              <Route exact path="/" render={() => <Login />}/>
               <Route exact path="/login" render={() => <Login  />}/>
               <Route exact path="/signUp" render={() => <SignUp />} />
-              <Redirect path="" to="/" /> 
+              <Redirect path="" to="/login" /> 
             </>
           }
             

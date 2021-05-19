@@ -3,12 +3,12 @@ import {Link} from "react-router-dom";
 import { Container, Table, Button } from "semantic-ui-react";
 import { PatientFormValues } from "./AddPatientModal/AddPatientForm";
 import AddPatientModal from "./AddPatientModal";
-import { Patient, NonSensitivePatient } from "../types";
-import HealthRatingBar from "../components/HealthRatingBar";
+import { Patient, NonSensitivePatient } from "../../types";
+import HealthRatingBar from "../HealthRatingBar";
 //import { useStateValue, addPatient } from "../state";
-import { useStateValue as testUseStateValue} from '../improvedState/State';
-import {addPatient} from '../improvedState/patientAndDiagnosis/actionCreator';
-import patientServices from '../services/patient';
+import { useStateValue as testUseStateValue} from '../../improvedState/State';
+import {addPatient} from '../../improvedState/patientAndDiagnosis/actionCreator';
+import patientServices from '../../services/patient';
 
 const PatientListPage = () => {
   //const [{ patients }, dispatch] = useStateValue();

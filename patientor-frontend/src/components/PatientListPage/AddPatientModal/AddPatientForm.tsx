@@ -3,8 +3,8 @@ import { Grid, Button } from "semantic-ui-react";
 import { Field, Formik, Form } from "formik";
 
 import { GenderOption} from "./FormField";
-import {TextField, SelectField} from "../../components/FormField";
-import { Gender, Patient } from "../../types";
+import {TextField, SelectField} from "../../FormField";
+import { Gender, Patient } from "../../../types";
 
 /*
  * use type Patient, but omit id and entries,

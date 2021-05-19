@@ -1,13 +1,13 @@
 import React from 'react';
-import {Patient,NonSensitivePatient, isPatient} from '../types';
+import {Patient,NonSensitivePatient, isPatient} from '../../types';
 //import { useStateValue,getFullPatientInfo, addEntry } from "../state";
-import {useStateValue as testUseStateValue} from '../improvedState/State';
-import {getFullPatientInfo , addEntry} from '../improvedState/patientAndDiagnosis/actionCreator';
+import {useStateValue as testUseStateValue} from '../../improvedState/State';
+import {getFullPatientInfo , addEntry} from '../../improvedState/patientAndDiagnosis/actionCreator';
 import {useParams} from 'react-router-dom';
-import patientService from '../services/patient';
-import GenderIcon from '../components/GenderIcon';
-import EntryCard from '../components/EntryCard/EntryCard';
-import {EntryWithoutId} from '../types';
+import patientService from '../../services/patient';
+import GenderIcon from '../GenderIcon';
+import EntryCard from '../EntryCard/EntryCard';
+import {EntryWithoutId} from '../../types';
 import {Button} from 'semantic-ui-react';
 import AddEntryModal from './AddEntryModal/index';
 

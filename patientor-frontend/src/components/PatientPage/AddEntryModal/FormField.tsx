@@ -1,7 +1,7 @@
 import React from "react";
 import { ErrorMessage, Field, FieldProps, FormikProps } from "formik";
 import { Dropdown, DropdownProps, Form } from "semantic-ui-react";
-import { Diagnosis, HealthCheckRating, Entry } from "../../types";
+import { Diagnosis, HealthCheckRating, Entry } from "../../../types";
 
 interface optionBase {
   label: string

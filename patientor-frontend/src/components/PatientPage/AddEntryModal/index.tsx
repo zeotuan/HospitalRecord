@@ -1,7 +1,7 @@
 import React from 'react';
 import AddEntryForm from './AddEntryForm';
-import {EntryWithoutId} from '../../types';
-import CustomBaseModal  from '../../components/CustomModal/CustomBaseModal';
+import {EntryWithoutId} from '../../../types';
+import CustomBaseModal  from '../../CustomModal/CustomBaseModal';
 
 interface Props /*extends BaseProps*/{
     modalOpen: boolean;

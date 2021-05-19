@@ -1,9 +1,9 @@
 import React from 'react';
-import {HealthCheckRating, EntryWithoutId, Entry} from '../../types';
+import {HealthCheckRating, EntryWithoutId, Entry} from '../../../types';
 import {Field, Form, Formik} from 'formik';
 import {DiagnosisSelection, SelectField, HealthCheckRatingOption, EntryTypeOption} from './FormField';
-import {TextField} from '../../components/FormField';
-import {useStateValue} from '../../improvedState/State';
+import {TextField} from '../../FormField';
+import {useStateValue} from '../../../improvedState/State';
 import { Grid, Button, Dropdown, Form as SForm} from "semantic-ui-react";
 
 // export type HealthCheckEntryWithoutId = Omit<HealthCheckEntry,'id'>;
