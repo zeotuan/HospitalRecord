@@ -1,6 +1,6 @@
 import React  from "react";
 import axios from "axios";
-import { BrowserRouter as Router, Route, Switch} from "react-router-dom";
+import {Route, Switch, useHistory} from "react-router-dom";
 import {Divider, Header, Container} from "semantic-ui-react";
 import { apiBaseUrl } from "./constants";
 import {useStateValue} from './improvedState/State';
@@ -14,14 +14,16 @@ import Login from "./components/authenticationForm/Login";
 import SignUp from "./components/authenticationForm/SignUp";
 import Menu from "./components/Menu";
 import userService from "./services/user";
+import tokenExtractor from "./utils/tokenExtractor";
 
 const App = () => {
   //const [, dispatch] = useStateValue();
   const {patientAndDiagnosis,user} = useStateValue();
   const [ ,dispatch] = patientAndDiagnosis;
   const [uState,userDispatch] = user;
+  const history = useHistory();
   React.useEffect(()=>{
-    const token = sessionStorage.getItem('userToken');
+    const token = tokenExtractor();
     if(token){
       userService.setToken(token);
       if(!uState.user){
@@ -30,16 +32,19 @@ const App = () => {
            const user = await userService.getUser();
             if(!user){
               sessionStorage.removeItem('userToken');
+              //history.push('/login');
             }else{
                userDispatch(SETUSER(user));  
             }
           } catch (error) {
             console.log(error);
+            //history.push('/login');
           }
         };  
         void fetchUserFromToken();
       }
     }
+    //history.push('/login');
   },[uState.user]);
 
   React.useEffect(() => {
@@ -59,14 +64,14 @@ const App = () => {
   }, [dispatch]);
 
   const handleLogOut = () => {
-    sessionStorage.removeItem('userToken');
+    localStorage.removeItem('userToken');
     userDispatch(LOGOUT());
+    history.push('/login');
   };
   
 
   return (
     <div className="App">
-      <Router>
         <Container>
           { uState.user?
             <>
@@ -81,12 +86,12 @@ const App = () => {
           <Switch>
           {uState.user?
             <>
-              <Route exact path="/" component={PatientListPage}/>
+              <Route path="/" component={PatientListPage}/>
               <Route exact path="/home" component={PatientListPage}/>
-              <Route exact path="/patient/:id" component={PatientPage}/>
+              <Route exact path="/patient/:id" component={PatientPage}/>              
             </>:
             <>
-              <Route exact path="/" render={() => <Login />}/>
+              <Route path="/" render={() => <Login />}/>
               <Route exact path="/login" render={() => <Login  />}/>
               <Route exact path="/signUp" render={() => <SignUp />} />
             </>
@@ -94,7 +99,6 @@ const App = () => {
             
           </Switch>
         </Container>
-      </Router>
     </div>
   );
 };
