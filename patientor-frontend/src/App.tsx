@@ -10,6 +10,7 @@ import patientService from "./services/patient";
 import diagnosisService from "./services/diagnosis";
 import PatientListPage from "./components/PatientListPage";
 import PatientPage from "./components/PatientPage";
+import DiagnosisListPage from "./components/DiagnosisListPage";
 import Login from "./components/authenticationForm/Login";
 import SignUp from "./components/authenticationForm/SignUp";
 import Menu from "./components/Menu";
@@ -81,8 +82,9 @@ const App = () => {
           <Switch>
           {uState?
             <>
-              <Route exact path="/home" component={PatientListPage}/>
-              <Route exact path="/patient/:id" component={PatientPage}/>
+              <Route exact path="/home" component={PatientListPage} />
+              <Route exact path="/patient/:id" component={PatientPage} />
+              <Route exact path="/diagnoses" component={DiagnosisListPage} />
               <Redirect path="" to="/home" />              
             </>:
             <>

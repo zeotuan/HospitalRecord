@@ -6,13 +6,13 @@ import AddPatientModal from "./AddPatientModal";
 import { Patient, NonSensitivePatient } from "../../types";
 import HealthRatingBar from "../HealthRatingBar";
 //import { useStateValue, addPatient } from "../state";
-import { useStateValue as testUseStateValue} from '../../improvedState/State';
+import { useStateValue} from '../../improvedState/State';
 import {addPatient} from '../../improvedState/patientAndDiagnosis/actionCreator';
 import patientServices from '../../services/patient';
 
 const PatientListPage = () => {
   //const [{ patients }, dispatch] = useStateValue();
-  const {patientAndDiagnosis} = testUseStateValue();//testing new state reducer
+  const {patientAndDiagnosis} = useStateValue();//testing new state reducer
   const [{patients},dispatch] = patientAndDiagnosis;// get patient from testing state reducer
   const [modalOpen, setModalOpen] = React.useState<boolean>(false);
   const [error, setError] = React.useState<string | undefined>();

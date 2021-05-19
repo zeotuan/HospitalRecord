@@ -1,0 +1,8 @@
+PORT=<set_port_here type: number>
+MONGODB_URI = <SET_MONGO_URI_HERE type:string>
+DEV_MONGODB_URI= <SET_MONGO_DEV_URI_HERE type:string>
+TEST_MONGODB_URI = <SET_MONGO_DEV_URI_HERE type:string>
+JWT_SECRET = <SET_JWT_SECRET_HERE type:string>
+saltRound= <SET_SALT_ROUND HERE type:string> // this will be parsed to integer 
+passwordRegex= <SET_REGEX_FOR_PASSWORD_HERE> // string of regex ex. passwordRegex='^[a-zA-Z0-9]{3,}[a-zA-Z0-9]*'
+usernameRegex= <SET_REGEX_FOR_USERNAME_HERE> // string of regex ex. usernameRegex='^[a-zA-Z0-9]{3,}[a-zA-Z0-9]*'

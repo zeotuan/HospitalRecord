@@ -23,7 +23,7 @@ const Menu = (props:menuProps):JSX.Element => {
                 name='diagnosis'
                 active={item === 'diagnosis'}
                 onClick={()=>{setItem('diagnosis');}}
-                as={Link} to='/home'
+                as={Link} to='/diagnoses'
             />
             <SMenu.Menu position='right'>
                 <SMenu.Item>
@@ -39,7 +39,7 @@ const Menu = (props:menuProps):JSX.Element => {
                     name='logout'
                     active={activeItem === 'logout'}
                     onClick={()=>{props.handleLogOut();}}
-                    as={Link} to='/'
+                    as={Link} to='/login'
                 />
             </SMenu.Menu>
         </SMenu>

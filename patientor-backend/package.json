@@ -8,7 +8,7 @@
     "tsc": "tsc",
     "dev": "NODE_ENV=dev ts-node-dev index.ts",
     "lint": "eslint --ext .ts .",
-    "start": "node build/index.js",
+    "start": "npm run tsc && node build/index.js",
     "seed": "npm run tsc && (NODE_ENV=dev node build/seed/diagnosis.js && NODE_ENV=dev node build/seed/patients.js)"
   },
   "author": "",
